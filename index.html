@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Glenforest Design Concepts</title>
+<style>
+  :root {
+    --paper: #ffffff;
+    --panel: #f4f5f8;
+    --ink: #1d2438;
+    --navy: #2b3a8f;
+    --muted: #5b6376;
+    --hairline: #d9dce6;
+    --lime: #a8bf2a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--panel); color: var(--ink); font-family: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 15px; line-height: 1.55; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 40px 32px 64px; }
+  header.top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 16px; border-bottom: 3px solid var(--navy); margin-bottom: 10px; }
+  .agency { font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px; color: var(--navy); }
+  .meta { font-size: 12px; color: var(--muted); }
+  h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: 30px; margin: 18px 0 4px; }
+  .sub { color: var(--muted); max-width: 70ch; margin-bottom: 26px; }
+  .legend { font-size: 12.5px; color: var(--muted); margin-bottom: 18px; }
+  .legend b { color: var(--navy); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 22px; }
+  .card { background: var(--paper); border: 1px solid var(--hairline); display: flex; flex-direction: column; }
+  .preview { position: relative; height: 340px; overflow: hidden; border-bottom: 1px solid var(--hairline); background: #fff; }
+  .preview iframe { width: 1280px; height: 1860px; border: 0; transform: scale(0.2734); transform-origin: 0 0; pointer-events: none; }
+  .preview a.cover { position: absolute; inset: 0; }
+  .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .num { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); }
+  .name { font-family: Georgia, serif; font-size: 19px; color: var(--navy); }
+  .anchored .name::after { content: "current brand"; font-family: "Segoe UI", Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); background: #eef2d8; border: 1px solid var(--lime); padding: 2px 6px; margin-left: 8px; vertical-align: 3px; white-space: nowrap; }
+  .type { font-size: 12px; color: var(--muted); }
+  .swatches { display: flex; gap: 5px; }
+  .swatches span { width: 22px; height: 22px; border: 1px solid rgba(0,0,0,0.12); }
+  .rationale { font-size: 13px; color: var(--ink); flex: 1; }
+  .open { align-self: flex-start; font-size: 13px; font-weight: 700; color: var(--navy); text-decoration: none; border-bottom: 2px solid var(--lime); padding-bottom: 1px; }
+  .open:hover { color: #1c2a6e; }
+  footer { margin-top: 40px; padding-top: 14px; border-top: 3px solid var(--navy); font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } .wrap { padding: 24px 16px 48px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="agency">WinWin Marketing</span>
+    <span class="meta">Glenforest Cleaners &middot; Homepage design concepts &middot; September 2026</span>
+  </header>
+  <h1>Ten Directions for the New Glenforest</h1>
+  <p class="sub">Each card is a live, full homepage built from Glenforest's real content. Previews show the top of the page; open any concept to scroll the whole thing and try it on a phone. Imagery is placeholder art until the photo day.</p>
+  <p class="legend"><b>01 to 03</b> stay anchored in the current navy and lime brand. <b>04 to 10</b> explore new directions.</p>
+
+  <div class="grid">
+
+    <div class="card anchored">
+      <div class="preview"><iframe src="01-yonge-and-lawrence.html" title="Yonge and Lawrence preview"></iframe><a class="cover" href="01-yonge-and-lawrence.html" aria-label="Open Yonge and Lawrence"></a></div>
+      <div class="card-body">
+        <div class="card-head"><span class="name">Yonge &amp; Lawrence</span><span class="num">01</span></div>
+        <div class="type">Source Serif 4 + Archivo</div>
+        <div class="swatches"><span style="background:#1e2a5e"></span><span style="background:#fafaf7"></span><span style="background:#b5cc2e"></span><span style="background:#5b6376"></span><span style="background:#dfe1ea"></span></div>
+        <p class="rationale">Keeps the navy and lime customers already recognize but sharpens them into a confident, classic 2026 storefront: serif headlines, hairline cards, lime as a fine tick of approval.</p>
+        <a class="open" href="01-yonge-and-lawrence.html">Open full page</a>
+      </div>
+    </div>
+
+    <div class="card anchored">
+      <div class="preview"><iframe src="02-pressed-and-folded.html" title="Pressed and Folded preview"></iframe><a class="cover" href="02-pressed-and-folded.html" aria-label="Open Pressed and Folded"></a></div>
+      <div class="card-body">
+        <div class="card-head"><span class="name">Pressed &amp; Folded</span><span class="num">02</span></div>
+        <div class="type">Instrument Sans, weights only</div>
+        <div class="swatches"><span style="background:#2b3990"></span><span style="background:#c3d500"></span><span style="background:#ffffff"></span><span style="background:#f2f3f6"></span><span style="background:#14192e"></span></div>
+        <p class="rationale">A crisp Swiss grid where big confident numbers (60 years, Tuesday and Friday, 6 services) and ruled hairlines make Glenforest feel as precise as the pressing itself.</p>
+        <a class="open" href="02-pressed-and-folded.html">Open full page</a>
+      </div>
+    </div>
+
+    <div class="card anchored">
+      <div class="preview"><iframe src="03-the-navy-standard.html" title="The Navy Standard preview"></iframe><a class="cover" href="03-the-navy-standard.html" aria-label="Open The Navy Standard"></a></div>
+      <div class="card-body">
+        <div class="card-head"><span class="name">The Navy Standard</span><span class="num">03</span></div>
+        <div class="type">Fraunces + Public Sans</div>
+        <div class="swatches"><span style="background:#101b45"></span><span style="background:#0c1330"></span><span style="background:#f6f7fb"></span><span style="background:#9aa3c7"></span><span style="background:#c8e64c"></span></div>
+        <p class="rationale">The navy and lime you already own, elevated into five-star dark luxury: deep navy grounds, editorial serif headlines, lime saved strictly for the moments we want customers to act.</p>
+        <a class="open" href="03-the-navy-standard.html">Open full page</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="preview"><iframe src="04-the-atelier.html" title="The Atelier preview"></iframe><a class="cover" href="04-the-atelier.html" aria-label="Open The Atelier"></a></div>
+      <div class="card-body">
+        <div class="card-head"><span class="name">The Atelier</span><span class="num">04</span></div>
+        <div class="type">Cormorant Garamond + Jost</div>
+        <div class="swatches"><span style="background:#f7f5f0"></span><span style="background:#17161a"></span><span style="background:#b08d3e"></span><span style="background:#8a877f"></span><span style="background:#c8c4b8"></span></div>
+        <p class="rationale">Bone and near black with a single gold thread, all hairlines and quiet whitespace: sixty years of craft presented the way a London luxury garment house would.</p>
+        <a class="open" href="04-the-atelier.html">Open full page</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="preview"><iframe src="05-glenforest-green.html" title="Glenforest Green preview"></iframe><a class="cover" href="05-glenforest-green.html" aria-label="Open Glenforest Green"></a></div>
+      <div class="card-body">
+        <div class="card-head"><span class="name">Glenforest Green</span><span class="num">05</span></div>
+        <div class="type">Newsreader + Mulish</div>
+        <div class="swatches"><span style="background:#f6f4ec"></span><span style="background:#1e3d2f"></span><span style="background:#9db89a"></span><span style="background:#efe9db"></span><span style="background:#5e7a5c"></span></div>
+        <p class="rationale">Puts the forest in the name to work: deep green, botanical, quietly premium, leading with the toxic-free story and a counted impact ledger.</p>
+        <a class="open" href="05-glenforest-green.html">Open full page</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="preview"><iframe src="06-the-house-of-care.html" title="The House of Care preview"></iframe><a class="cover" href="06-the-house-of-care.html" aria-label="Open The House of Care"></a></div>
+      <div class="card-body">
+        <div class="card-head"><span class="name">The House of Care</span><span class="num">06</span></div>
+        <div class="type">Libre Caslon + Work Sans</div>
+        <div class="swatches"><span style="background:#f5efe3"></span><span style="background:#5e1f24"></span><span style="background:#a97e2f"></span><span style="background:#c9a15a"></span><span style="background:#26201a"></span></div>
+        <p class="rationale">Dresses Glenforest as the old Toronto institution it actually is: crest-style wordmark, ivory and oxblood with brass rules, and a sixty-year house timeline.</p>
+        <a class="open" href="06-the-house-of-care.html">Open full page</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="preview"><iframe src="07-steam.html" title="Steam preview"></iframe><a class="cover" href="07-steam.html" aria-label="Open Steam"></a></div>
+      <div class="card-body">
+        <div class="card-head"><span class="name">Steam</span><span class="num">07</span></div>
+        <div class="type">DM Serif Display + Nunito Sans</div>
+        <div class="swatches"><span style="background:#dce8f2"></span><span style="background:#a8c6de"></span><span style="background:#eceae6"></span><span style="background:#2c3947"></span><span style="background:#4a7fa5"></span></div>
+        <p class="rationale">Soft powder blues, drifting steam gradients, and airy rounded cards that give the Reserve shelf a boutique skincare presence.</p>
+        <a class="open" href="07-steam.html">Open full page</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="preview"><iframe src="08-ink-and-linen.html" title="Ink and Linen preview"></iframe><a class="cover" href="08-ink-and-linen.html" aria-label="Open Ink and Linen"></a></div>
+      <div class="card-body">
+        <div class="card-head"><span class="name">Ink &amp; Linen</span><span class="num">08</span></div>
+        <div class="type">Instrument Serif + IBM Plex Sans</div>
+        <div class="swatches"><span style="background:#efeae2"></span><span style="background:#121110"></span><span style="background:#1f3fc3"></span><span style="background:#6d685f"></span></div>
+        <p class="rationale">A fashion magazine profile of a 60-year craft house: oversized serif headlines, heavy rules, and a single cobalt accent.</p>
+        <a class="open" href="08-ink-and-linen.html">Open full page</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="preview"><iframe src="09-midnight-service.html" title="Midnight Service preview"></iframe><a class="cover" href="09-midnight-service.html" aria-label="Open Midnight Service"></a></div>
+      <div class="card-body">
+        <div class="card-head"><span class="name">Midnight Service</span><span class="num">09</span></div>
+        <div class="type">Marcellus + Figtree</div>
+        <div class="swatches"><span style="background:#16181d"></span><span style="background:#0e0f13"></span><span style="background:#d3b98a"></span><span style="background:#aab0bc"></span><span style="background:#f2f2f0"></span></div>
+        <p class="rationale">A night concierge for your wardrobe: charcoal and champagne, valet ticket framing, route plaques, and a room-service style Reserve menu.</p>
+        <a class="open" href="09-midnight-service.html">Open full page</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="preview"><iframe src="10-corner-store-modern.html" title="Corner Store Modern preview"></iframe><a class="cover" href="10-corner-store-modern.html" aria-label="Open Corner Store Modern"></a></div>
+      <div class="card-body">
+        <div class="card-head"><span class="name">Corner Store Modern</span><span class="num">10</span></div>
+        <div class="type">Bricolage Grotesque + Source Sans 3</div>
+        <div class="swatches"><span style="background:#f8f2e4"></span><span style="background:#c6382e"></span><span style="background:#23366e"></span><span style="background:#f0d78c"></span><span style="background:#221f1a"></span></div>
+        <p class="rationale">The storefront everyone already trusts, striped awning and all, given a crisp modern polish that makes 60 years of neighbourhood history feel fresh.</p>
+        <a class="open" href="10-corner-store-modern.html">Open full page</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>WinWin Marketing &middot; internal design review</span>
+    <span>Glenforest Cleaners rebuild &middot; design phase</span>
+  </footer>
+</div>
+</body>
+</html>

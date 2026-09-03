@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Glenforest Cleaners: The House of Care</title>
+<meta name="description" content="Glenforest Cleaners, family run at Yonge and Lawrence for over sixty years. Toronto's first wet cleaning specialist: Miele certified, entirely toxic free, valet pickup on Tuesday and Friday routes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE HOUSE OF CARE, Glenforest Cleaners
+   A 1960s Toronto institution, typeset like a crest.
+   Palette: ivory, oxblood, brass, dark umber ink.
+   ============================================================ */
+
+:root{
+  --ivory:        #f5efe3;
+  --ivory-deep:   #efe7d6;
+  --ivory-card:   #f9f4e8;
+  --oxblood:      #5e1f24;
+  --oxblood-deep: #4a171c;
+  --brass:        #a97e2f;
+  --brass-light:  #c9a15a;
+  --ink:          #26201a;
+  --ink-soft:     #4a4136;
+  --hairline:     rgba(38,32,26,.16);
+  --hairline-brass: rgba(169,126,47,.45);
+  --serif-display: 'Libre Caslon Display', 'Libre Caslon Text', Georgia, 'Times New Roman', serif;
+  --serif-text:    'Libre Caslon Text', Georgia, 'Times New Roman', serif;
+  --sans:          'Work Sans', 'Helvetica Neue', Arial, sans-serif;
+  --pad-x: clamp(20px, 4.5vw, 48px);
+  --sec-y: clamp(68px, 9vw, 116px);
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body{
+  margin: 0;
+  background-color: var(--ivory);
+  color: var(--ink);
+  font-family: var(--serif-text);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  font-variant-numeric: oldstyle-nums;
+}
+
+::selection{ background: var(--oxblood); color: var(--ivory); }
+
+h1, h2, h3{
+  font-family: var(--serif-display);
+  font-weight: 400;
+  line-height: 1.12;
+  margin: 0;
+  color: var(--ink);
+}
+
+p{ margin: 0; }
+a{ color: var(--oxblood); }
+
+:focus-visible{
+  outline: 2px solid var(--oxblood);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+.skip{
+  position: absolute;
+  left: -9999px;
+  top: 12px;
+  z-index: 200;
+  background: var(--oxblood);
+  color: var(--ivory);
+  font-family: var(--sans);
+  font-size: .8125rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  text-decoration: none;
+}
+.skip:focus-visible{ left: 12px; outline-color: var(--brass); }
+
+.container{
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: var(--pad-x);
+}
+
+/* ---------- shared devices: kickers, rules, fleurons ---------- */
+
+.kicker{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .6875rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+.kicker::before, .kicker::after{
+  content: "";
+  width: 44px;
+  height: 1px;
+  background: var(--brass);
+  flex: none;
+}
+
+.sec-head{
+  text-align: center;
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  margin-bottom: clamp(40px, 5.5vw, 64px);
+}
+.sec-head h2{
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  max-width: 24ch;
+  letter-spacing: .005em;
+}
+.fleuron{
+  width: 7px;
+  height: 7px;
+  background: var(--brass);
+  transform: rotate(45deg);
+  flex: none;
+}
+.sec-head .fleuron{ margin-top: 2px; }
+
+.lede{
+  max-width: 62ch;
+  color: var(--ink-soft);
+}
+
+.head-rule{
+  width: 72px;
+  height: 1px;
+  background: var(--brass);
+}
+
+.dateline{
+  font-family: var(--serif-text);
+  font-variant: small-caps;
+  letter-spacing: .12em;
+  font-size: 1.0625rem;
+  color: var(--oxblood);
+}
+
+/* flush-left section head: H2 beside a short intro, used once (Reserve) */
+.sec-head-split{
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: clamp(24px, 4vw, 60px);
+  align-items: end;
+  margin-bottom: clamp(40px, 5.5vw, 64px);
+}
+.sec-head-split h2{
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  letter-spacing: .005em;
+  max-width: 20ch;
+}
+.sec-head-split .lede{
+  font-size: 1rem;
+  border-left: 1px solid var(--hairline-brass);
+  padding-left: clamp(16px, 2vw, 24px);
+}
+
+/* photo placeholders: swap for real photography at build */
+.ph{
+  border: 1px solid var(--hairline-brass);
+  background: var(--ivory-deep);
+  display: grid;
+  place-items: center;
+  padding: 14px;
+  text-align: center;
+}
+.ph span{
+  font-style: italic;
+  font-size: .8125rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.photo-frame{
+  margin: 4px 0 0;
+}
+.photo-frame .ph{ min-height: clamp(220px, 28vw, 300px); }
+
+/* ============================ HEADER ============================ */
+
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ivory);
+  border-bottom: 4px double var(--brass);
+}
+.header-inner{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 78px;
+  padding-block: 10px;
+}
+
+.wordmark{
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  color: var(--oxblood);
+  padding: 4px 2px;
+}
+.wm-name{
+  font-family: var(--serif-display);
+  font-size: 1.4375rem;
+  letter-spacing: .24em;
+  margin-right: -.24em; /* balance trailing tracking */
+  line-height: 1;
+  color: var(--oxblood);
+}
+.wm-sub{
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .5625rem;
+  letter-spacing: .3em;
+  margin-right: -.3em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.wm-sub::before, .wm-sub::after{
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--brass);
+}
+
+.nav-check{ position: absolute; opacity: 0; width: 1px; height: 1px; }
+
+.menu{
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 26px);
+}
+.menu a:not(.btn){
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .75rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  padding: 14px 2px;
+  border-bottom: 1px solid transparent;
+  transition: color .15s ease, border-color .15s ease;
+}
+.menu a:not(.btn):hover{
+  color: var(--oxblood);
+  border-bottom-color: var(--brass);
+}
+
+.nav-toggle{
+  display: none;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid var(--hairline-brass);
+}
+.nav-toggle .bars{
+  position: relative;
+  width: 20px;
+  height: 2px;
+  background: var(--ink);
+}
+.nav-toggle .bars::before, .nav-toggle .bars::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: var(--ink);
+}
+.nav-toggle .bars::before{ top: -6px; }
+.nav-toggle .bars::after{ top: 6px; }
+.nav-check:focus-visible + .nav-toggle{
+  outline: 2px solid var(--oxblood);
+  outline-offset: 3px;
+}
+
+/* ============================= HERO ============================= */
+
+.hero{
+  position: relative;
+  background-color: var(--ivory);
+  background-image:
+    repeating-linear-gradient(90deg, rgba(169,126,47,.055) 0, rgba(169,126,47,.055) 1px, transparent 1px, transparent 64px),
+    radial-gradient(ellipse 120% 80% at 50% 0%, rgba(94,31,36,.05), transparent 62%);
+  padding-block: clamp(72px, 10vw, 128px) clamp(64px, 8vw, 104px);
+}
+.hero-inner{
+  max-width: 800px;
+  margin-inline: auto;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 26px;
+}
+
+.crest-orn{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--brass);
+}
+.crest-orn::before, .crest-orn::after{
+  content: "";
+  width: 60px;
+  height: 1px;
+  background: var(--brass);
+}
+
+.hero h1{
+  font-size: clamp(2.375rem, 6vw, 4rem);
+  letter-spacing: .002em;
+  max-width: 18ch;
+}
+.hero .lede{
+  font-size: 1.125rem;
+  max-width: 56ch;
+}
+
+.cta-row{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 0 30px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .8125rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.btn-primary{
+  background: var(--oxblood);
+  color: var(--ivory);
+  border: 1px solid var(--oxblood);
+}
+.btn-primary:hover{
+  background: var(--oxblood-deep);
+  border-color: var(--brass);
+}
+.btn-ghost{
+  background: transparent;
+  color: var(--oxblood);
+  border: 1px solid rgba(94,31,36,.5);
+}
+.btn-ghost:hover{
+  border-color: var(--oxblood);
+  background: rgba(94,31,36,.06);
+}
+
+.hero-xref{
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: var(--ink-soft);
+}
+.hero-xref a{
+  color: var(--oxblood);
+  text-decoration: none;
+  border-bottom: 1px solid var(--brass);
+  padding-bottom: 1px;
+  transition: border-color .15s ease;
+}
+.hero-xref a:hover{ border-bottom-color: var(--oxblood); }
+
+/* postal route widget */
+.route-card{
+  margin-top: clamp(22px, 3vw, 34px);
+  width: min(560px, 100%);
+  background: var(--ivory-card);
+  border: 1px solid var(--hairline-brass);
+  box-shadow: 0 0 0 4px var(--ivory-card), 0 0 0 5px var(--hairline-brass);
+  padding: clamp(22px, 3.4vw, 32px) clamp(20px, 3.4vw, 34px);
+  display: grid;
+  gap: 14px;
+  text-align: center;
+}
+.route-card .rc-label{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .6875rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+.rc-row{
+  display: flex;
+  gap: 10px;
+}
+.rc-row input{
+  flex: 1;
+  min-width: 0;
+  min-height: 50px;
+  padding: 0 16px;
+  border: 1px solid rgba(38,32,26,.35);
+  background: #fdfaf2;
+  color: var(--ink);
+  font-family: var(--serif-text);
+  font-size: 1rem;
+}
+.rc-row input::placeholder{ color: #6b5f50; opacity: 1; }
+.rc-row input:focus-visible{ outline-offset: 1px; }
+.rc-note{
+  font-style: italic;
+  font-size: .9375rem;
+  color: var(--oxblood);
+  border-top: 1px solid var(--hairline-brass);
+  padding-top: 12px;
+}
+.rc-note[hidden]{ display: none; }
+
+.hero-tagline{
+  margin-top: 8px;
+  font-style: italic;
+  font-size: .9375rem;
+  color: var(--ink-soft);
+}
+
+/* ======================= TRUST COLOPHON ======================== */
+
+.trust{
+  border-top: 1px solid var(--hairline-brass);
+  border-bottom: 1px solid var(--hairline-brass);
+  background: var(--ivory);
+}
+.colophon{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px clamp(16px, 2.4vw, 26px);
+  margin: 0;
+  padding-block: clamp(24px, 3vw, 38px);
+  text-align: center;
+}
+.colophon > span:not(.fleuron){
+  font-family: var(--serif-text);
+  font-variant: small-caps;
+  letter-spacing: .12em;
+  font-size: 1.0625rem;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.colophon .fleuron{ width: 6px; height: 6px; }
+
+/* ==================== SERVICES: THE LEDGER ===================== */
+
+.sec{ padding-block: var(--sec-y); }
+.sec-services{ background: var(--ivory-deep); }
+
+.ledger{
+  max-width: 780px;
+  margin-inline: auto;
+  display: grid;
+  gap: clamp(24px, 3.2vw, 34px);
+}
+.ledger-item{
+  display: grid;
+  gap: 6px;
+}
+.ledger-line{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+}
+.ledger-line h3{
+  font-size: 1.375rem;
+  letter-spacing: .01em;
+  flex: none;
+}
+.ledger-dots{
+  flex: 1;
+  min-width: 36px;
+  border-bottom: 1px dotted rgba(38,32,26,.45);
+  margin: 0 2px 6px;
+}
+.ledger-tag{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .625rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+  white-space: nowrap;
+}
+.ledger-item > p{
+  font-size: .9375rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  max-width: 58ch;
+}
+.ledger-foot{
+  margin-top: clamp(28px, 4vw, 40px);
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* ============================ VALET ============================ */
+
+.steps{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(28px, 4vw, 52px);
+  counter-reset: step;
+}
+.step{
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  align-content: start;
+}
+.step-num{
+  font-family: var(--serif-display);
+  font-size: clamp(3.25rem, 5vw, 4.25rem);
+  line-height: 1;
+  color: var(--brass);
+}
+.step-rule{
+  width: 40px;
+  height: 1px;
+  background: var(--brass);
+  margin-block: 6px 4px;
+}
+.step h3{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .8125rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.step p{
+  font-size: .9375rem;
+  color: var(--ink-soft);
+  max-width: 30ch;
+  line-height: 1.7;
+}
+.valet-foot{
+  margin-top: clamp(40px, 5vw, 56px);
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+}
+.valet-foot p{
+  font-style: italic;
+  color: var(--ink-soft);
+  max-width: 52ch;
+}
+
+/* ========================== OUR CARE =========================== */
+
+.sec-care{
+  background-color: var(--oxblood);
+  background-image:
+    repeating-linear-gradient(90deg, rgba(245,239,227,.03) 0, rgba(245,239,227,.03) 1px, transparent 1px, transparent 72px);
+  color: var(--ivory);
+}
+.sec-care .kicker{ color: var(--brass-light); }
+.sec-care .kicker::before, .sec-care .kicker::after{ background: var(--brass-light); }
+.sec-care .sec-head h2{ color: var(--ivory); }
+.sec-care .fleuron{ background: var(--brass-light); }
+.sec-care :focus-visible{ outline-color: var(--brass-light); }
+
+.care-cols{
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: clamp(36px, 5vw, 72px);
+  align-items: start;
+}
+.care-copy{
+  display: grid;
+  gap: 22px;
+}
+.care-copy p{
+  max-width: 58ch;
+  color: rgba(245,239,227,.92);
+}
+.care-copy .care-pull{
+  font-family: var(--serif-display);
+  font-size: 1.375rem;
+  line-height: 1.4;
+  color: var(--brass-light);
+  border-left: 2px solid var(--brass);
+  padding-left: 20px;
+}
+
+.house-rules{
+  border: 1px solid rgba(201,161,90,.55);
+  box-shadow: 0 0 0 5px var(--oxblood), 0 0 0 6px rgba(201,161,90,.35);
+  padding: clamp(26px, 3vw, 36px) clamp(22px, 3vw, 32px);
+  display: grid;
+  gap: 22px;
+}
+.house-rules h3{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .6875rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--brass-light);
+  text-align: center;
+}
+.hr-block{ display: grid; gap: 6px; }
+.hr-block dt{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .625rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--brass-light);
+}
+.hr-block dd{
+  margin: 0;
+  font-family: var(--serif-display);
+  font-size: 1.1875rem;
+  color: var(--ivory);
+  line-height: 1.5;
+}
+.hr-sep{
+  height: 1px;
+  background: rgba(201,161,90,.35);
+}
+.house-rules dl{ margin: 0; display: grid; gap: 18px; }
+
+/* ========================= TIMELINE ============================ */
+
+.tl-scroll{
+  overflow-x: auto;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+.timeline{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(230px, 1fr));
+  gap: clamp(22px, 3vw, 40px);
+  position: relative;
+  min-width: 960px;
+  padding-top: 38px;
+}
+.timeline::before{
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 4px;
+  right: 4px;
+  height: 1px;
+  background: var(--brass);
+}
+.timeline li{
+  position: relative;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+.timeline li::before{
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 0;
+  width: 11px;
+  height: 11px;
+  background: var(--ivory);
+  border: 2px solid var(--brass);
+  transform: rotate(45deg);
+}
+.tl-year{
+  font-family: var(--serif-display);
+  font-size: 1.875rem;
+  color: var(--brass);
+  line-height: 1.1;
+}
+.timeline li p{
+  font-size: .9375rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  max-width: 34ch;
+}
+.tl-hint{
+  display: none;
+  text-align: center;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: .6875rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 10px;
+}
+
+/* =========================== SHOP ============================== */
+
+.sec-shop{ background: var(--ivory-deep); }
+.shop-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(18px, 2.6vw, 28px);
+}
+.product{
+  background: var(--ivory-card);
+  border: 1px solid var(--hairline);
+  padding: clamp(18px, 2.2vw, 24px);
+  display: grid;
+  grid-template-columns: minmax(104px, 136px) 1fr;
+  gap: clamp(16px, 2vw, 22px);
+  align-items: stretch;
+}
+.product .ph{ min-height: 136px; }
+.product-info{
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+.product h3{
+  font-size: 1.1875rem;
+  line-height: 1.3;
+}
+.product p{
+  font-size: .875rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+.price{
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline-brass);
+  width: 64px;
+  font-family: var(--serif-display);
+  font-size: 1.25rem;
+  color: var(--oxblood);
+}
+.shop-foot{
+  margin-top: clamp(32px, 4vw, 44px);
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* ========================== REVIEW ============================= */
+
+.review{
+  margin-inline: auto;
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  text-align: center;
+  justify-items: center;
+}
+.review .qmark{
+  font-family: var(--serif-display);
+  font-size: 3.5rem;
+  line-height: .6;
+  color: var(--brass);
+  height: 26px;
+}
+.review blockquote{
+  margin: 0;
+  font-style: italic;
+  font-size: clamp(1.1875rem, 2.3vw, 1.5rem);
+  line-height: 1.6;
+  color: var(--ink);
+  max-width: 44ch;
+}
+.review cite{
+  font-style: normal;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .6875rem;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+
+/* =========================== FOOTER ============================ */
+
+.site-footer{
+  background: var(--ink);
+  color: var(--ivory);
+  border-top: 4px double var(--brass);
+  padding-block: clamp(56px, 7vw, 84px) 36px;
+}
+.site-footer :focus-visible{ outline-color: var(--brass-light); }
+.foot-crest{
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  margin-bottom: clamp(40px, 5vw, 56px);
+  text-align: center;
+}
+.foot-crest .wm-name{
+  font-size: 1.625rem;
+  color: var(--ivory);
+}
+.foot-crest .wm-sub{ color: var(--brass-light); }
+.foot-crest .wm-sub::before, .foot-crest .wm-sub::after{ background: var(--brass-light); }
+
+.foot-cols{
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1.2fr;
+  gap: clamp(32px, 5vw, 64px);
+  padding-bottom: clamp(40px, 5vw, 56px);
+}
+.foot-col h3{
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .6875rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--brass-light);
+  margin-bottom: 16px;
+}
+.foot-col p, .foot-col a{
+  color: rgba(245,239,227,.88);
+  font-size: .9688rem;
+  line-height: 1.8;
+}
+.foot-col a{ text-underline-offset: 3px; }
+.foot-col a:hover{ color: var(--ivory); }
+.foot-tel{
+  font-family: var(--serif-display);
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: var(--ivory) !important;
+  display: inline-block;
+  padding: 4px 0;
+}
+.foot-tel:hover{ color: var(--brass-light) !important; }
+
+.hours{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 7px;
+  max-width: 320px;
+}
+.hours li{
+  display: flex;
+  align-items: baseline;
+  font-size: .9375rem;
+  color: rgba(245,239,227,.88);
+}
+.hours .dots{
+  flex: 1;
+  border-bottom: 1px dotted rgba(245,239,227,.35);
+  margin: 0 10px 4px;
+}
+.hours .closed{ font-style: italic; color: var(--brass-light); }
+
+.foot-sign{
+  border-top: 1px solid rgba(201,161,90,.3);
+  padding-top: 28px;
+  text-align: center;
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+.foot-sign .tagline{
+  font-style: italic;
+  font-family: var(--serif-text);
+  color: var(--brass-light);
+  font-size: 1rem;
+}
+.foot-sign .legal{
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: .75rem;
+  letter-spacing: .12em;
+  color: rgba(245,239,227,.72);
+}
+
+/* ======================== RESPONSIVE =========================== */
+
+section[id], footer[id]{ scroll-margin-top: 96px; }
+
+@media (max-width: 960px){
+  .nav-toggle{ display: inline-flex; }
+  .menu{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: calc(-1 * var(--pad-x));
+    right: calc(-1 * var(--pad-x));
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--ivory);
+    border-bottom: 4px double var(--brass);
+    padding: 6px var(--pad-x) 26px;
+    box-shadow: 0 18px 30px rgba(38,32,26,.12);
+  }
+  .nav-check:checked ~ .menu{ display: flex; }
+  .menu a:not(.btn){
+    padding: 15px 4px;
+    border-bottom: 1px solid var(--hairline);
+    font-size: .8125rem;
+  }
+  .menu .btn{ margin-top: 18px; }
+  .care-cols{ grid-template-columns: 1fr; }
+  .tl-hint{ display: block; }
+}
+
+@media (max-width: 680px){
+  .steps{ grid-template-columns: 1fr; gap: 36px; }
+  .shop-grid{ grid-template-columns: 1fr; }
+  .sec-head-split{ grid-template-columns: 1fr; align-items: start; }
+  .sec-head-split .lede{ border-left: 0; padding-left: 0; }
+  .foot-cols{ grid-template-columns: 1fr; }
+  .rc-row{ flex-direction: column; }
+  .rc-row .btn{ width: 100%; }
+}
+
+@media (max-width: 560px){
+  .product{ grid-template-columns: 96px 1fr; }
+  .product .ph{ min-height: 96px; }
+  .cta-row{ width: 100%; }
+  .cta-row .btn{ flex: 1; min-width: 200px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *, *::before, *::after{
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+<body id="top">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="#top" aria-label="Glenforest Cleaners, home">
+      <span class="wm-name">GLENFOREST</span>
+      <span class="wm-sub">Cleaners &middot; Est. 1960s</span>
+    </a>
+
+    <input type="checkbox" id="navCheck" class="nav-check" aria-label="Open menu">
+    <label for="navCheck" class="nav-toggle" aria-hidden="true">
+      <span class="bars"></span>
+    </label>
+
+    <nav class="menu" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#valet">Valet</a>
+      <a href="#care">Our Care</a>
+      <a href="#shop">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a class="btn btn-primary" href="tel:+14164886717">Book a Pickup</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <p class="crest-orn" aria-hidden="true"><span class="fleuron"></span></p>
+      <p class="dateline">Yonge and Lawrence &middot; Toronto</p>
+      <h1>The house that keeps Toronto&rsquo;s wardrobes.</h1>
+      <p class="lede">Family run for over sixty years, Glenforest is Toronto&rsquo;s first wet cleaning specialist: Miele certified, entirely toxic free, and quietly exacting about a proper press.</p>
+      <p class="hero-xref">See <a href="#care">our standard of care</a>, further down the page.</p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="tel:+14164886717">Book a Pickup</a>
+      </div>
+
+      <form class="route-card" id="routeForm" novalidate>
+        <p class="rc-label" id="routeLabel">Valet routes: Tuesday and Friday</p>
+        <div class="rc-row">
+          <input type="text" id="postal" name="postal" autocomplete="postal-code" placeholder="Your postal code" aria-labelledby="routeLabel" aria-describedby="routeNote">
+          <button type="submit" class="btn btn-ghost">Find my pickup day</button>
+        </div>
+        <p class="rc-note" id="routeNote" aria-live="polite" hidden></p>
+      </form>
+
+      <p class="hero-tagline">&ldquo;May your worst problem be a stain on your clothes.&rdquo;</p>
+    </div>
+  </section>
+
+  <!-- ======================= TRUST COLOPHON ======================= -->
+  <section class="trust" aria-label="Why Glenforest">
+    <div class="container">
+      <p class="colophon">
+        <span>Family run over 60 years</span>
+        <span class="fleuron" aria-hidden="true"></span>
+        <span>Toronto&rsquo;s first wet cleaner</span>
+        <span class="fleuron" aria-hidden="true"></span>
+        <span>Miele certified</span>
+        <span class="fleuron" aria-hidden="true"></span>
+        <span>No PERC</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========================== SERVICES ========================== -->
+  <section id="services" class="sec sec-services">
+    <div class="container">
+      <header class="sec-head">
+        <p class="kicker">Our Services</p>
+        <h2>Every garment in this house has its own protocol.</h2>
+        <span class="fleuron" aria-hidden="true"></span>
+      </header>
+
+      <div class="ledger">
+        <article class="ledger-item">
+          <div class="ledger-line">
+            <h3>Wet Cleaning</h3>
+            <span class="ledger-dots" aria-hidden="true"></span>
+            <span class="ledger-tag">The house signature</span>
+          </div>
+          <p>Pure water and Miele precision in place of solvents: gentler on fibre, truer to colour, and a Toronto first.</p>
+        </article>
+        <article class="ledger-item">
+          <div class="ledger-line">
+            <h3>Wash and Fold</h3>
+            <span class="ledger-dots" aria-hidden="true"></span>
+            <span class="ledger-tag">Everyday laundry</span>
+          </div>
+          <p>Everyday laundry returned folded to a standard your dresser drawers will notice.</p>
+        </article>
+        <article class="ledger-item">
+          <div class="ledger-line">
+            <h3>Executive Shirt Service</h3>
+            <span class="ledger-dots" aria-hidden="true"></span>
+            <span class="ledger-tag">For the boardroom</span>
+          </div>
+          <p>Collars, cuffs, and plackets finished properly, pressed and presented ready for the boardroom.</p>
+        </article>
+        <article class="ledger-item">
+          <div class="ledger-line">
+            <h3>Alterations and Repairs</h3>
+            <span class="ledger-dots" aria-hidden="true"></span>
+            <span class="ledger-tag">The tailor&rsquo;s bench</span>
+          </div>
+          <p>Hems, buttons, zippers, and small rescues from the tailor&rsquo;s bench at the back of the shop.</p>
+        </article>
+        <article class="ledger-item">
+          <div class="ledger-line">
+            <h3>Household and Linens</h3>
+            <span class="ledger-dots" aria-hidden="true"></span>
+            <span class="ledger-tag">Duvets to drapery</span>
+          </div>
+          <p>Duvets, drapery, and table linens treated with the same regard we give a good suit.</p>
+        </article>
+        <article class="ledger-item">
+          <div class="ledger-line">
+            <h3>Wedding Gowns and Delicates</h3>
+            <span class="ledger-dots" aria-hidden="true"></span>
+            <span class="ledger-tag">Preservation grade</span>
+          </div>
+          <p>Preservation-grade care for the garments you intend to keep for the rest of your life.</p>
+        </article>
+      </div>
+
+      <p class="ledger-foot">Full price list at the counter, 3309 Yonge Street.</p>
+    </div>
+  </section>
+
+  <!-- ============================ VALET =========================== -->
+  <section id="valet" class="sec">
+    <div class="container">
+      <header class="sec-head">
+        <h2>Leave the bag. We attend to the rest.</h2>
+        <span class="head-rule" aria-hidden="true"></span>
+      </header>
+
+      <ol class="steps" style="list-style:none; margin:0; padding:0;">
+        <li class="step">
+          <span class="step-num" aria-hidden="true">1</span>
+          <span class="step-rule" aria-hidden="true"></span>
+          <h3>Set out your bag</h3>
+          <p>Fill your personalized Glenforest garment bag and leave it out on the morning of your route day.</p>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">2</span>
+          <span class="step-rule" aria-hidden="true"></span>
+          <h3>We call for it</h3>
+          <p>Our valet collects on Tuesday and Friday routes through the neighbourhood. No appointment required.</p>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">3</span>
+          <span class="step-rule" aria-hidden="true"></span>
+          <h3>Returned, pressed</h3>
+          <p>Everything comes back on your route day: cleaned, finished, and hanging ready for the closet.</p>
+        </li>
+      </ol>
+
+      <div class="valet-foot">
+        <p>New to the route? Telephone the counter and we will bring a personalized garment bag with our compliments.</p>
+        <a class="btn btn-primary" href="tel:+14164886717">Book a Pickup</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== OUR CARE ========================= -->
+  <section id="care" class="sec sec-care">
+    <div class="container">
+      <header class="sec-head">
+        <p class="kicker">Our Care</p>
+        <h2>Dry cleaning was never actually dry.</h2>
+        <span class="fleuron" aria-hidden="true"></span>
+      </header>
+
+      <div class="care-cols">
+        <div class="care-copy">
+          <p>Conventional dry cleaning bathes your clothes in petroleum solvents, most often perchloroethylene, a chemical you would not knowingly bring near your skin. It cleans, after a fashion. It also dulls colour, stiffens fibre, and leaves its signature on everything it touches.</p>
+          <p>Wet cleaning is the older, wiser idea done with modern precision: pure water, biodegradable detergents, and Miele machines that measure temperature and movement to the degree. It is gentler on wool, truer to silk, and completely toxic free. No PERC, no harsh chemicals, no chemical smell hanging in the closet.</p>
+          <p class="care-pull">Wool comes back softer and silk keeps its colour: water and skill, not perchloroethylene.</p>
+          <p>Glenforest was the first house in Toronto to commit to it entirely. Sixty years at the pressing table teaches you the difference between cleaning a garment and caring for one.</p>
+          <div class="photo-frame">
+            <div class="ph" aria-hidden="true"><span>Photograph at build: the press and Miele machines at work behind the counter, 3309 Yonge.</span></div>
+          </div>
+        </div>
+
+        <aside class="house-rules" aria-label="The house rules">
+          <h3>The House Rules</h3>
+          <dl>
+            <div class="hr-block">
+              <dt>Never in this house</dt>
+              <dd>Perchloroethylene, or any solvent you would not rinse off your own hands.</dd>
+            </div>
+            <div class="hr-sep" aria-hidden="true"></div>
+            <div class="hr-block">
+              <dt>Always in this house</dt>
+              <dd>Pure water, Miele machines, and enough time to do it properly.</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== TIMELINE ========================== -->
+  <section id="about" class="sec">
+    <div class="container">
+      <header class="sec-head">
+        <p class="dateline">Yonge Street, since the 1960s</p>
+        <h2>Sixty years, one counter.</h2>
+      </header>
+
+      <div class="tl-scroll">
+        <ol class="timeline">
+          <li>
+            <h3 class="tl-year">1960s</h3>
+            <p>The Zachos family hangs the Glenforest sign at Yonge and Lawrence and begins pressing for the neighbourhood.</p>
+          </li>
+          <li>
+            <h3 class="tl-year">A city first</h3>
+            <p>Glenforest retires harsh solvents and becomes Toronto&rsquo;s first wet cleaning specialist, trading chemistry for water and skill.</p>
+          </li>
+          <li>
+            <h3 class="tl-year">Miele certified</h3>
+            <p>The house earns its Miele certification, the exacting European standard for professional garment care.</p>
+          </li>
+          <li>
+            <h3 class="tl-year">Today</h3>
+            <p>Over sixty years on: still family run, still toxic free, still the same counter at 3309 Yonge Street.</p>
+          </li>
+        </ol>
+      </div>
+      <p class="tl-hint" aria-hidden="true">Swipe to follow the record</p>
+    </div>
+  </section>
+
+  <!-- ============================ SHOP ============================ -->
+  <section id="shop" class="sec sec-shop">
+    <div class="container">
+      <header class="sec-head-split">
+        <h2>The counter&rsquo;s own tools, for keeping at home.</h2>
+        <p class="lede">Glenforest Reserve is the kit we reach for ourselves: the solution, the brush, and the spotting bone, sold over the counter.</p>
+      </header>
+
+      <div class="shop-grid">
+        <article class="product">
+          <div class="ph" aria-hidden="true"><span>Photograph at build: the Reserve bottle on the counter.</span></div>
+          <div class="product-info">
+            <h3>Reserve Stain Treatment Solution</h3>
+            <p>The counter formula for treating a spill at home before it thinks about setting.</p>
+            <p class="price">$35</p>
+          </div>
+        </article>
+        <article class="product">
+          <div class="ph" aria-hidden="true"><span>Photograph at build: the soft spotting brush.</span></div>
+          <div class="product-info">
+            <h3>Soft Spotting Brush</h3>
+            <p>A gentle brush for working treatment into fabric without bruising the weave.</p>
+            <p class="price">$35</p>
+          </div>
+        </article>
+        <article class="product">
+          <div class="ph" aria-hidden="true"><span>Photograph at build: the boxed starter kit.</span></div>
+          <div class="product-info">
+            <h3>Reserve Starter Kit</h3>
+            <p>The solution, brush, and spotting bone together, boxed for the hall closet.</p>
+            <p class="price">$110</p>
+          </div>
+        </article>
+        <article class="product">
+          <div class="ph" aria-hidden="true"><span>Photograph at build: the spotting bone in hand.</span></div>
+          <div class="product-info">
+            <h3>Spotting Bone</h3>
+            <p>The old professional&rsquo;s tool for lifting a fresh spill instead of spreading it.</p>
+            <p class="price">$25</p>
+          </div>
+        </article>
+      </div>
+
+      <p class="shop-foot">Available at the counter, 3309 Yonge Street.</p>
+    </div>
+  </section>
+
+  <!-- =========================== REVIEW =========================== -->
+  <!-- At build: replace with a verbatim Google review, typos and plain phrasing
+       intact, attributed exactly as signed, linked to the live Google profile. -->
+  <section class="sec" aria-label="From the neighbourhood">
+    <div class="container">
+      <header class="sec-head">
+        <h2>Kind words from up and down Yonge Street.</h2>
+      </header>
+
+      <figure class="review" style="margin:0;">
+        <span class="qmark" aria-hidden="true">&ldquo;</span>
+        <blockquote>A silk blouse I had given up on came back looking like the day I bought it. They never made a fuss about it, either.</blockquote>
+        <figcaption><cite>Margaret &middot; Lawrence Park</cite></figcaption>
+      </figure>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer id="contact" class="site-footer">
+  <div class="container">
+    <div class="foot-crest">
+      <span class="wm-name">GLENFOREST</span>
+      <span class="wm-sub">Cleaners &middot; Est. 1960s</span>
+    </div>
+
+    <div class="foot-cols">
+      <div class="foot-col">
+        <h3>The Counter</h3>
+        <p>3309 Yonge Street<br>Toronto, Ontario<br>Yonge and Lawrence</p>
+        <p><a href="https://maps.google.com/?q=3309+Yonge+St,+Toronto">Get directions</a></p>
+      </div>
+      <div class="foot-col">
+        <h3>The Telephone</h3>
+        <a class="foot-tel" href="tel:+14164886717">416 488-6717</a>
+        <p>Call ahead and we will have your order waiting at the counter.</p>
+      </div>
+      <div class="foot-col">
+        <h3>Hours of the House</h3>
+        <ul class="hours">
+          <li><span>Monday</span><span class="dots" aria-hidden="true"></span><span>8 to 5</span></li>
+          <li><span>Tuesday</span><span class="dots" aria-hidden="true"></span><span>8 to 6</span></li>
+          <li><span>Wednesday</span><span class="dots" aria-hidden="true"></span><span>8 to 5</span></li>
+          <li><span>Thursday</span><span class="dots" aria-hidden="true"></span><span>8 to 5</span></li>
+          <li><span>Friday</span><span class="dots" aria-hidden="true"></span><span>8 to 6</span></li>
+          <li><span>Saturday</span><span class="dots" aria-hidden="true"></span><span>8 to 4</span></li>
+          <li><span>Sunday</span><span class="dots" aria-hidden="true"></span><span class="closed">Closed</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-sign">
+      <p class="tagline">&ldquo;May your worst problem be a stain on your clothes.&rdquo;</p>
+      <p class="legal">&copy; Glenforest Cleaners &middot; Family run by the Zachos family for over sixty years</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Postal route note. The reply names no day the code has not verified;
+  // at build, wire a real FSA-to-route map (M4N, M5M, etc.) if the shop
+  // supplies one, and only then state Tuesday or Friday.
+  var form = document.getElementById('routeForm');
+  var input = document.getElementById('postal');
+  var note = document.getElementById('routeNote');
+  if (form) {
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var v = input.value.trim();
+      note.hidden = false;
+      if (v) {
+        note.textContent = 'You’re within our routes. Telephone the counter and we’ll confirm your day.';
+      } else {
+        note.textContent = 'Kindly enter your postal code and we will find your route day.';
+      }
+    });
+  }
+  // Close the mobile menu when a link is chosen
+  var check = document.getElementById('navCheck');
+  var links = document.querySelectorAll('.menu a');
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', function(){ check.checked = false; });
+  }
+})();
+</script>
+
+</body>
+</html>

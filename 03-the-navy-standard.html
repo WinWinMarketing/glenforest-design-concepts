@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Glenforest Cleaners: The Navy Standard</title>
+<meta name="description" content="Glenforest Cleaners, Toronto's first wet cleaning specialist. Family run for over 60 years at Yonge and Lawrence. Toxic-free cleaning, valet pickup on Tuesday and Friday routes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400..600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* The Navy Standard: dark luxury in the house colors. Navy grounds, lime kept for action. */
+:root{
+  --navy:#101b45;
+  --navy-deep:#0c1330;
+  --ink:#f6f7fb;
+  --peri:#9aa3c7;
+  --lime:#c8e64c;
+  --hair:rgba(154,163,199,.24);
+  --hair-soft:rgba(154,163,199,.14);
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"Public Sans","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --wrap:1120px;
+  --pad:clamp(1.25rem,4vw,2.5rem);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--navy-deep);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:1rem;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:var(--lime);color:var(--navy-deep)}
+img,svg{max-width:100%;display:block}
+a{color:var(--ink)}
+section[id],footer[id]{scroll-margin-top:5.5rem}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:absolute;left:1rem;top:-4rem;z-index:100;background:var(--lime);color:var(--navy-deep);padding:.9rem 1.25rem;border-radius:6px;font-weight:600;text-decoration:none;transition:top .2s ease}
+.skip:focus{top:1rem}
+
+a:focus-visible,button:focus-visible,input:focus-visible,label:focus-visible{
+  outline:2px solid var(--lime);outline-offset:3px;border-radius:4px}
+
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--pad)}
+
+/* ---------- type ---------- */
+h1,h2,h3{font-family:var(--serif);font-weight:500;font-optical-sizing:auto;color:var(--ink)}
+h1{font-size:clamp(2.7rem,5.8vw,4.5rem);line-height:1.04;letter-spacing:-.015em}
+h2{font-size:clamp(1.9rem,3.4vw,2.75rem);line-height:1.12;letter-spacing:-.01em;max-width:24ch}
+h3{font-size:1.25rem;line-height:1.3}
+p{max-width:64ch}
+.eyebrow{
+  font-family:var(--sans);font-size:.72rem;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--peri);display:flex;align-items:center;gap:.8rem}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--peri);opacity:.55;flex:none}
+.lede{font-size:clamp(1.05rem,1.5vw,1.2rem);color:var(--peri);line-height:1.65}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  min-height:48px;padding:.8rem 1.6rem;border-radius:6px;
+  font-family:var(--sans);font-weight:600;font-size:.95rem;letter-spacing:.01em;
+  text-decoration:none;cursor:pointer;border:1px solid transparent;
+  transition:filter .18s ease,background-color .18s ease,border-color .18s ease}
+.btn-lime{background:var(--lime);color:var(--navy-deep)}
+.btn-lime:hover{filter:brightness(1.07)}
+
+/* ---------- header ---------- */
+.site-head{
+  position:sticky;top:0;z-index:50;
+  background:rgba(12,19,48,.88);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--hair-soft)}
+.head-in{display:flex;align-items:center;gap:.75rem;min-height:72px;position:relative}
+.brand{
+  font-family:var(--serif);font-weight:600;font-size:1.02rem;letter-spacing:.34em;
+  text-decoration:none;color:var(--ink);margin-right:auto;padding:.6rem 0;white-space:nowrap}
+.menu-t{position:absolute;opacity:0;pointer-events:none}
+.nav{display:flex;align-items:center;gap:.1rem}
+.nav a{
+  display:inline-flex;align-items:center;min-height:44px;padding:.5rem .85rem;
+  color:var(--peri);text-decoration:none;font-size:.92rem;font-weight:500;
+  transition:color .15s ease}
+.nav a:hover{color:var(--ink)}
+.nav-book{display:none}
+.head-cta{margin-left:.5rem;padding:.65rem 1.25rem;min-height:44px}
+.burger{display:none;width:44px;height:44px;cursor:pointer;position:relative;flex:none}
+.burger span.bar{
+  position:absolute;left:11px;width:22px;height:1.6px;background:var(--ink);
+  transition:transform .2s ease,top .2s ease}
+.burger .bar1{top:18px}
+.burger .bar2{top:26px}
+.menu-t:checked ~ .burger .bar1{top:22px;transform:rotate(45deg)}
+.menu-t:checked ~ .burger .bar2{top:22px;transform:rotate(-45deg)}
+
+@media (max-width:900px){
+  .burger{display:block}
+  .nav{
+    display:none;position:absolute;top:100%;left:calc(-1 * var(--pad));right:calc(-1 * var(--pad));
+    background:rgba(12,19,48,.98);border-bottom:1px solid var(--hair);
+    flex-direction:column;align-items:stretch;gap:0;
+    padding:.5rem var(--pad) 1.5rem}
+  .menu-t:checked ~ .nav{display:flex}
+  .nav a{min-height:52px;border-top:1px solid var(--hair-soft);font-size:1.05rem;padding:.85rem .25rem}
+  .nav a:first-child{border-top:0}
+  .nav-book{
+    display:inline-flex;margin-top:1rem;background:var(--lime);color:var(--navy-deep);
+    border-radius:6px;justify-content:center;font-weight:600;border-top:0 !important}
+}
+@media (max-width:640px){
+  .head-cta{display:none}
+}
+
+/* ---------- sections ---------- */
+.sec{padding-block:clamp(4.5rem,9vw,7.5rem)}
+.sec-a{background:var(--navy-deep)}
+.sec-b{background:var(--navy)}
+.sec-head{display:grid;gap:1.1rem;margin-bottom:clamp(2.5rem,5vw,4rem)}
+
+/* ---------- hero ---------- */
+.hero{
+  background:var(--navy-deep);
+  padding-block:clamp(4.5rem,9vw,8rem) clamp(4.5rem,9vw,7.5rem)}
+.hero-grid{display:grid;gap:clamp(2.5rem,5vw,4.5rem);align-items:center}
+@media (min-width:940px){.hero-grid{grid-template-columns:1.08fr .92fr}}
+.hero-copy{display:grid;gap:1.6rem;justify-items:start}
+.hero-copy h1{max-width:14ch}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.6rem;margin-top:.5rem}
+
+.route-card{
+  border:1px solid var(--hair);border-radius:12px;
+  background:rgba(16,27,69,.55);
+  padding:clamp(1.6rem,3vw,2.4rem);
+  display:grid;gap:1.25rem}
+.route-h{font-size:1.15rem;letter-spacing:0;max-width:none}
+.route-line{width:100%;height:auto}
+.route-copy{color:var(--peri);font-size:.98rem}
+.route-form{display:flex;flex-wrap:wrap;gap:.7rem}
+.route-form input{
+  flex:1 1 170px;min-height:48px;padding:.7rem 1rem;
+  background:rgba(12,19,48,.7);border:1px solid var(--hair);border-radius:6px;
+  color:var(--ink);font-family:var(--sans);font-size:.95rem}
+.route-form input::placeholder{color:rgba(154,163,199,.65)}
+.route-form input:focus-visible{outline-offset:1px}
+.route-out{font-size:.98rem;color:var(--ink);min-height:1.4em}
+.route-out strong{color:var(--ink);font-weight:600}
+.route-out .dot{
+  display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:var(--peri);margin-right:.55rem;vertical-align:baseline}
+
+/* ---------- trust strip ---------- */
+.trust-wrap{padding-block:0}
+.trust{
+  list-style:none;display:grid;grid-template-columns:1fr 1fr;
+  border-block:1px solid var(--hair-soft)}
+.trust li{
+  display:flex;align-items:center;gap:.9rem;
+  padding:1.4rem 1.1rem;font-size:.92rem;color:var(--peri);line-height:1.4}
+.trust li svg{flex:none;stroke:var(--peri);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.trust li b{color:var(--ink);font-weight:600}
+@media (min-width:880px){
+  .trust{grid-template-columns:repeat(4,1fr)}
+  .trust li + li{border-left:1px solid var(--hair-soft)}
+  .trust li{padding:1.6rem 1.6rem}
+}
+@media (max-width:879px){
+  .trust li:nth-child(n+3){border-top:1px solid var(--hair-soft)}
+  .trust li:nth-child(even){border-left:1px solid var(--hair-soft)}
+}
+
+/* ---------- services: rate card ---------- */
+.svc-grid{display:grid;gap:0 4rem}
+@media (min-width:880px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+.svc{
+  border-top:1px solid var(--hair);
+  padding-block:1.7rem 2rem;display:grid;gap:.5rem;align-content:start}
+.svc p{color:var(--peri);font-size:.97rem}
+
+/* ---------- valet steps ---------- */
+.steps{list-style:none;display:grid;gap:2.25rem}
+@media (min-width:880px){.steps{grid-template-columns:repeat(3,1fr);gap:3rem}}
+.steps li{border-top:1px solid var(--hair);padding-top:1.6rem;display:grid;gap:.7rem;align-content:start}
+.step-n{
+  font-family:var(--serif);font-size:2rem;font-weight:400;
+  color:var(--peri);line-height:1;font-feature-settings:"tnum"}
+.steps p{color:var(--peri);font-size:.97rem}
+.valet-note{
+  margin-top:clamp(2.5rem,5vw,3.5rem);padding-top:1.6rem;border-top:1px solid var(--hair-soft);
+  display:flex;flex-wrap:wrap;align-items:center;gap:1.25rem;justify-content:space-between}
+.valet-note p{color:var(--peri);font-size:.97rem}
+
+/* ---------- care story ---------- */
+.care-grid{display:grid;gap:clamp(2.5rem,6vw,5rem);align-items:center}
+@media (min-width:940px){.care-grid{grid-template-columns:1.05fr .95fr}}
+.care-copy{display:grid;gap:1.25rem}
+.care-copy p{color:var(--peri)}
+.care-copy .firm{color:var(--ink)}
+.care-list{list-style:none;margin-top:.75rem}
+.care-list li{
+  border-top:1px solid var(--hair-soft);padding:1rem .25rem;
+  color:var(--ink);font-weight:500;font-size:.98rem}
+.care-list li:last-child{border-bottom:1px solid var(--hair-soft)}
+.care-art{display:flex;justify-content:center}
+.photo-slot{
+  width:min(100%,400px);aspect-ratio:4/5;
+  border:1px solid var(--hair);background:var(--navy);
+  display:grid;align-content:center;justify-items:center;gap:.7rem;
+  padding:2.5rem;text-align:center}
+.photo-slot strong{font-family:var(--serif);font-weight:500;font-size:1.15rem;color:var(--ink)}
+.photo-slot p{color:var(--peri);font-size:.92rem;max-width:30ch}
+
+/* ---------- shop ---------- */
+.shop-grid{display:grid;gap:1.25rem}
+@media (min-width:1080px){.shop-grid{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:560px) and (max-width:1079px){.shop-grid{grid-template-columns:repeat(2,1fr)}}
+.prod{
+  border:1px solid var(--hair);border-radius:10px;
+  background:rgba(12,19,48,.5);
+  padding:1.75rem;display:grid;gap:.9rem;align-content:start}
+.prod svg{stroke:var(--peri);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.prod h3{font-size:1.12rem}
+.prod .price{font-family:var(--serif);font-size:1.3rem;font-weight:500;color:var(--ink)}
+.prod p{color:var(--peri);font-size:.93rem}
+.shop-note{margin-top:2.25rem;color:var(--peri);font-size:.95rem}
+
+/* ---------- reviews ---------- */
+.rev-grid{display:grid;gap:2.5rem}
+@media (min-width:880px){.rev-grid{grid-template-columns:repeat(3,1fr);gap:3rem}}
+.rev{border-top:1px solid var(--hair);padding-top:1.75rem;display:grid;gap:1.1rem;align-content:start}
+.rev-note{margin-top:2.5rem}
+.rev blockquote{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:1.1rem;line-height:1.65;color:var(--ink)}
+.rev figcaption{font-size:.92rem}
+.rev figcaption b{color:var(--ink);font-weight:600;display:block}
+.rev figcaption span{color:var(--peri)}
+
+/* ---------- about ---------- */
+.about-in{display:grid;gap:1.5rem;justify-items:center;text-align:center}
+.about-in h2{margin-inline:auto}
+.about-in p{color:var(--peri);max-width:62ch}
+.tagline{
+  font-family:var(--serif);font-style:italic;font-size:1.15rem;
+  color:var(--peri);margin-top:.5rem}
+
+/* ---------- footer ---------- */
+.footer{background:var(--navy-deep);border-top:1px solid var(--hair);padding-block:clamp(3.5rem,7vw,5.5rem) 0}
+.foot-grid{display:grid;gap:3rem;padding-bottom:clamp(3rem,6vw,4.5rem)}
+@media (min-width:820px){.foot-grid{grid-template-columns:1.1fr 1fr 1fr;gap:4rem}}
+.brand-foot{font-family:var(--serif);font-weight:600;letter-spacing:.34em;font-size:1rem;margin-bottom:1.25rem}
+.footer address{font-style:normal;color:var(--peri);line-height:1.7;margin-bottom:1rem}
+.tel{
+  display:inline-flex;align-items:center;min-height:44px;
+  color:var(--ink);text-decoration:none;font-family:var(--serif);
+  font-size:1.35rem;font-weight:500;letter-spacing:.01em}
+.tel:hover{color:var(--lime)}
+.link-underline{
+  display:inline-flex;align-items:center;min-height:44px;
+  color:var(--peri);text-decoration:underline;text-underline-offset:4px;font-size:.95rem}
+.link-underline:hover{color:var(--ink)}
+.foot-h{
+  font-family:var(--sans);font-size:.92rem;font-weight:600;letter-spacing:.02em;
+  color:var(--ink);margin-bottom:1.25rem}
+.hours{list-style:none;max-width:320px}
+.hours li{
+  display:flex;justify-content:space-between;gap:1rem;
+  padding:.55rem 0;border-bottom:1px solid var(--hair-soft);font-size:.93rem}
+.hours .d{color:var(--ink);font-weight:500}
+.hours .t{color:var(--peri)}
+.foot-valet p{color:var(--peri);font-size:.95rem;margin-bottom:1.5rem}
+.foot-bottom{
+  border-top:1px solid var(--hair-soft);
+  padding-block:1.75rem 2.25rem;
+  display:flex;flex-wrap:wrap;gap:.75rem 2rem;align-items:baseline;justify-content:space-between}
+.foot-bottom p{color:var(--peri);font-size:.85rem}
+.foot-bottom .tagline{font-size:.95rem;margin:0}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="brand" href="#top">GLENFOREST</a>
+    <input type="checkbox" id="menu-t" class="menu-t" aria-label="Open menu">
+    <nav class="nav" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#valet">Valet</a>
+      <a href="#care">Our Care</a>
+      <a href="#shop">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a class="nav-book" href="tel:+14164886717">Book a Pickup</a>
+    </nav>
+    <a class="btn btn-lime head-cta" href="tel:+14164886717">Book a Pickup</a>
+    <label class="burger" for="menu-t">
+      <span class="sr-only">Menu</span>
+      <span class="bar bar1" aria-hidden="true"></span>
+      <span class="bar bar2" aria-hidden="true"></span>
+    </label>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Dry and wet cleaning, Yonge and Lawrence</p>
+        <h1>Wet cleaning, held to a higher standard.</h1>
+        <p class="lede">Toronto's first wet cleaning specialist, family run for over 60 years. Miele certified, 100 percent toxic-free, and exacting about every seam, stain, and press.</p>
+        <div class="cta-row">
+          <a class="btn btn-lime" href="tel:+14164886717">Book a Pickup</a>
+          <a class="link-underline" href="#services">See services and prices</a>
+        </div>
+      </div>
+
+      <aside class="route-card" aria-label="Valet pickup and delivery">
+        <h2 class="route-h">Valet pickup and delivery</h2>
+        <svg class="route-line" viewBox="0 0 320 44" aria-hidden="true">
+          <line x1="8" y1="18" x2="312" y2="18" stroke="rgba(154,163,199,.35)" stroke-width="1"/>
+          <circle cx="96" cy="18" r="5" fill="none" stroke="#9aa3c7" stroke-width="1.5"/>
+          <circle cx="224" cy="18" r="5" fill="none" stroke="#9aa3c7" stroke-width="1.5"/>
+          <text x="96" y="40" text-anchor="middle" fill="#9aa3c7" font-family="Public Sans, Arial, sans-serif" font-size="9.5" letter-spacing="2.5">TUE</text>
+          <text x="224" y="40" text-anchor="middle" fill="#9aa3c7" font-family="Public Sans, Arial, sans-serif" font-size="9.5" letter-spacing="2.5">FRI</text>
+        </svg>
+        <p class="route-copy">Two weekly routes, Tuesday and Friday. Leave your personalized garment bag at the door; it returns pressed on your next route day.</p>
+        <form class="route-form" id="route-form">
+          <label class="sr-only" for="pc">Postal code</label>
+          <input id="pc" name="pc" type="text" autocomplete="postal-code" placeholder="Postal code, e.g. M4N 1J7" required>
+          <button class="btn btn-lime" type="submit">Find my pickup day</button>
+        </form>
+        <p class="route-out" id="route-out" role="status"></p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <section class="sec-b trust-wrap" aria-label="Why Glenforest">
+    <div class="wrap">
+      <ul class="trust">
+        <li>
+          <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/>
+          </svg>
+          <span><b>Family run</b> for over 60 years</span>
+        </li>
+        <li>
+          <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3.5C12 3.5 5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0C18.5 10.5 12 3.5 12 3.5Z"/>
+          </svg>
+          <span>Toronto's <b>first wet cleaning</b> specialist</span>
+        </li>
+        <li>
+          <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/>
+          </svg>
+          <span><b>Miele certified</b> process</span>
+        </li>
+        <li>
+          <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 20C4.5 12.5 8 4.5 20 4c.5 12-4 15.5-8 16Z"/><path d="M12 20c0-5 2.5-8.5 6-11"/>
+          </svg>
+          <span><b>100 percent toxic-free</b> cleaning</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="sec sec-a">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Everything in your closet, cared for properly.</h2>
+      </div>
+      <!-- Mockup rates: confirm the real price list with the client before ship. -->
+      <div class="svc-grid">
+        <article class="svc">
+          <h3>Wet Cleaning</h3>
+          <p>Suits, dresses, and knits cleaned in pure water matched to the fibre, from $12.95 per piece.</p>
+        </article>
+        <article class="svc">
+          <h3>Wash and Fold</h3>
+          <p>Everyday laundry back in 24 hours, folded for the drawer, $2.75 per pound.</p>
+        </article>
+        <article class="svc">
+          <h3>Executive Shirt Service</h3>
+          <p>Business shirts hand-finished, same day by 5 pm, from $4.50.</p>
+        </article>
+        <article class="svc">
+          <h3>Alterations and Repairs</h3>
+          <p>On-site tailoring, from a simple hem to a careful refit; hems from $18.</p>
+        </article>
+        <article class="svc">
+          <h3>Household and Linens</h3>
+          <p>Duvets, drapery, and table linens; a queen duvet is $34.95, back in three days.</p>
+        </article>
+        <article class="svc">
+          <h3>Wedding Gowns and Delicates</h3>
+          <p>Gown cleaning and boxed preservation from $185; allow two weeks.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALET -->
+  <section id="valet" class="sec sec-b">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Leave the bag out Tuesday or Friday. We handle the rest.</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <span class="step-n" aria-hidden="true">01</span>
+          <h3>Hang your bag</h3>
+          <p>We set you up with a personalized Glenforest garment bag. On your route day, leave it at your door in the morning.</p>
+        </li>
+        <li>
+          <span class="step-n" aria-hidden="true">02</span>
+          <h3>We collect and clean</h3>
+          <p>Your garments travel to Yonge and Lawrence, where each piece is cleaned toxic-free and finished by hand.</p>
+        </li>
+        <li>
+          <span class="step-n" aria-hidden="true">03</span>
+          <h3>Returned, pressed</h3>
+          <p>On your next Tuesday or Friday, everything comes home pressed, bagged, and ready to wear.</p>
+        </li>
+      </ol>
+      <div class="valet-note">
+        <p>New to valet? Call us and we will confirm your route and have a garment bag made up with your name on it.</p>
+        <a class="btn btn-lime" href="tel:+14164886717">Book a Pickup</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARE STORY -->
+  <section id="care" class="sec sec-a">
+    <div class="wrap care-grid">
+      <div class="care-copy">
+        <h2>Water, chosen over solvent.</h2>
+        <p>Most of the industry still leans on PERC, a harsh solvent your clothes carry home with them. Glenforest went a different way decades ago, becoming Toronto's first wet cleaning specialist: pure water, controlled to the degree, matched to each fibre.</p>
+        <p>Done properly, wet cleaning is kinder than conventional dry cleaning in every way that matters. Wool keeps its softness, silk keeps its light, and colors stay true. Our Miele certified equipment and six decades of hands make sure of it.</p>
+        <p class="firm">Every garment is cleaned in water and detergent matched to its fibre; there is no PERC in the building.</p>
+        <ul class="care-list">
+          <li>Pressed and finished by hand</li>
+          <li>Safe for skin and delicate fibres</li>
+          <li>Miele certified, professionally controlled</li>
+        </ul>
+      </div>
+      <div class="care-art">
+        <div class="photo-slot">
+          <strong>Commissioned photo</strong>
+          <p>Steam rising off the press at Yonge and Lawrence, or water beading on wool. Duotone into the navy palette; square corners.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+  <section id="shop" class="sec sec-b">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Glenforest Reserve</p>
+        <h2>Take the standard home.</h2>
+      </div>
+      <div class="shop-grid">
+        <article class="prod">
+          <svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true">
+            <rect x="24" y="26" width="16" height="28" rx="3"/><rect x="28" y="15" width="8" height="11" rx="1.5"/><line x1="27" y1="12" x2="37" y2="12"/>
+          </svg>
+          <h3>Reserve Stain Treatment Solution</h3>
+          <p>Our in-house formula for treating stains the moment they happen.</p>
+          <span class="price">$35</span>
+        </article>
+        <article class="prod">
+          <svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true">
+            <rect x="28" y="10" width="8" height="24" rx="3"/><rect x="23" y="34" width="18" height="10" rx="2"/><line x1="26" y1="47" x2="26" y2="52"/><line x1="32" y1="47" x2="32" y2="52"/><line x1="38" y1="47" x2="38" y2="52"/>
+          </svg>
+          <h3>Soft Spotting Brush</h3>
+          <p>Natural bristles, gentle enough for silk and fine knits.</p>
+          <span class="price">$35</span>
+        </article>
+        <article class="prod">
+          <svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true">
+            <rect x="14" y="24" width="36" height="28" rx="2"/><line x1="14" y1="32" x2="50" y2="32"/><line x1="32" y1="24" x2="32" y2="52"/>
+          </svg>
+          <h3>Reserve Starter Kit</h3>
+          <p>The full ritual, boxed: solution, brush, and spotting bone.</p>
+          <span class="price">$110</span>
+        </article>
+        <article class="prod">
+          <svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="20" cy="32" r="7"/><circle cx="44" cy="32" r="7"/><rect x="24" y="29" width="16" height="6" rx="2"/>
+          </svg>
+          <h3>Spotting Bone</h3>
+          <p>The professional's tool for lifting spots without spreading them.</p>
+          <span class="price">$25</span>
+        </article>
+      </div>
+      <p class="shop-note">Available in store at Yonge and Lawrence.</p>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="sec sec-a" aria-label="Reviews">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Quiet praise, earned slowly.</h2>
+      </div>
+      <!-- Before ship: replace with verbatim Google reviews, typos kept, attributed as the reviewers signed, linked to the Google profile. -->
+      <div class="rev-grid">
+        <figure class="rev">
+          <blockquote>&ldquo;They have looked after my husband's shirts for years. Everything comes back exactly as it should, and the Tuesday pickup means I never have to think about it.&rdquo;</blockquote>
+          <figcaption><b>Margaret</b> <span>Lawrence Park</span></figcaption>
+        </figure>
+        <figure class="rev">
+          <blockquote>&ldquo;Brought in a silk dress with a stain I had given up on. It came back perfect, and with no chemical smell at all.&rdquo;</blockquote>
+          <figcaption><b>Priya</b> <span>Bedford Park</span></figcaption>
+        </figure>
+        <figure class="rev">
+          <blockquote>&ldquo;Reliable, kind, and clearly proud of the work. Friday pickup at our door has become one of my favourite routines.&rdquo;</blockquote>
+          <figcaption><b>Daniel</b> <span>Davisville</span></figcaption>
+        </figure>
+      </div>
+      <p class="rev-note"><a class="link-underline" href="#">Read our Google reviews</a></p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="sec sec-b">
+    <div class="wrap about-in">
+      <h2>The Zachos family standard.</h2>
+      <p>For over 60 years, the Zachos family has cleaned, pressed, and handed back this neighbourhood's wardrobes from the same corner at Yonge and Lawrence. We were Toronto's first wet cleaning specialist, and we still believe the proof of good work is in the garments themselves: they simply come back right, every time.</p>
+      <p class="tagline">&ldquo;May your worst problem be a stain on your clothes.&rdquo;</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact" class="footer">
+  <div class="wrap foot-grid">
+    <div>
+      <p class="brand-foot">GLENFOREST</p>
+      <address>3309 Yonge St<br>Toronto, Ontario<br>at Yonge and Lawrence</address>
+      <p><a class="tel" href="tel:+14164886717">416 488-6717</a></p>
+      <p><a class="link-underline" href="#">Get directions</a></p>
+    </div>
+    <div>
+      <h3 class="foot-h">Hours</h3>
+      <ul class="hours">
+        <li><span class="d">Monday</span><span class="t">8 to 5</span></li>
+        <li><span class="d">Tuesday</span><span class="t">8 to 6</span></li>
+        <li><span class="d">Wednesday</span><span class="t">8 to 5</span></li>
+        <li><span class="d">Thursday</span><span class="t">8 to 5</span></li>
+        <li><span class="d">Friday</span><span class="t">8 to 6</span></li>
+        <li><span class="d">Saturday</span><span class="t">8 to 4</span></li>
+        <li><span class="d">Sunday</span><span class="t">Closed</span></li>
+      </ul>
+    </div>
+    <div class="foot-valet">
+      <h3 class="foot-h">Valet routes</h3>
+      <p>Pickup and delivery every Tuesday and Friday. Call to confirm your route day and request your personalized garment bag.</p>
+      <a class="btn btn-lime" href="tel:+14164886717">Book a Pickup</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <p>&copy; Glenforest Cleaners. Family run for over 60 years.</p>
+    <p class="tagline">May your worst problem be a stain on your clothes.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form=document.getElementById("route-form");
+  if(form){
+    form.addEventListener("submit",function(e){
+      e.preventDefault();
+      var out=document.getElementById("route-out");
+      out.innerHTML='<span class="dot" aria-hidden="true"></span>You&rsquo;re on the <strong>Tuesday route</strong>. Leave your bag out and it returns pressed.';
+    });
+  }
+  var toggle=document.getElementById("menu-t");
+  var links=document.querySelectorAll(".nav a");
+  for(var i=0;i<links.length;i++){
+    links[i].addEventListener("click",function(){toggle.checked=false;});
+  }
+})();
+</script>
+</body>
+</html>

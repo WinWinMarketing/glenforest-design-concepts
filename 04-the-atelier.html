@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Glenforest Cleaners: The Atelier</title>
+<meta name="description" content="Glenforest Cleaners, Toronto's first wet cleaning specialist. Family run for over 60 years at Yonge and Lawrence. Toxic free garment care, valet pickup on Tuesday and Friday routes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* THE ATELIER, a monochrome garment atelier concept for Glenforest Cleaners.
+   Bone ground, near black ink, a single gold thread. Nothing raised, everything considered. */
+
+:root{
+  --bone:#f7f5f0;
+  --ink:#17161a;
+  --gold:#b08d3e;        /* hairlines, marks, decoration */
+  --gold-ink:#a1802f;    /* gold used as large display text on bone */
+  --grey:#8a877f;        /* warm grey, decorative and hairline use */
+  --grey-ink:#6b675c;    /* warm grey darkened for readable small text on bone */
+  --bone-dim:#c8c4b8;    /* secondary text on the dark ground */
+  --hair:rgba(23,22,26,.16);
+  --hair-gold:rgba(176,141,62,.55);
+  --hair-bone:rgba(247,245,240,.18);
+  --serif:'Cormorant Garamond', Cormorant, Georgia, 'Times New Roman', serif;
+  --sans:'Jost', 'Avenir Next', 'Century Gothic', 'Segoe UI', Arial, sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: no-preference){
+  html{scroll-behavior:smooth}
+}
+
+body{
+  background:#f7f5f0;
+  color:#17161a;
+  font:300 1.0625rem/1.75 var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
+
+::selection{background:var(--gold);color:var(--bone)}
+
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+
+:focus-visible{outline:2px solid var(--gold-ink);outline-offset:3px}
+
+.wrap{max-width:1160px;margin-inline:auto;padding-inline:clamp(1.25rem,4vw,2.5rem)}
+.narrow{max-width:860px}
+
+.skip{
+  position:absolute;left:50%;top:-4rem;transform:translateX(-50%);
+  background:var(--ink);color:var(--bone);padding:.9rem 1.6rem;z-index:99;
+  font:500 .75rem/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;text-decoration:none;
+}
+.skip:focus{top:0}
+
+/* ---------- shared atoms ---------- */
+
+.eyebrow{
+  font:500 .6875rem/1.4 var(--sans);
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--ink);
+  display:flex;align-items:center;justify-content:center;gap:.9rem;
+}
+.eyebrow::before,.eyebrow::after{
+  content:"";width:5px;height:5px;background:var(--gold);
+  transform:rotate(45deg);flex:none;
+}
+h1,h2,h3{font-family:var(--serif);font-weight:300;color:var(--ink)}
+
+.sec{padding-block:clamp(4.5rem,10vw,8rem)}
+.sec-head{text-align:center;display:grid;gap:1.4rem;justify-items:center;margin-bottom:clamp(2.75rem,6vw,4.75rem)}
+.sec-head h2{
+  font-size:clamp(1.9rem,3.8vw,2.85rem);
+  line-height:1.15;letter-spacing:.015em;max-width:22ch;
+}
+.sec-head .lede{max-width:62ch;color:var(--grey-ink);font-size:1rem}
+
+/* left-set section head: a small gold folio numeral instead of a repeated eyebrow */
+.folio{font:400 1rem/1 var(--serif);font-style:italic;color:var(--gold-ink);letter-spacing:.06em}
+.sec-head-left{display:grid;gap:1.2rem;justify-items:start;text-align:left;margin-bottom:clamp(2.25rem,5vw,3.75rem)}
+.sec-head-left h2{
+  font-size:clamp(1.9rem,3.8vw,2.85rem);
+  line-height:1.15;letter-spacing:.015em;max-width:22ch;
+}
+.sec-head-left .lede{max-width:52ch;color:var(--grey-ink);font-size:1rem}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:.2rem 2rem;
+  font:500 .75rem/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;
+  text-decoration:none;cursor:pointer;
+  border:1px solid var(--ink);color:var(--ink);background:transparent;
+}
+.btn-solid{background:var(--ink);color:var(--bone)}
+.btn:hover{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+.btn-solid:hover{background:transparent;color:var(--ink)}
+.btn-bone{border-color:var(--bone);color:var(--bone);background:transparent}
+.btn-bone:hover{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+
+.textlink{
+  font:500 .75rem/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;
+  border-bottom:1px solid var(--hair-gold);
+  padding:.9rem .1rem;
+}
+.textlink:hover{border-bottom-color:var(--gold)}
+
+/* the gold thread: a hairline that runs down into a section */
+.thread{width:1px;height:clamp(3rem,7vw,4.5rem);background:var(--gold);margin-inline:auto}
+
+/* ---------- linen texture placeholders ---------- */
+
+.linen{
+  background-image:
+    repeating-linear-gradient(0deg, rgba(247,245,240,.06) 0, rgba(247,245,240,.06) 1px, transparent 1px, transparent 3px),
+    repeating-linear-gradient(90deg, rgba(23,22,26,.10) 0, rgba(23,22,26,.10) 1px, transparent 1px, transparent 3px),
+    linear-gradient(155deg, #23222a 0%, #45423e 48%, #6f6b62 82%, #8a877f 100%);
+}
+.linen-light{
+  background-image:
+    repeating-linear-gradient(0deg, rgba(23,22,26,.05) 0, rgba(23,22,26,.05) 1px, transparent 1px, transparent 3px),
+    repeating-linear-gradient(90deg, rgba(23,22,26,.04) 0, rgba(23,22,26,.04) 1px, transparent 1px, transparent 3px),
+    linear-gradient(155deg, #eee9df 0%, #ddd7c8 55%, #c2bcab 100%);
+}
+.framed{position:relative}
+.framed::after{
+  content:"";position:absolute;inset:14px;
+  border:1px solid var(--hair-gold);pointer-events:none;
+}
+
+/* ---------- header ---------- */
+
+.site-head{
+  position:sticky;top:0;z-index:50;
+  background:#f7f5f0;
+  border-top:2px solid var(--gold);
+  border-bottom:1px solid var(--hair);
+}
+.head-in{
+  position:relative;z-index:45;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+  gap:1.5rem;min-height:72px;
+}
+.wordmark{
+  font:500 1.05rem/1 var(--serif);
+  letter-spacing:.32em;text-transform:uppercase;text-decoration:none;
+  color:var(--ink);padding:.9rem 0;
+  white-space:nowrap;
+}
+.wordmark span{color:var(--gold-ink)}
+.d-nav{display:flex;justify-content:center;gap:clamp(.25rem,1.5vw,1rem)}
+.d-nav a{
+  font:400 .71875rem/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink);
+  padding:1rem .55rem;
+}
+.d-nav a:hover{color:var(--gold-ink)}
+.head-cta{display:flex;align-items:center;gap:1rem}
+.head-cta .btn{min-height:44px;padding-inline:1.4rem}
+
+.menu-check{position:absolute;opacity:0;pointer-events:none}
+.burger{
+  display:none;width:48px;height:48px;cursor:pointer;
+  flex-direction:column;align-items:center;justify-content:center;gap:6px;
+}
+.burger span{display:block;width:24px;height:1px;background:var(--ink)}
+.burger:hover span{background:var(--gold-ink)}
+
+.m-menu{
+  display:none;
+  position:fixed;inset:0;z-index:40;
+  background:#f7f5f0;
+  padding-top:96px;
+  overflow:auto;
+}
+.menu-check:checked ~ .m-menu{display:block}
+.menu-check:checked ~ .head-in .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-check:checked ~ .head-in .burger span:nth-child(2){opacity:0}
+.menu-check:checked ~ .head-in .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.m-nav{display:grid;justify-items:center;gap:0;padding:1rem 1.5rem 3rem}
+.m-nav a{
+  font:300 1.9rem/1 var(--serif);letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink);
+  padding:1.1rem 2rem;text-align:center;width:100%;max-width:420px;
+  border-bottom:1px solid var(--hair);
+}
+.m-nav a:hover{color:var(--gold-ink)}
+.m-nav .m-book{
+  border:1px solid var(--ink);margin-top:2.25rem;
+  font:500 .8rem/1 var(--sans);letter-spacing:.26em;
+  padding:1.2rem 2rem;
+}
+.m-nav .m-book:hover{background:var(--ink);color:var(--bone)}
+
+@media (max-width:920px){
+  .d-nav{display:none}
+  .head-in{grid-template-columns:auto auto}
+  .head-cta .btn{display:none}
+  .burger{display:flex}
+  .head-cta{justify-self:end}
+}
+
+/* ---------- hero ---------- */
+
+.hero{
+  text-align:center;
+  padding-block:clamp(4rem,9vw,7rem) clamp(4.5rem,9vw,7rem);
+}
+.hero-in{display:grid;justify-items:center;gap:1.6rem}
+.hero h1{
+  font-size:clamp(2.15rem,5.6vw,4.35rem);
+  line-height:1.12;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+  max-width:18ch;
+  color:var(--ink);
+}
+.hero h1 em{
+  font-style:italic;font-weight:400;text-transform:none;
+  letter-spacing:.01em;color:var(--gold-ink);
+}
+.hero .sub{
+  max-width:56ch;color:var(--grey-ink);
+  font-size:1.03125rem;line-height:1.8;
+}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.25rem 2rem;margin-top:.6rem}
+
+/* one considered moment: the gold thread draws downward once */
+@media (prefers-reduced-motion: no-preference){
+  .hero .thread{transform-origin:top;animation:draw 1.2s cubic-bezier(.22,.61,.36,1) both}
+  @keyframes draw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+}
+
+/* postal route widget */
+.route{
+  width:100%;max-width:460px;margin-top:2.4rem;
+  display:grid;gap:.9rem;justify-items:center;
+}
+.route-label{
+  font:500 .65rem/1.4 var(--sans);letter-spacing:.3em;text-transform:uppercase;
+  color:var(--grey-ink);
+}
+.route-row{
+  display:flex;width:100%;
+  border:1px solid var(--ink);background:#f7f5f0;
+}
+.route-row input{
+  flex:1;min-width:0;border:0;background:transparent;
+  font:300 1rem/1 var(--sans);color:var(--ink);
+  padding:0 1.1rem;min-height:52px;
+}
+.route-row input::placeholder{color:var(--grey-ink);opacity:1}
+.route-row .btn{border:0;border-left:1px solid var(--ink);min-height:52px;flex:none}
+.route-out{
+  font:400 1.25rem/1.4 var(--serif);font-style:italic;color:var(--ink);
+  display:flex;align-items:center;gap:.75rem;min-height:1.5rem;
+}
+.route-out::before{
+  content:"";width:5px;height:5px;background:var(--gold);transform:rotate(45deg);flex:none;
+}
+.route-out[hidden]{display:none}
+
+@media (max-width:480px){
+  .route-row{flex-direction:column;border:0;gap:.75rem;background:transparent}
+  .route-row input{border:1px solid var(--ink);width:100%}
+  .route-row .btn{border:1px solid var(--ink);width:100%;background:var(--ink);color:var(--bone)}
+  .route-row .btn:hover{background:transparent;color:var(--ink)}
+}
+
+/* ---------- editorial band ---------- */
+
+.band{padding-bottom:clamp(4.5rem,10vw,8rem)}
+.band-in{
+  height:clamp(240px,42vw,440px);
+  display:grid;place-items:center;
+  position:relative;
+}
+.band-mark{color:var(--gold);opacity:.9}
+.band-cap{
+  position:absolute;left:0;right:0;bottom:26px;
+  text-align:center;
+  font:500 .625rem/1.4 var(--sans);letter-spacing:.32em;text-transform:uppercase;
+  color:rgba(247,245,240,.92);
+}
+
+/* ---------- trust strip: one static serif line ---------- */
+
+.trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.trust-line{
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+  gap:.9rem 1.4rem;padding-block:2.4rem;
+  font:300 1.3rem/1.5 var(--serif);font-style:italic;color:var(--ink);
+  text-align:center;
+}
+.trust-line .dia{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);flex:none}
+
+/* ---------- services ---------- */
+
+/* single-column price list: serif name, gold hairline leader, one line each */
+.svc-list{list-style:none;border-top:1px solid var(--hair)}
+.svc-row{
+  display:grid;gap:.55rem;
+  padding-block:clamp(1.6rem,3vw,2.2rem);
+  border-bottom:1px solid var(--hair);
+}
+.svc-line{display:flex;align-items:center;gap:1.2rem}
+.svc-line h3{font-size:clamp(1.3rem,2.4vw,1.55rem);font-weight:400;letter-spacing:.02em;white-space:nowrap}
+.svc-leader{flex:1;min-width:2.5rem;height:1px;background:var(--hair-gold)}
+.svc-meta{
+  font:500 .6875rem/1.4 var(--sans);letter-spacing:.24em;text-transform:uppercase;
+  color:var(--grey-ink);white-space:nowrap;
+}
+.svc-row p{font-size:.9375rem;line-height:1.7;color:var(--grey-ink);max-width:62ch}
+@media (max-width:560px){
+  .svc-line{flex-wrap:wrap;gap:.6rem 1rem}
+  .svc-line h3{white-space:normal}
+}
+
+/* ---------- valet ---------- */
+
+/* left-aligned two-column split, mirroring the Care section's asymmetry */
+.valet-grid{
+  display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);
+  gap:clamp(2.5rem,6vw,5rem);align-items:start;
+}
+.valet-steps{list-style:none;display:grid}
+.valet-steps .step{
+  display:grid;grid-template-columns:auto 1fr;gap:1.4rem;align-items:baseline;
+  padding-block:1.5rem;border-top:1px solid var(--hair);text-align:left;
+}
+.valet-steps .step:last-child{border-bottom:1px solid var(--hair)}
+.step .n{font:400 1.05rem/1 var(--serif);font-style:italic;color:var(--gold-ink);letter-spacing:.06em}
+.step h3{font-size:1.3rem;font-weight:400;margin-bottom:.3rem}
+.step p{font-size:.9375rem;line-height:1.7;color:var(--grey-ink);max-width:52ch}
+.valet-side{
+  border-left:1px solid var(--hair);padding-left:clamp(1.5rem,3vw,2.5rem);
+  display:grid;gap:1.6rem;justify-items:start;
+}
+.valet-note{font:300 1.1875rem/1.6 var(--serif);font-style:italic;color:var(--grey-ink);max-width:34ch}
+.valet-note a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair-gold);white-space:nowrap}
+.valet-note a:hover{border-bottom-color:var(--gold)}
+@media (max-width:860px){
+  .valet-grid{grid-template-columns:1fr;gap:2.75rem}
+  .valet-side{border-left:0;border-top:1px solid var(--hair);padding-left:0;padding-top:2.25rem}
+}
+
+/* ---------- our care, dark ---------- */
+
+.care{background:#17161a;color:#f7f5f0}
+.care .folio{color:var(--gold)}
+.care h2{color:var(--bone);font-size:clamp(1.9rem,3.8vw,2.85rem);line-height:1.18;letter-spacing:.015em}
+.care-grid{
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);
+  gap:clamp(2.5rem,6vw,5.5rem);align-items:center;
+}
+.care-fig{aspect-ratio:4/5;display:grid;place-items:center;position:relative}
+.care-fig .band-cap{bottom:24px}
+.care-copy{display:grid;gap:1.5rem;justify-items:start}
+.care-copy .folio{margin-bottom:.2rem}
+.care-copy p{max-width:58ch;color:var(--bone-dim);font-size:1rem;line-height:1.85}
+.care-pull{
+  border-left:1px solid var(--gold);
+  padding-left:1.4rem;
+  font:400 1.3rem/1.5 var(--serif);font-style:italic;color:var(--bone);
+  max-width:34ch;
+}
+@media (max-width:860px){
+  .care-grid{grid-template-columns:1fr}
+  .care-fig{aspect-ratio:16/10;order:2}
+  .care-copy{justify-items:center;text-align:center}
+  .care-pull{border-left:0;border-top:1px solid var(--gold);padding:1.3rem 0 0;}
+}
+
+/* ---------- about ---------- */
+
+.about{text-align:center}
+.about-in{display:grid;justify-items:center;gap:1.7rem}
+.about blockquote{
+  font:300 clamp(1.6rem,3.4vw,2.4rem)/1.35 var(--serif);
+  font-style:italic;color:var(--ink);max-width:26ch;
+}
+.about p{max-width:60ch;color:var(--grey-ink);font-size:1rem}
+
+/* ---------- reserve shop ---------- */
+
+.shop{border-top:1px solid var(--hair)}
+.shop-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:clamp(1.5rem,3vw,2.5rem);
+}
+.prod{display:grid;gap:1rem;justify-items:center;text-align:center}
+.prod-swatch{
+  width:100%;aspect-ratio:1;
+  display:grid;place-items:center;
+}
+.prod-swatch svg{color:var(--gold);opacity:.85}
+.prod h3{font-size:1.2rem;font-weight:400;line-height:1.3;max-width:16ch}
+.prod .price{
+  font:400 .8125rem/1 var(--sans);letter-spacing:.2em;color:var(--ink);
+  display:grid;justify-items:center;gap:.7rem;
+}
+.prod .price::before{content:"";width:26px;height:1px;background:var(--gold)}
+.shop-note{
+  margin-top:clamp(2.75rem,6vw,4rem);text-align:center;
+  font:300 1.1875rem/1.6 var(--serif);font-style:italic;color:var(--grey-ink);
+}
+@media (max-width:900px){
+  .shop-grid{grid-template-columns:1fr 1fr;gap:2.5rem 1.5rem}
+}
+
+/* ---------- reviews ---------- */
+
+/* two quotes at unequal widths, hairlines above and below */
+.reviews{border-top:1px solid var(--hair)}
+.rev-one{
+  border-top:1px solid var(--hair);
+  padding-block:clamp(2.25rem,4.5vw,3.5rem);
+  display:grid;gap:1.3rem;justify-items:start;text-align:left;
+}
+.rev-one blockquote{
+  font:300 clamp(1.55rem,3.2vw,2.15rem)/1.4 var(--serif);font-style:italic;color:var(--ink);
+  max-width:36ch;
+}
+.rev-one cite{
+  font:500 .625rem/1.6 var(--sans);font-style:normal;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--grey-ink);
+}
+.rev-two{justify-items:end;text-align:right;border-bottom:1px solid var(--hair)}
+.rev-two blockquote{font-size:clamp(1.25rem,2.4vw,1.6rem);max-width:30ch}
+.rev-link{margin-top:2.4rem;text-align:center}
+
+/* ---------- footer ---------- */
+
+.foot{background:#17161a;color:#f7f5f0;border-top:2px solid var(--gold)}
+.foot-in{padding-block:clamp(4rem,8vw,6rem) 2.5rem;display:grid;gap:clamp(3rem,6vw,4.5rem)}
+.foot-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(2.5rem,5vw,4rem);
+}
+.foot h2{
+  font:500 1.05rem/1 var(--serif);letter-spacing:.32em;text-transform:uppercase;color:var(--bone);
+}
+.foot h2 span{color:var(--gold)}
+.f-label{
+  font:500 .625rem/1.4 var(--sans);letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.3rem;
+  display:flex;align-items:center;gap:.8rem;
+}
+.f-label::before{content:"";width:5px;height:5px;background:var(--gold);transform:rotate(45deg);flex:none}
+.f-col{font-size:.9375rem;line-height:1.9;color:var(--bone-dim)}
+.f-col address{font-style:normal}
+.f-col a{color:var(--bone);text-decoration:none;border-bottom:1px solid var(--hair-bone);padding-block:.35rem}
+.f-col a:hover{border-bottom-color:var(--gold)}
+.f-links{display:grid;gap:.1rem;justify-items:start}
+.f-links a{
+  font:400 .75rem/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--bone);text-decoration:none;border-bottom:0;
+  padding:.72rem 0;
+}
+.f-links a:hover{color:var(--gold)}
+.hours{display:grid;grid-template-columns:auto 1fr;gap:.15rem 2rem}
+.hours dt{color:var(--bone)}
+.hours dd{color:var(--bone-dim);text-align:right}
+.f-contact{margin-top:1.4rem;display:grid;gap:.4rem;justify-items:start}
+.foot-end{
+  border-top:1px solid var(--hair-bone);
+  padding-top:2.2rem;text-align:center;display:grid;gap:1.1rem;justify-items:center;
+}
+.foot-tag{font:400 1.25rem/1.5 var(--serif);font-style:italic;color:var(--gold)}
+.foot-copy{font:300 .75rem/1.6 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-dim)}
+@media (max-width:820px){
+  .foot-grid{grid-template-columns:1fr;gap:2.75rem}
+  .hours{max-width:340px}
+}
+</style>
+</head>
+<body id="top">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <input type="checkbox" id="menu-t" class="menu-check" aria-label="Open menu">
+  <div class="head-in wrap">
+    <a class="wordmark" href="#top">Glenforest<span>.</span></a>
+    <nav class="d-nav" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#valet">Valet</a>
+      <a href="#care">Our Care</a>
+      <a href="#shop">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="head-cta">
+      <a class="btn" href="tel:+14164886717">Book a Pickup</a>
+      <label class="burger" for="menu-t" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </label>
+    </div>
+  </div>
+  <div class="m-menu">
+    <nav class="m-nav" aria-label="Mobile">
+      <a href="#services">Services</a>
+      <a href="#valet">Valet</a>
+      <a href="#care">Our Care</a>
+      <a href="#shop">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a class="m-book" href="tel:+14164886717">Book a Pickup</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-in">
+      <div class="thread" aria-hidden="true"></div>
+      <p class="eyebrow">Toronto's Garment Atelier &middot; Yonge and Lawrence</p>
+      <h1>The Quiet <em>Craft</em> of Garment Care</h1>
+      <p class="sub">Toronto's first wet cleaning specialist: pure water and biodegradable detergent instead of PERC, for over sixty years at Yonge and Lawrence.</p>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="tel:+14164886717">Book a Pickup</a>
+        <a class="textlink" href="#services">The Services</a>
+      </div>
+      <form class="route" id="routeForm" novalidate>
+        <label class="route-label" for="pc">Valet routes run Tuesday and Friday</label>
+        <div class="route-row">
+          <input id="pc" name="pc" type="text" autocomplete="postal-code" placeholder="Your postal code">
+          <button class="btn btn-solid" type="submit">Find my pickup day</button>
+        </div>
+        <p class="route-out" id="routeOut" aria-live="polite" hidden></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- EDITORIAL BAND -->
+  <div class="band wrap">
+    <div class="band-in linen framed">
+      <svg class="band-mark" width="72" height="52" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+        <circle cx="36" cy="8" r="5"/>
+        <path d="M36 13 L8 40 H64 Z"/>
+      </svg>
+      <p class="band-cap">The pressing room &middot; 3309 Yonge Street</p>
+    </div>
+  </div>
+
+  <!-- TRUST STRIP -->
+  <section class="trust" aria-label="Why Glenforest">
+    <p class="trust-line wrap">
+      <span>Family run for over sixty years.</span>
+      <span class="dia" aria-hidden="true"></span>
+      <span>Toronto's first wet cleaning specialist.</span>
+      <span class="dia" aria-hidden="true"></span>
+      <span>No PERC.</span>
+    </p>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="sec wrap" id="services">
+    <header class="sec-head-left">
+      <p class="folio">No. 01</p>
+      <h2>Every garment, given its due</h2>
+      <p class="lede">Six disciplines, practised daily at the same corner of Yonge Street for three generations.</p>
+    </header>
+    <ul class="svc-list">
+      <li class="svc-row">
+        <div class="svc-line">
+          <h3>Wet Cleaning</h3>
+          <span class="svc-leader" aria-hidden="true"></span>
+          <span class="svc-meta">Our signature</span>
+        </div>
+        <p>Pure water and biodegradable detergent in Miele certified machines, for the garments other cleaners refuse.</p>
+      </li>
+      <li class="svc-row">
+        <div class="svc-line">
+          <h3>Wash and Fold</h3>
+          <span class="svc-leader" aria-hidden="true"></span>
+          <span class="svc-meta">By the pound</span>
+        </div>
+        <p>Everyday laundry, weighed at the counter and returned folded.</p>
+      </li>
+      <li class="svc-row">
+        <div class="svc-line">
+          <h3>Executive Shirt Service</h3>
+          <span class="svc-leader" aria-hidden="true"></span>
+          <span class="svc-meta">Next day</span>
+        </div>
+        <p>Washed, hand finished on the press, loose buttons replaced without asking. In by 10, ready next day.</p>
+      </li>
+      <li class="svc-row">
+        <div class="svc-line">
+          <h3>Alterations and Repairs</h3>
+          <span class="svc-leader" aria-hidden="true"></span>
+        </div>
+        <p>Hems, zippers, and small repairs, measured in the shop and sewn in house.</p>
+      </li>
+      <li class="svc-row">
+        <div class="svc-line">
+          <h3>Household and Linens</h3>
+          <span class="svc-leader" aria-hidden="true"></span>
+        </div>
+        <p>Duvets and drapery cleaned flat in water, table linens starched and pressed.</p>
+      </li>
+      <li class="svc-row">
+        <div class="svc-line">
+          <h3>Wedding Gowns and Delicates</h3>
+          <span class="svc-leader" aria-hidden="true"></span>
+          <span class="svc-meta">Preservation grade</span>
+        </div>
+        <p>Gown cleaning and boxed preservation, handled in the shop from start to finish.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- VALET -->
+  <section class="sec wrap" id="valet">
+    <div class="valet-grid">
+      <div>
+        <header class="sec-head-left">
+          <p class="folio">No. 02</p>
+          <h2>Your wardrobe, called for and returned</h2>
+          <p class="lede">Two routes a week, Tuesday and Friday. A personalized garment bag, and nothing else to think about.</p>
+        </header>
+        <ol class="valet-steps">
+          <li class="step">
+            <span class="n">01</span>
+            <div>
+              <h3>Join your route</h3>
+              <p>Call or book a pickup and we place your address on the Tuesday or the Friday run.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="n">02</span>
+            <div>
+              <h3>Set out your bag</h3>
+              <p>Leave your garments in your personalized Glenforest bag by the door on route morning.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="n">03</span>
+            <div>
+              <h3>Pressed and returned</h3>
+              <p>Your bag comes home cleaned and pressed on your next route day.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <aside class="valet-side">
+        <p class="valet-note">Most of Lawrence Park is a Tuesday. Call <a href="tel:+14164886717">416 488-6717</a> and we will place you on yours.</p>
+        <a class="btn btn-solid" href="tel:+14164886717">Book a Pickup</a>
+        <a class="textlink" href="#pc">Find your pickup day</a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- OUR CARE -->
+  <section class="care sec" id="care">
+    <div class="wrap care-grid">
+      <div class="care-fig linen-light framed">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#a1802f" stroke-width="1" aria-hidden="true">
+          <circle cx="32" cy="32" r="22"/>
+          <path d="M20 34 q6 -6 12 0 t12 0"/>
+          <path d="M20 40 q6 -6 12 0 t12 0"/>
+        </svg>
+        <p class="band-cap" style="color:#5c584d">Pure water, Miele certified</p>
+      </div>
+      <div class="care-copy">
+        <p class="folio">No. 03</p>
+        <h2>We clean with water, not solvents</h2>
+        <p>Conventional dry cleaning leans on PERC, a solvent that lingers in fabric long after the press. We took a different path decades ago and became Toronto's first wet cleaning specialist.</p>
+        <p>Every garment is cleaned in pure water with biodegradable detergent, on Miele certified equipment programmed for that fabric. Wool keeps its loft, silk its hand. Your clothes come home brighter, with no solvent residue or odour.</p>
+        <p class="care-pull">One hundred percent toxic free. No harsh chemicals. No PERC. Sixty years of proof.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="sec about" id="about">
+    <div class="wrap about-in">
+      <blockquote>Three generations of the Zachos family, one corner of Yonge Street.</blockquote>
+      <p>Glenforest Cleaners has been family run for over sixty years at Yonge and Lawrence, caring for the wardrobes of the neighbourhood from the same shop at 3309 Yonge Street. The methods have been refined; the standard has never moved.</p>
+    </div>
+  </section>
+
+  <!-- RESERVE SHOP -->
+  <section class="sec shop" id="shop">
+    <div class="wrap">
+      <header class="sec-head">
+        <h2>The Glenforest Reserve</h2>
+        <p class="lede">The tools of the trade, for home. The same spotting kit we use at the counter, for care between visits.</p>
+      </header>
+      <div class="shop-grid">
+        <article class="prod">
+          <div class="prod-swatch linen-light framed">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+              <rect x="12" y="9" width="10" height="18"/>
+              <path d="M14 9 V5 h6 v4"/>
+            </svg>
+          </div>
+          <h3>Reserve Stain Treatment Solution</h3>
+          <p class="price">$35</p>
+        </article>
+        <article class="prod">
+          <div class="prod-swatch linen-light framed">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+              <rect x="9" y="6" width="16" height="7"/>
+              <path d="M11 13 v6 M14 13 v7 M17 13 v6 M20 13 v7 M23 13 v6"/>
+            </svg>
+          </div>
+          <h3>Soft Spotting Brush</h3>
+          <p class="price">$35</p>
+        </article>
+        <article class="prod">
+          <div class="prod-swatch linen-light framed">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+              <rect x="6" y="10" width="22" height="16"/>
+              <path d="M6 15 h22 M17 15 v11"/>
+            </svg>
+          </div>
+          <h3>Reserve Starter Kit</h3>
+          <p class="price">$110</p>
+        </article>
+        <article class="prod">
+          <div class="prod-swatch linen-light framed">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+              <path d="M8 22 q9 -12 18 -10 q-2 9 -18 10 Z"/>
+            </svg>
+          </div>
+          <h3>Spotting Bone</h3>
+          <p class="price">$25</p>
+        </article>
+      </div>
+      <p class="shop-note">Available at the counter, 3309 Yonge Street.</p>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <!-- Before hand-off: replace both placeholder quotes with real Google reviews
+       quoted verbatim, typos left in, attributed exactly as the reviewer signed. -->
+  <section class="sec reviews" id="reviews">
+    <div class="wrap narrow">
+      <header class="sec-head">
+        <h2>The neighbourhood, on the record</h2>
+      </header>
+      <figure class="rev-one">
+        <blockquote>They rescued a silk blouse that two other cleaners refused to touch.</blockquote>
+        <figcaption><cite>Placeholder &middot; swap in a verbatim Google review</cite></figcaption>
+      </figure>
+      <figure class="rev-one rev-two">
+        <blockquote>The Tuesday valet is the easiest habit I have ever kept.</blockquote>
+        <figcaption><cite>Placeholder &middot; swap in a verbatim Google review</cite></figcaption>
+      </figure>
+      <p class="rev-link"><a class="textlink" href="#">Read on Google</a></p>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="foot" id="contact">
+  <div class="wrap foot-in">
+    <div class="foot-grid">
+      <div class="f-col">
+        <h2>Glenforest<span>.</span></h2>
+        <p class="f-label" style="margin-top:1.6rem">The Atelier</p>
+        <address>
+          3309 Yonge Street<br>
+          Toronto, Ontario<br>
+          Yonge and Lawrence
+        </address>
+        <div class="f-contact">
+          <a href="tel:+14164886717">416 488-6717</a>
+          <a href="#">Get directions</a>
+        </div>
+      </div>
+      <div class="f-col">
+        <p class="f-label">Hours</p>
+        <dl class="hours">
+          <dt>Monday</dt><dd>8 to 5</dd>
+          <dt>Tuesday</dt><dd>8 to 6</dd>
+          <dt>Wednesday</dt><dd>8 to 5</dd>
+          <dt>Thursday</dt><dd>8 to 5</dd>
+          <dt>Friday</dt><dd>8 to 6</dd>
+          <dt>Saturday</dt><dd>8 to 4</dd>
+          <dt>Sunday</dt><dd>Closed</dd>
+        </dl>
+      </div>
+      <div class="f-col">
+        <p class="f-label">Visit</p>
+        <nav class="f-links" aria-label="Footer">
+          <a href="#services">Services</a>
+          <a href="#valet">Valet</a>
+          <a href="#care">Our Care</a>
+          <a href="#shop">Shop</a>
+          <a href="#about">About</a>
+          <a href="tel:+14164886717">Book a Pickup</a>
+        </nav>
+      </div>
+    </div>
+    <div class="foot-end">
+      <p class="foot-tag">May your worst problem be a stain on your clothes.</p>
+      <p class="foot-copy">&copy; 2026 Glenforest Cleaners &middot; Toronto</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('routeForm');
+  var out = document.getElementById('routeOut');
+  var pc = document.getElementById('pc');
+  // FSA-to-route map. PLACEHOLDER: confirm the real routes with the shop
+  // before launch, then fill this in (e.g. M4N: 'Tuesday', M4R: 'Tuesday').
+  var routes = { M4N: 'Tuesday', M4R: 'Tuesday' };
+  if (form) {
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var v = pc.value.trim().toUpperCase().replace(/\s+/g, '');
+      if (!v) {
+        out.textContent = 'Please enter your postal code.';
+      } else {
+        var day = routes[v.slice(0, 3)];
+        if (day) {
+          out.textContent = 'Most of ' + v.slice(0, 3) + ' is a ' + day + '. Call 416 488-6717 and we will confirm your route.';
+        } else {
+          out.textContent = 'Most of Lawrence Park is a Tuesday. Call 416 488-6717 and we will confirm your route.';
+        }
+      }
+      out.hidden = false;
+    });
+  }
+  var check = document.getElementById('menu-t');
+  var links = document.querySelectorAll('.m-nav a');
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', function(){ check.checked = false; });
+  }
+})();
+</script>
+
+</body>
+</html>
