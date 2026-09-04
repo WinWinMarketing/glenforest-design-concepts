@@ -20,6 +20,9 @@
   --sans:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
   --pad:clamp(20px,4.5vw,56px);
   --max:1360px;
+  --e-settle:cubic-bezier(.22,1,.36,1);
+  --e-expo:cubic-bezier(.16,1,.3,1);
+  --e-ui:cubic-bezier(.4,0,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scroll-padding-top:96px}
@@ -93,11 +96,21 @@ p{max-width:65ch}
 .site-nav{margin-left:auto;display:flex;align-items:center}
 .site-nav ul{display:flex;list-style:none;align-items:center}
 .navlink{
+  position:relative;
   display:inline-flex;align-items:center;min-height:44px;padding:0 13px;
   font:600 .76rem var(--sans);text-transform:uppercase;letter-spacing:.15em;
   text-decoration:none;transition:color .15s ease;
 }
-.navlink:hover{color:var(--cobalt);text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+.navlink::after{
+  content:"";position:absolute;left:10px;right:10px;bottom:9px;height:2px;
+  background:var(--cobalt);transform:scaleX(0);transform-origin:100% 50%;
+  transition:transform 260ms var(--e-settle);
+}
+@media (hover:hover){
+  .navlink:hover{color:var(--cobalt)}
+  .navlink:hover::after{transform:scaleX(1);transform-origin:0 50%}
+}
+.navlink:focus-visible::after{transform:scaleX(1);transform-origin:0 50%}
 .head-btn{margin-left:6px;min-height:46px;padding:0 22px}
 .nav-cta{display:none}
 .burger{display:none;align-items:center;justify-content:center;width:48px;height:48px;cursor:pointer}
@@ -121,7 +134,7 @@ p{max-width:65ch}
 }
 
 /* ============ hero ============ */
-.hero{background:repeating-linear-gradient(to bottom,var(--linen) 0 55px,rgba(18,17,16,.05) 55px 56px)}
+.hero{background:repeating-linear-gradient(to bottom,var(--linen) 0 55px,rgba(18,17,16,.05) 55px 56px);overflow:hidden}
 .hero-inner{position:relative;padding-block:clamp(52px,7.5vw,104px) clamp(52px,7vw,92px)}
 .hero-mark{position:absolute;right:0;top:clamp(6px,2vw,26px);width:clamp(58px,8.5vw,116px);height:auto}
 .display{
@@ -159,7 +172,23 @@ p{max-width:65ch}
   font:600 .78rem var(--sans);text-transform:uppercase;letter-spacing:.18em;
   text-decoration:none;transition:color .15s ease;
 }
-.toc a:hover{color:var(--cobalt);text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+.toc a{position:relative}
+.toc a::after{
+  content:"";position:absolute;left:10px;right:10px;bottom:5px;height:7px;opacity:0;
+  background:repeating-linear-gradient(45deg,var(--cobalt) 0 2px,transparent 2px 6px);
+  transition:opacity 220ms var(--e-ui);
+}
+.toc-num{
+  font-family:var(--serif);font-style:italic;font-size:.92rem;color:var(--cobalt);
+  margin-right:7px;transition:transform 220ms var(--e-settle);
+}
+@media (hover:hover){
+  .toc a:hover{color:var(--cobalt)}
+  .toc a:hover::after{opacity:1}
+  .toc a:hover .toc-num{transform:translateX(3px)}
+}
+.toc a:focus-visible::after{opacity:1}
+.toc a:focus-visible .toc-num{transform:translateX(3px)}
 .toc .sep{color:var(--cobalt);font-family:var(--serif);font-size:1.1rem}
 
 /* ============ trust strip ============ */
@@ -274,7 +303,7 @@ p{max-width:65ch}
 
 /* ============ about ============ */
 .about-grid{display:grid;gap:clamp(32px,5vw,80px)}
-@media (min-width:961px){.about-grid{grid-template-columns:minmax(0,6fr) minmax(0,6fr);align-items:start}}
+@media (min-width:961px){.about-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:start}}
 .sig{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:var(--cobalt);margin-top:22px}
 
 /* ============ footer ============ */
@@ -322,15 +351,104 @@ p{max-width:65ch}
 .tagline{font-family:var(--serif);font-style:italic;font-size:1rem;color:rgba(239,234,226,.75)}
 .copyright{font-size:.85rem;color:rgba(239,234,226,.6)}
 
+/* ============ photography ============ */
+.ph{overflow:hidden;background:var(--ink)}
+.ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05) brightness(1.02)}
+.ph-colour img{filter:saturate(.92) contrast(1.03)}
+.figcap{font:500 .78rem/1.55 var(--sans);letter-spacing:.04em;color:var(--grey);padding-top:10px;max-width:52ch}
+
+/* ============ masthead ticker ============ */
+.ticker{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);background:var(--linen);overflow:hidden}
+.ticker-track{display:flex;width:max-content}
+.tick-copy{display:flex;flex:none}
+.tick-seq{display:flex;align-items:center;flex:none;max-width:none;padding-block:13px}
+.tick-seq span{font:600 .72rem/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;white-space:nowrap}
+.tick-seq .tsep{font:400 1.3rem/1 var(--serif);letter-spacing:0;color:var(--cobalt);margin-inline:clamp(18px,2.6vw,40px);transform:translateY(.08em)}
+.ticker:hover .ticker-track,
+.ticker:focus-within .ticker-track{animation-play-state:paused}
+
+/* ============ hero photo band ============ */
+.band-frame{aspect-ratio:16/9;max-height:76vh}
+.band-cap{max-width:var(--max);text-align:right;padding-block:10px 6px}
+.band-cap .d{font-family:var(--serif)}
+
+/* ============ hero fact rail ============ */
+.factrail{list-style:none;margin-top:clamp(34px,5vw,60px);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);display:flex;flex-wrap:wrap;align-items:center}
+.factrail li{display:flex;align-items:center;font:600 .7rem/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--grey);padding-block:12px}
+.factrail li:not(:last-child)::after{content:"";width:1px;height:13px;background:rgba(18,17,16,.45);margin-inline:clamp(12px,1.9vw,26px)}
+@media (max-width:700px){
+  .factrail{flex-direction:column;align-items:stretch}
+  .factrail li{padding-block:10px}
+  .factrail li:not(:last-child)::after{display:none}
+  .factrail li + li{border-top:1px solid rgba(18,17,16,.2)}
+}
+
+/* ============ pull-quote band ============ */
+.quoteband{background:var(--ink)}
+.qb{font-family:var(--serif);font-weight:400;font-style:italic;color:var(--linen);font-size:clamp(1.7rem,3.8vw,3.1rem);line-height:1.18;letter-spacing:-.01em;max-width:30ch;padding-block:clamp(48px,7vw,90px)}
+.qb .qstar{font-style:normal;color:#9caef7}
+
+/* ============ chapter separator ============ */
+.sep-photo{border-top:4px solid var(--ink);position:relative}
+.sep-photo::before{content:"";position:absolute;top:7px;left:0;right:0;height:1px;background:var(--ink);z-index:1}
+.sep-frame{height:clamp(300px,46vw,540px)}
+
+/* ============ editorial figures ============ */
+.care-fig{width:100%;max-width:400px;margin-left:auto;margin-top:10px}
+.care-fig .ph{aspect-ratio:4/5;border:2px solid var(--ink)}
+.about-fig{width:100%;max-width:380px;margin-left:auto;margin-top:clamp(10px,3vw,42px)}
+.about-fig .ph{aspect-ratio:3/5;border:2px solid var(--ink)}
+.about-grid .lede{margin-top:26px}
+
+/* ============ gallery strip ============ */
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.6vw,36px)}
+.gal-fig .ph{aspect-ratio:4/5;border:2px solid var(--ink)}
+@media (hover:hover){
+  .gal-fig .ph img{transition:transform 520ms var(--e-settle)}
+  .gal-fig:hover .ph img{transform:scale(1.03)}
+  .prod{transition:transform 240ms var(--e-ui)}
+  .prod:hover{transform:translateY(-2px)}
+}
+
+/* ============ scroll reveals ============ */
+.js-motion [data-reveal]{opacity:0;transform:translateY(12px);will-change:transform,opacity}
+.js-motion [data-reveal].is-in{opacity:1;transform:none;transition:opacity 620ms var(--e-ui),transform 720ms var(--e-settle);transition-delay:calc(min(var(--i,0),4)*70ms)}
+.js-motion [data-wipe]{clip-path:inset(0 0 100% 0);will-change:clip-path}
+.js-motion [data-wipe] img{transform:scale(1.06)}
+.js-motion [data-wipe].is-in{clip-path:inset(0 0 0 0);transition:clip-path 1000ms var(--e-expo)}
+.js-motion [data-wipe].is-in img{transform:scale(1);transition:transform 1400ms var(--e-expo)}
+
+/* ============ hero masked reveal ============ */
+.display .l1,.display .l2,.display .l3{overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+.js-motion .display .li{transform:translateY(105%);animation:lineup 820ms var(--e-expo) both}
+.js-motion .l1 .li{animation-delay:120ms}
+.js-motion .l2 .li{animation-delay:210ms}
+.js-motion .l3 .li{animation-delay:300ms}
+@keyframes lineup{to{transform:translateY(0)}}
+.js-motion .display em{
+  background-image:linear-gradient(100deg,var(--ink) 0 42%,var(--cobalt) 58% 100%);
+  background-size:260% 100%;background-repeat:no-repeat;background-position:0% 0;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:inksweep 900ms var(--e-settle) 1100ms both;
+}
+@keyframes inksweep{to{background-position:100% 0}}
+
 /* ============ motion ============ */
 @media (prefers-reduced-motion:no-preference){
   html{scroll-behavior:smooth}
   .ast-spin{animation:spin 90s linear infinite;transform-origin:50% 50%}
   @keyframes spin{to{transform:rotate(360deg)}}
+  .ticker-track{animation:tick 56s linear infinite}
+  @keyframes tick{to{transform:translate3d(-50%,0,0)}}
 }
 @media (prefers-reduced-motion:reduce){
-  *{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
 }
 
 /* ============ responsive ============ */
@@ -339,6 +457,7 @@ p{max-width:65ch}
 }
 @media (max-width:960px){
   .head-btn{display:none}
+  .navlink::after{display:none}
   .burger{display:flex;margin-left:auto}
   .site-nav{
     position:fixed;top:0;right:0;bottom:0;left:0;z-index:50;
@@ -365,6 +484,8 @@ p{max-width:65ch}
 }
 @media (max-width:760px){
   .steps{grid-template-columns:1fr}
+  .gal{grid-template-columns:1fr}
+  .care-fig,.about-fig{max-width:none;margin-left:0}
   .shop-grid{grid-template-columns:1fr 1fr}
   .trust-list{flex-direction:column;align-items:flex-start;gap:0;padding-block:16px}
   .trust-list li{border-top:1px solid rgba(239,234,226,.35);width:100%;padding:11px 0}
@@ -422,9 +543,9 @@ p{max-width:65ch}
       </svg>
       <p class="kicker">Toronto&rsquo;s first wet cleaning specialist &middot; Yonge &amp; Lawrence</p>
       <h1 class="display">
-        <span class="l1">Sixty years</span>
-        <span class="l2">of getting it</span>
-        <span class="l3"><em>spotless</em>.</span>
+        <span class="l1"><span class="li">Sixty years</span></span>
+        <span class="l2"><span class="li">of getting it</span></span>
+        <span class="l3"><span class="li"><em>spotless</em>.</span></span>
       </h1>
       <div class="hero-deck">
         <div class="hero-copy">
@@ -442,16 +563,77 @@ p{max-width:65ch}
           <p class="route-result" id="route-result" aria-live="polite" hidden></p>
         </div>
       </div>
+      <ul class="factrail" aria-label="House facts">
+        <li>60+ years family run</li>
+        <li>First wet cleaning specialist in Toronto</li>
+        <li>Miele certified</li>
+        <li>Tuesday and Friday valet</li>
+        <li>100 percent toxic-free</li>
+      </ul>
       <nav class="toc" aria-label="In this issue">
         <span class="toc-label">In this issue</span>
-        <a href="#services">The Services</a><span class="sep" aria-hidden="true">*</span>
-        <a href="#valet">The Valet</a><span class="sep" aria-hidden="true">*</span>
-        <a href="#care">The Water Method</a><span class="sep" aria-hidden="true">*</span>
-        <a href="#shop">The Reserve</a><span class="sep" aria-hidden="true">*</span>
-        <a href="#letters">Letters</a>
+        <a href="#services"><span class="toc-num" aria-hidden="true">01</span>The Services</a><span class="sep" aria-hidden="true">*</span>
+        <a href="#valet"><span class="toc-num" aria-hidden="true">02</span>The Valet</a><span class="sep" aria-hidden="true">*</span>
+        <a href="#care"><span class="toc-num" aria-hidden="true">03</span>The Water Method</a><span class="sep" aria-hidden="true">*</span>
+        <a href="#shop"><span class="toc-num" aria-hidden="true">04</span>The Reserve</a><span class="sep" aria-hidden="true">*</span>
+        <a href="#letters"><span class="toc-num" aria-hidden="true">05</span>Letters</a>
       </nav>
     </div>
   </section>
+
+  <!-- masthead ticker -->
+  <aside class="ticker" aria-label="Glenforest strapline">
+    <div class="ticker-track">
+      <div class="tick-copy">
+        <p class="tick-seq">
+          <span>Toronto’s first wet cleaner</span><span class="tsep" aria-hidden="true">*</span>
+          <span>Since the 1960s</span><span class="tsep" aria-hidden="true">*</span>
+          <span>No PERC</span><span class="tsep" aria-hidden="true">*</span>
+          <span>Miele certified</span><span class="tsep" aria-hidden="true">*</span>
+        </p>
+        <p class="tick-seq" aria-hidden="true">
+          <span>Toronto’s first wet cleaner</span><span class="tsep">*</span>
+          <span>Since the 1960s</span><span class="tsep">*</span>
+          <span>No PERC</span><span class="tsep">*</span>
+          <span>Miele certified</span><span class="tsep">*</span>
+        </p>
+        <p class="tick-seq" aria-hidden="true">
+          <span>Toronto’s first wet cleaner</span><span class="tsep">*</span>
+          <span>Since the 1960s</span><span class="tsep">*</span>
+          <span>No PERC</span><span class="tsep">*</span>
+          <span>Miele certified</span><span class="tsep">*</span>
+        </p>
+      </div>
+      <div class="tick-copy" aria-hidden="true">
+        <p class="tick-seq">
+          <span>Toronto’s first wet cleaner</span><span class="tsep">*</span>
+          <span>Since the 1960s</span><span class="tsep">*</span>
+          <span>No PERC</span><span class="tsep">*</span>
+          <span>Miele certified</span><span class="tsep">*</span>
+        </p>
+        <p class="tick-seq">
+          <span>Toronto’s first wet cleaner</span><span class="tsep">*</span>
+          <span>Since the 1960s</span><span class="tsep">*</span>
+          <span>No PERC</span><span class="tsep">*</span>
+          <span>Miele certified</span><span class="tsep">*</span>
+        </p>
+        <p class="tick-seq">
+          <span>Toronto’s first wet cleaner</span><span class="tsep">*</span>
+          <span>Since the 1960s</span><span class="tsep">*</span>
+          <span>No PERC</span><span class="tsep">*</span>
+          <span>Miele certified</span><span class="tsep">*</span>
+        </p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- hero photo band -->
+  <figure class="hero-band">
+    <div class="ph ph-colour band-frame">
+      <img src="img/pressing-shirt-on-rack.jpg" alt="A presser steams a shirt hanging on the garment rack" width="1600" height="900" loading="eager" fetchpriority="high">
+    </div>
+    <figcaption class="container band-cap figcap"><span class="d" aria-hidden="true">*</span> The press line, photographed mid-morning at 3309 Yonge.</figcaption>
+  </figure>
 
   <!-- trust strip -->
   <section class="trust" aria-label="Why Glenforest">
@@ -504,6 +686,13 @@ p{max-width:65ch}
     </div>
   </section>
 
+  <!-- pull-quote band -->
+  <section class="quoteband" aria-label="On dry cleaning">
+    <div class="container">
+      <p class="qb"><span class="qstar" aria-hidden="true">*</span> Most dry cleaning is not dry. Ours is not dry cleaning at all.</p>
+    </div>
+  </section>
+
   <!-- valet -->
   <section class="section" id="valet">
     <div class="container section-inner">
@@ -546,6 +735,13 @@ p{max-width:65ch}
     </div>
   </section>
 
+  <!-- chapter separator -->
+  <section class="sep-photo" aria-label="Inside the shop">
+    <div class="ph sep-frame" data-wipe>
+      <img src="img/folding-dim-shop.jpg" alt="A worker folds garments in the dim pressing room" width="1600" height="900" loading="lazy">
+    </div>
+  </section>
+
   <!-- our care / wet cleaning story -->
   <section class="section" id="care">
     <span class="dept">No. 2 / The Water Method</span>
@@ -558,6 +754,12 @@ p{max-width:65ch}
           <p class="dropcap lede">Most dry cleaning is not dry. It is a bath in petroleum-derived solvent, most often PERC, a chemical you can smell on the collar. Glenforest was the first house in Toronto to walk away from it. We clean in water, with biodegradable detergents and computer-controlled Miele machines, and the result is not a compromise: colours come back brighter, whites come back whiter, and nothing comes home smelling like a laboratory.</p>
           <p class="lede">It is gentler on silk and wool, and easier on skin that reacts to solvent residue.</p>
           <span class="stamp">No PERC &middot; No harsh chemicals &middot; Ever</span>
+          <figure class="care-fig">
+            <div class="ph">
+              <img src="img/drycleaner-at-work.jpg" alt="A cleaner inspects garments hanging at the sorting rail" width="1000" height="1250" loading="lazy">
+            </div>
+            <figcaption class="figcap">Every piece is read at the rail before it is cleaned.</figcaption>
+          </figure>
         </div>
         <ol class="process">
           <li>
@@ -589,6 +791,38 @@ p{max-width:65ch}
             </div>
           </li>
         </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- gallery strip -->
+  <section class="section" aria-label="The work in photographs">
+    <div class="container section-inner">
+      <div class="sec-head">
+        <div>
+          <h2 class="h2">From the<br><span class="big">floor.</span></h2>
+        </div>
+        <p class="lede">Shot at the board and the bench on an ordinary Tuesday.</p>
+      </div>
+      <div class="gal">
+        <figure class="gal-fig" data-reveal style="--i:0">
+          <div class="ph">
+            <img src="img/steam-iron-in-hand.jpg" alt="Hands guiding a steam iron with steam rising from the plate" width="1000" height="1250" loading="lazy">
+          </div>
+          <figcaption class="figcap">Steam held for a two-count on wool.</figcaption>
+        </figure>
+        <figure class="gal-fig" data-reveal style="--i:1">
+          <div class="ph">
+            <img src="img/gown-lacing-bw.jpg" alt="Hands lacing the back of a wedding gown" width="1000" height="1250" loading="lazy">
+          </div>
+          <figcaption class="figcap">A gown laced closed before boxing.</figcaption>
+        </figure>
+        <figure class="gal-fig" data-reveal style="--i:2">
+          <div class="ph">
+            <img src="img/hand-sewing-needle.jpg" alt="A hand stitching a garment with needle and thread" width="1000" height="1250" loading="lazy">
+          </div>
+          <figcaption class="figcap">A repair at the bench, measured twice.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -682,11 +916,15 @@ p{max-width:65ch}
       <div class="about-grid">
         <div>
           <h2 class="h2">Sixty years,<br>one family.</h2>
-        </div>
-        <div>
           <p class="lede">Glenforest has been in the Zachos family for more than sixty years, long enough to have pressed wedding gowns for the daughters of women who first brought in their own. From the same shop at Yonge and Lawrence, the house became Toronto&rsquo;s first wet cleaning specialist and never looked back: Miele certified, one hundred percent toxic-free, and still small enough to know your name.</p>
           <p class="sig">The Zachos family, Yonge &amp; Lawrence</p>
         </div>
+        <figure class="about-fig">
+          <div class="ph">
+            <img src="img/laundry-towels-team.jpg" alt="Two staff members carrying tall stacks of pressed white linens" width="900" height="1500" loading="lazy">
+          </div>
+          <figcaption class="figcap">Linens stacked for the Friday route.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -770,6 +1008,32 @@ p{max-width:65ch}
       }
     });
   }
+})();
+</script>
+<script>
+(function(){
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  document.documentElement.classList.add('js-motion');
+  var targets = document.querySelectorAll('[data-reveal],[data-wipe]');
+  if (!('IntersectionObserver' in window)) {
+    for (var i = 0; i < targets.length; i++) targets[i].classList.add('is-in');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    for (var i = 0; i < entries.length; i++) {
+      var en = entries[i];
+      if (en.isIntersecting) {
+        var el = en.target;
+        el.classList.add('is-in');
+        io.unobserve(el);
+        el.addEventListener('transitionend', function h(e){
+          e.currentTarget.style.willChange = 'auto';
+          e.currentTarget.removeEventListener('transitionend', h);
+        });
+      }
+    }
+  }, {threshold:.18, rootMargin:'0px 0px -10% 0px'});
+  for (var j = 0; j < targets.length; j++) io.observe(targets[j]);
 })();
 </script>
 

@@ -21,6 +21,9 @@
   --white:#ffffff;
   --serif:'Source Serif 4', Georgia, 'Times New Roman', serif;
   --sans:Archivo, 'Helvetica Neue', Arial, sans-serif;
+  --e-settle:cubic-bezier(.22,1,.36,1);
+  --e-expo:cubic-bezier(.16,1,.3,1);
+  --e-ui:cubic-bezier(.4,0,.2,1);
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -28,7 +31,12 @@
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{transition:none !important;animation:none !important}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
 }
 
 body{
@@ -89,7 +97,18 @@ section{scroll-margin-top:92px}
   text-decoration:none;font-size:.9rem;font-weight:500;color:var(--slate);
   padding:12px 2px;
 }
-.site-nav a:hover{color:var(--navy)}
+.site-nav a:not(.btn){position:relative}
+.site-nav a:not(.btn)::after{
+  content:"";position:absolute;left:2px;right:2px;bottom:8px;height:2px;
+  background:var(--lime);transform:scaleX(0);transform-origin:right;
+  transition:transform 260ms var(--e-settle);
+}
+@media (hover:hover){
+  .site-nav a:hover{color:var(--navy)}
+  .site-nav a:not(.btn):hover::after{transform:scaleX(1);transform-origin:left}
+}
+.site-nav a:not(.btn):focus-visible{color:var(--navy)}
+.site-nav a:not(.btn):focus-visible::after{transform:scaleX(1);transform-origin:left}
 .site-nav a.btn{color:var(--paper)}
 
 .btn{
@@ -97,14 +116,19 @@ section{scroll-margin-top:92px}
   min-height:48px;padding:0 26px;
   font-family:var(--sans);font-size:.95rem;font-weight:600;letter-spacing:.01em;
   text-decoration:none;cursor:pointer;border-radius:3px;
-  transition:background-color .18s ease,color .18s ease,border-color .18s ease;
+  transition:background-color .18s ease,color .18s ease,border-color .18s ease,
+    transform 140ms var(--e-ui),box-shadow 140ms var(--e-ui);
 }
 .btn-solid{background:var(--navy);color:var(--paper);border:1px solid var(--navy)}
-.btn-solid:hover{background:#16204b}
 .btn-paper{background:var(--paper);color:var(--navy);border:1px solid var(--paper)}
-.btn-paper:hover{background:var(--white)}
+@media (hover:hover){
+  .btn-solid:hover{background:#16204b;transform:translateY(-1px);box-shadow:0 0 0 1px var(--lime)}
+  .btn-paper:hover{background:var(--white);transform:translateY(-1px);box-shadow:0 0 0 1px var(--lime)}
+}
+.btn-solid:focus-visible{background:#16204b;transform:translateY(-1px);box-shadow:0 0 0 1px var(--lime)}
+.btn-paper:focus-visible{background:var(--white);transform:translateY(-1px);box-shadow:0 0 0 1px var(--lime)}
 
-.nav-toggle{position:absolute;opacity:0;width:44px;height:44px;right:0;top:14px}
+.nav-toggle{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .burger{
   display:none;width:48px;height:48px;cursor:pointer;
   align-items:center;justify-content:center;flex:none;
@@ -144,9 +168,9 @@ section{scroll-margin-top:92px}
 
 .hero{border-bottom:1px solid var(--hair)}
 .hero-in{
-  display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+  display:grid;grid-template-columns:minmax(0,11fr) minmax(0,9fr);
   gap:clamp(32px,5vw,72px);align-items:center;
-  padding-block:clamp(56px,8vw,104px);
+  padding-block:clamp(48px,7vw,88px) clamp(40px,5vw,64px);
 }
 .eyebrow{
   display:flex;align-items:center;gap:12px;
@@ -160,6 +184,10 @@ section{scroll-margin-top:92px}
   font-size:clamp(2.4rem,5.4vw,4rem);
   line-height:1.08;letter-spacing:-.01em;
   margin-top:22px;max-width:15ch;text-wrap:balance;
+}
+.hero h1::after{
+  content:"";display:block;width:76px;height:2px;background:var(--lime);
+  margin-top:20px;transform-origin:left;
 }
 .hero-sub{
   margin-top:20px;max-width:56ch;color:var(--slate);font-size:1.075rem;
@@ -190,27 +218,46 @@ section{scroll-margin-top:92px}
 .route-result svg{flex:none;margin-top:6px}
 .route-result[hidden]{display:none}
 
-.hero-art{align-self:stretch;display:flex;flex-direction:column}
+/* Concept-wide photo treatment: slight desaturate + 8% navy multiply, so the mixed
+   pool reads as one shoot. Every photo sits in a .ph frame. */
+.ph{position:relative;overflow:hidden;background:#e8eaf0}
+.ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.84) contrast(1.02)}
+.ph::after{
+  content:"";position:absolute;inset:0;background:var(--navy);
+  mix-blend-mode:multiply;opacity:.08;pointer-events:none;z-index:1;
+}
+
+.hero-art{align-self:center;display:flex;flex-direction:column}
 .hero-photo{
-  flex:1;min-height:420px;position:relative;
-  border:1px solid var(--hair);border-radius:4px;overflow:hidden;
-  background:#edeef1;
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  padding:32px;
+  aspect-ratio:4/5;width:100%;
+  border:1px solid var(--hair);border-radius:4px;
 }
 .hero-photo::before{
-  content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--lime);
-}
-.hero-photo span{
-  font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--slate);max-width:26ch;line-height:1.8;
+  content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--lime);z-index:2;
 }
 .hero-art figcaption{margin-top:14px;font-size:.92rem;color:var(--slate)}
 .hero-art figcaption strong{color:var(--navy);font-weight:600}
 
+.fact-rail{
+  list-style:none;display:flex;flex-wrap:wrap;
+  border-top:1px solid var(--hair);
+  padding-block:20px 24px;
+}
+.fact-rail li{
+  font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--slate);padding:4px 22px;border-left:1px solid var(--hair);
+}
+.fact-rail li:first-child{border-left:none;padding-left:0}
+
 @media (max-width:960px){
-  .hero-in{grid-template-columns:1fr}
-  .hero-art{display:none}
+  .hero-in{grid-template-columns:1fr;gap:40px}
+  .hero-art{max-width:560px;align-self:start}
+  .hero-photo{aspect-ratio:3/2}
+}
+@media (max-width:760px){
+  .fact-rail{display:grid;grid-template-columns:1fr 1fr;padding-block:6px 10px}
+  .fact-rail li{border-left:none;border-top:1px solid var(--hair);padding:12px 12px 12px 0}
+  .fact-rail li:nth-child(-n+2){border-top:none}
 }
 
 /* ---------- trust strip ---------- */
@@ -249,8 +296,12 @@ section{scroll-margin-top:92px}
 
 /* ---------- services price list ---------- */
 
+.services-photo{margin-top:clamp(32px,5vw,52px);max-width:760px}
+.services-photo .ph{aspect-ratio:3/2;border:1px solid var(--hair);border-radius:4px}
+.services-photo figcaption{margin-top:12px;font-size:.9rem;color:var(--slate)}
+
 .services-list{
-  list-style:none;margin-top:clamp(36px,5vw,56px);
+  list-style:none;margin-top:clamp(28px,4vw,44px);
   max-width:760px;border-top:1px solid var(--hair);
 }
 .services-list li{
@@ -264,6 +315,27 @@ section{scroll-margin-top:92px}
 }
 .services-list p{font-size:.95rem;color:var(--slate);line-height:1.55}
 @media (max-width:620px){.services-list li{grid-template-columns:1fr}}
+
+/* ---------- fabrics word-grid ---------- */
+
+.fabrics{
+  background:var(--white);
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  padding-block:clamp(44px,6vw,72px);
+}
+.fabric-row{
+  list-style:none;margin-top:24px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px 0;
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(1.5rem,3.4vw,2.3rem);line-height:1.3;letter-spacing:-.005em;
+  color:var(--navy);
+}
+.fabric-row li{display:flex;align-items:center}
+.fabric-row li + li::before{
+  content:"";width:12px;height:2px;background:var(--lime);
+  margin-inline:clamp(14px,2vw,24px);flex:none;
+}
+.fabric-note{margin-top:22px;font-size:.9rem;color:var(--slate)}
 
 /* ---------- valet band ---------- */
 
@@ -303,12 +375,39 @@ section{scroll-margin-top:92px}
 .band-cta .note{font-size:.9rem;color:#c6cbde}
 @media (max-width:760px){.steps{grid-template-columns:1fr}}
 
+/* ---------- craft 4-up ---------- */
+
+.craft{border-bottom:1px solid var(--hair)}
+.craft-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:20px;margin-top:clamp(32px,5vw,52px);
+}
+.tile{margin:0}
+.tile .ph{aspect-ratio:4/5;border:1px solid var(--hair);border-radius:4px}
+.tile .ph img{transition:transform 520ms var(--e-settle)}
+@media (hover:hover){
+  .tile:hover .ph img{transform:scale(1.03)}
+}
+.tile figcaption{
+  margin-top:12px;display:flex;align-items:center;gap:10px;
+  font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--navy);
+}
+.tile figcaption::before{content:"";width:14px;height:2px;background:var(--lime);flex:none}
+@media (max-width:760px){
+  .craft-grid{grid-template-columns:1fr 1fr;gap:16px}
+}
+
 /* ---------- wet cleaning story ---------- */
 
 .story-grid{
   display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);
   gap:clamp(36px,6vw,80px);align-items:start;
 }
+.story-side{display:grid;gap:28px}
+.editorial{margin:0}
+.editorial .ph{aspect-ratio:4/5;border:1px solid var(--hair);border-radius:4px}
+.editorial figcaption{margin-top:12px;font-size:.9rem;color:var(--slate);line-height:1.6}
 .story-copy p{margin-top:18px;color:var(--slate);max-width:62ch}
 .story-copy p:first-of-type{margin-top:0}
 .story-copy .section-head{margin-bottom:26px}
@@ -347,6 +446,10 @@ section{scroll-margin-top:92px}
 .product{
   border:1px solid var(--hair);border-radius:4px;background:var(--paper);
   padding:28px 24px;display:flex;flex-direction:column;gap:0;
+  transition:transform 180ms var(--e-ui),border-color 180ms var(--e-ui);
+}
+@media (hover:hover){
+  .product:hover{transform:translateY(-2px);border-color:#b9c0d4}
 }
 .product svg{color:var(--navy)}
 .product h3{margin-top:22px;font-size:1rem;font-weight:600;line-height:1.35}
@@ -355,6 +458,7 @@ section{scroll-margin-top:92px}
   margin-top:18px;padding-top:14px;border-top:1px solid var(--hair);
   font-weight:600;font-size:1.02rem;display:flex;align-items:center;gap:8px;
 }
+.product .price::before{content:"";width:14px;height:2px;background:var(--lime);flex:none}
 .shop-note{margin-top:32px;font-size:.92rem;color:var(--slate)}
 @media (max-width:960px){.shop-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.shop-grid{grid-template-columns:1fr}}
@@ -387,7 +491,11 @@ section{scroll-margin-top:92px}
   font-family:var(--sans);font-size:.85rem;font-weight:600;letter-spacing:.04em;color:var(--slate);
 }
 .reviews-note{margin-top:28px;font-size:.85rem;color:var(--slate)}
-.reviews-note a{color:var(--navy);text-underline-offset:3px}
+.reviews-note a{color:var(--navy);text-underline-offset:3px;transition:text-decoration-color 180ms var(--e-ui)}
+@media (hover:hover){
+  .reviews-note a:hover{text-decoration-color:var(--lime)}
+}
+.reviews-note a:focus-visible{text-decoration-color:var(--lime)}
 @media (max-width:720px){.review-lines{grid-template-columns:1fr}}
 
 /* ---------- footer ---------- */
@@ -421,7 +529,12 @@ section{scroll-margin-top:92px}
 .footer-link{
   display:inline-flex;align-items:center;min-height:44px;
   text-decoration:underline;text-underline-offset:3px;font-size:.95rem;
+  transition:text-decoration-color 180ms var(--e-ui);
 }
+@media (hover:hover){
+  .footer-link:hover{text-decoration-color:var(--lime)}
+}
+.footer-link:focus-visible{text-decoration-color:var(--lime)}
 .tel-link{
   display:inline-flex;align-items:center;min-height:44px;
   font-size:1.15rem;font-weight:600;text-decoration:none;
@@ -441,6 +554,37 @@ section{scroll-margin-top:92px}
 }
 @media (max-width:960px){.footer-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.footer-grid{grid-template-columns:1fr}}
+
+/* ---------- motion ---------- */
+/* Everything below runs only when .js-motion is set on <html>, which the script
+   adds only when the visitor has not asked for reduced motion. Base cascade
+   never hides content. Header and nav never animate. */
+
+@keyframes m-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes m-draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes m-wipe{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes m-settle{from{transform:scale(1.06)}to{transform:none}}
+@keyframes m-fade{from{opacity:0}to{opacity:1}}
+
+/* Hero entrance: 4-step settle, then the signature lime rule draws under the h1 */
+.js-motion .hero h1{animation:m-rise 700ms var(--e-settle) 60ms both}
+.js-motion .hero-sub{animation:m-rise 700ms var(--e-settle) 150ms both}
+.js-motion .hero-ctas{animation:m-rise 700ms var(--e-settle) 240ms both}
+.js-motion .route-widget{animation:m-rise 700ms var(--e-settle) 330ms both}
+.js-motion .hero h1::after{animation:m-draw 640ms var(--e-settle) 480ms both}
+
+/* Hero photo: bottom-up inset wipe with a slow inner settle, caption follows */
+.js-motion .hero-photo{animation:m-wipe 1000ms var(--e-expo) 560ms both}
+.js-motion .hero-photo img{animation:m-settle 1400ms var(--e-expo) 560ms both}
+.js-motion .hero-art figcaption{animation:m-fade 620ms var(--e-ui) 900ms both}
+
+/* Scroll reveals: three moments only, play once */
+.js-motion [data-reveal]{opacity:0;transform:translateY(12px);will-change:opacity,transform}
+.js-motion [data-reveal].is-in{
+  opacity:1;transform:none;
+  transition:opacity 620ms var(--e-ui),transform 720ms var(--e-settle);
+  transition-delay:calc(min(var(--i,0),4)*70ms);
+}
 </style>
 </head>
 <body id="top">
@@ -494,12 +638,23 @@ section{scroll-margin-top:92px}
         </div>
       </div>
       <figure class="hero-art">
-        <!-- Commissioned photo slot: the actual storefront, the counter, or a garment being hand pressed -->
-        <div class="hero-photo">
-          <span>Photo to commission: the Glenforest storefront at 3309 Yonge St</span>
+        <!-- At build: replace with a commissioned photo of the actual counter at 3309 Yonge -->
+        <div class="ph hero-photo">
+          <img src="img/drycleaner-at-work.jpg" width="1000" height="1500"
+            alt="A cleaner at work among hanging garments in the shop"
+            loading="eager" fetchpriority="high">
         </div>
         <figcaption><strong>Returned pressed, on hangers,</strong> on your route day.</figcaption>
       </figure>
+    </div>
+    <div class="wrap">
+      <ul class="fact-rail" aria-label="Glenforest at a glance">
+        <li>60+ years family run</li>
+        <li>Toronto's first wet cleaning specialist</li>
+        <li>Miele certified</li>
+        <li>Tuesday and Friday valet</li>
+        <li>100% toxic free</li>
+      </ul>
     </div>
   </section>
 
@@ -532,6 +687,13 @@ section{scroll-margin-top:92px}
         <h2>Everything in your closet, cared for properly.</h2>
         <p class="lede">From the everyday shirt to the once in a lifetime gown, each piece gets the process it actually needs.</p>
       </div>
+      <figure class="services-photo" data-reveal>
+        <div class="ph">
+          <img src="img/shirts-row-pressed.jpg" width="1600" height="1067"
+            alt="A row of pressed dress shirts hanging in order" loading="lazy">
+        </div>
+        <figcaption>Pressed, on hangers, sorted for the Tuesday and Friday routes.</figcaption>
+      </figure>
       <ul class="services-list">
         <li>
           <h3>Wet Cleaning</h3>
@@ -558,6 +720,24 @@ section{scroll-margin-top:92px}
           <p>Patient, museum minded care for the pieces you could never replace.</p>
         </li>
       </ul>
+    </div>
+  </section>
+
+  <!-- FABRICS -->
+  <section class="fabrics" aria-label="Fabrics in our care">
+    <div class="wrap">
+      <p class="eyebrow">On the rail this week</p>
+      <ul class="fabric-row">
+        <li>Silk</li>
+        <li>Cashmere</li>
+        <li>Wool</li>
+        <li>Lace</li>
+        <li>Linen</li>
+        <li>Denim</li>
+        <li>Down</li>
+        <li>Leather</li>
+      </ul>
+      <p class="fabric-note">Each one cleaned in water, matched to the fibre.</p>
     </div>
   </section>
 
@@ -597,6 +777,47 @@ section{scroll-margin-top:92px}
     </div>
   </section>
 
+  <!-- CRAFT 4-UP -->
+  <section class="section craft" aria-label="The Glenforest method">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">The Glenforest method</p>
+        <h2>Inspect to deliver.</h2>
+        <p class="lede">Six decades in, the routine has not changed.</p>
+      </div>
+      <div class="craft-grid">
+        <figure class="tile" data-reveal style="--i:0">
+          <div class="ph">
+            <img src="img/wool-grey-macro.jpg" width="1600" height="1200"
+              alt="Grey wool suiting examined up close" loading="lazy">
+          </div>
+          <figcaption>Inspect</figcaption>
+        </figure>
+        <figure class="tile" data-reveal style="--i:1">
+          <div class="ph">
+            <img src="img/shirt-white-hanger-focus.jpg" width="1600" height="1067"
+              alt="A freshly cleaned white shirt on a hanger" loading="lazy">
+          </div>
+          <figcaption>Clean</figcaption>
+        </figure>
+        <figure class="tile" data-reveal style="--i:2">
+          <div class="ph">
+            <img src="img/iron-on-blue-cloth.jpg" width="1560" height="1200"
+              alt="An iron gliding across blue cloth" loading="lazy">
+          </div>
+          <figcaption>Press</figcaption>
+        </figure>
+        <figure class="tile" data-reveal style="--i:3">
+          <div class="ph">
+            <img src="img/white-van-open.jpg" width="1600" height="1067"
+              alt="The delivery van open and loaded for the route" loading="lazy">
+          </div>
+          <figcaption>Deliver</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- WET CLEANING STORY + ABOUT -->
   <section class="section" id="care">
     <div class="wrap story-grid">
@@ -613,12 +834,21 @@ section{scroll-margin-top:92px}
           <li>Every garment hand pressed and finished before it goes home</li>
         </ul>
       </div>
-      <aside class="about-aside" id="about">
-        <h3>The Zachos family</h3>
-        <p>Glenforest has been family run at Yonge and Lawrence for over 60 years. Generations of the Zachos family have stood behind the same counter, learning fibres, finishes and the neighbourhood's wardrobes by name.</p>
-        <p>Some customers have been bringing us their clothes since they were children. We take that as the review that matters most.</p>
-        <p class="motto">"May your worst problem be a stain on your clothes."</p>
-      </aside>
+      <div class="story-side">
+        <figure class="editorial" data-reveal>
+          <div class="ph">
+            <img src="img/tailor-measuring-fabric.jpg" width="1200" height="1500"
+              alt="Hands measuring fabric with a tape at the bench" loading="lazy">
+          </div>
+          <figcaption>Every garment is read by hand, fibre and finish, before we choose its process.</figcaption>
+        </figure>
+        <aside class="about-aside" id="about">
+          <h3>The Zachos family</h3>
+          <p>Glenforest has been family run at Yonge and Lawrence for over 60 years. Generations of the Zachos family have stood behind the same counter, learning fibres, finishes and the neighbourhood's wardrobes by name.</p>
+          <p>Some customers have been bringing us their clothes since they were children. We take that as the review that matters most.</p>
+          <p class="motto">"May your worst problem be a stain on your clothes."</p>
+        </aside>
+      </div>
     </div>
   </section>
 
@@ -759,6 +989,27 @@ section{scroll-margin-top:92px}
   document.querySelectorAll('.site-nav a').forEach(function(a){
     a.addEventListener('click', function(){ toggle.checked = false; });
   });
+})();
+
+(function(){
+  // Motion: opt in only when the visitor has not asked for reduced motion.
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('js-motion');
+  var targets = document.querySelectorAll('[data-reveal]');
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.add('is-in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      el.classList.add('is-in');
+      io.unobserve(el); // play once, never replay
+      el.addEventListener('transitionend', function(){ el.style.willChange = 'auto'; }, {once:true});
+    });
+  }, {threshold:.18, rootMargin:'0px 0px -10% 0px'});
+  targets.forEach(function(el){ io.observe(el); });
 })();
 </script>
 

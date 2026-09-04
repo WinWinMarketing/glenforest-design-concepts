@@ -10,7 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400..600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* The Navy Standard: dark luxury in the house colors. Navy grounds, lime kept for action. */
+/* The Navy Standard: dark luxury in the house colors. Navy grounds, lime kept for action.
+   Photography pass: one moody shoot feel via desaturation + a 12 percent navy multiply on every image. */
 :root{
   --navy:#101b45;
   --navy-deep:#0c1330;
@@ -23,6 +24,9 @@
   --sans:"Public Sans","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
   --wrap:1120px;
   --pad:clamp(1.25rem,4vw,2.5rem);
+  --e-settle:cubic-bezier(.22,1,.36,1);
+  --e-expo:cubic-bezier(.16,1,.3,1);
+  --e-ui:cubic-bezier(.4,0,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -51,7 +55,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,label:focus-visible{
 
 /* ---------- type ---------- */
 h1,h2,h3{font-family:var(--serif);font-weight:500;font-optical-sizing:auto;color:var(--ink)}
-h1{font-size:clamp(2.7rem,5.8vw,4.5rem);line-height:1.04;letter-spacing:-.015em}
+h1{font-size:clamp(2.25rem,6vw,4.5rem);line-height:1.04;letter-spacing:-.015em}
 h2{font-size:clamp(1.9rem,3.4vw,2.75rem);line-height:1.12;letter-spacing:-.01em;max-width:24ch}
 h3{font-size:1.25rem;line-height:1.3}
 p{max-width:64ch}
@@ -61,15 +65,42 @@ p{max-width:64ch}
 .eyebrow::before{content:"";width:28px;height:1px;background:var(--peri);opacity:.55;flex:none}
 .lede{font-size:clamp(1.05rem,1.5vw,1.2rem);color:var(--peri);line-height:1.65}
 
+/* ---------- photography treatment (concept-wide) ---------- */
+.ph{position:relative;overflow:hidden;background:var(--navy)}
+.ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.72) contrast(1.05) brightness(.95)}
+.ph::after{content:"";position:absolute;inset:0;background:var(--navy);mix-blend-mode:multiply;opacity:.12;pointer-events:none}
+
 /* ---------- buttons ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
   min-height:48px;padding:.8rem 1.6rem;border-radius:6px;
   font-family:var(--sans);font-weight:600;font-size:.95rem;letter-spacing:.01em;
   text-decoration:none;cursor:pointer;border:1px solid transparent;
-  transition:filter .18s ease,background-color .18s ease,border-color .18s ease}
+  transition:filter 140ms var(--e-ui),transform 140ms var(--e-ui),background-color 140ms var(--e-ui),border-color 140ms var(--e-ui)}
 .btn-lime{background:var(--lime);color:var(--navy-deep)}
-.btn-lime:hover{filter:brightness(1.07)}
+@media (hover:hover){
+  .btn-lime:hover{filter:brightness(1.04);transform:translateY(-1px)}
+}
+.btn-lime:focus-visible{filter:brightness(1.04);transform:translateY(-1px)}
+
+/* ---------- underline links: draw left to right, retract to the right ---------- */
+.link-underline{
+  position:relative;display:inline-flex;align-items:center;min-height:44px;
+  color:var(--peri);text-decoration:none;font-size:.95rem;
+  transition:color 180ms var(--e-ui)}
+.link-underline::before{
+  content:"";position:absolute;left:0;right:0;bottom:9px;height:1px;
+  background:var(--hair)}
+.link-underline::after{
+  content:"";position:absolute;left:0;right:0;bottom:9px;height:1px;
+  background:var(--lime);transform:scaleX(0);transform-origin:100% 50%;
+  transition:transform 260ms var(--e-settle)}
+@media (hover:hover){
+  .link-underline:hover{color:var(--ink)}
+  .link-underline:hover::after{transform:scaleX(1);transform-origin:0 50%}
+}
+.link-underline:focus-visible{color:var(--ink)}
+.link-underline:focus-visible::after{transform:scaleX(1);transform-origin:0 50%}
 
 /* ---------- header ---------- */
 .site-head{
@@ -81,13 +112,14 @@ p{max-width:64ch}
 .brand{
   font-family:var(--serif);font-weight:600;font-size:1.02rem;letter-spacing:.34em;
   text-decoration:none;color:var(--ink);margin-right:auto;padding:.6rem 0;white-space:nowrap}
-.menu-t{position:absolute;opacity:0;pointer-events:none}
+.menu-t{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .nav{display:flex;align-items:center;gap:.1rem}
 .nav a{
   display:inline-flex;align-items:center;min-height:44px;padding:.5rem .85rem;
   color:var(--peri);text-decoration:none;font-size:.92rem;font-weight:500;
   transition:color .15s ease}
-.nav a:hover{color:var(--ink)}
+@media (hover:hover){.nav a:hover{color:var(--ink)}}
+.nav a:focus-visible{color:var(--ink)}
 .nav-book{display:none}
 .head-cta{margin-left:.5rem;padding:.65rem 1.25rem;min-height:44px}
 .burger{display:none;width:44px;height:44px;cursor:pointer;position:relative;flex:none}
@@ -125,17 +157,33 @@ p{max-width:64ch}
 
 /* ---------- hero ---------- */
 .hero{
-  background:var(--navy-deep);
-  padding-block:clamp(4.5rem,9vw,8rem) clamp(4.5rem,9vw,7.5rem)}
+  position:relative;overflow:hidden;background:var(--navy-deep);
+  padding-block:clamp(4.5rem,9vw,8rem) clamp(3rem,6vw,4.5rem)}
+.hero-bg{position:absolute;inset:0;margin:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;filter:saturate(.68) contrast(1.06) brightness(.95)}
+.hero-scrim{position:absolute;inset:0;background:rgba(12,19,48,.82)}
+.hero .wrap{position:relative;z-index:1}
 .hero-grid{display:grid;gap:clamp(2.5rem,5vw,4.5rem);align-items:center}
 @media (min-width:940px){.hero-grid{grid-template-columns:1.08fr .92fr}}
 .hero-copy{display:grid;gap:1.6rem;justify-items:start}
-.hero-copy h1{max-width:14ch}
+.mask{display:block;overflow:hidden;padding-bottom:.07em;margin-bottom:-.07em}
+.mline{display:block}
 .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.6rem;margin-top:.5rem}
+
+.fact-rail{
+  list-style:none;margin-top:clamp(2.75rem,6vw,4.5rem);padding-top:1.35rem;
+  border-top:1px solid var(--hair);
+  display:flex;flex-wrap:wrap;align-items:center;gap:.55rem 0;
+  font-size:.8rem;letter-spacing:.045em;color:var(--peri)}
+.fact-rail li{display:inline-flex;align-items:center;line-height:1.4}
+.fact-rail li + li::before{
+  content:"";width:1px;height:11px;background:var(--hair);
+  margin-inline:1.1rem;flex:none}
 
 .route-card{
   border:1px solid var(--hair);border-radius:12px;
-  background:rgba(16,27,69,.55);
+  background:rgba(12,19,48,.68);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   padding:clamp(1.6rem,3vw,2.4rem);
   display:grid;gap:1.25rem}
 .route-h{font-size:1.15rem;letter-spacing:0;max-width:none}
@@ -174,6 +222,19 @@ p{max-width:64ch}
   .trust li:nth-child(even){border-left:1px solid var(--hair-soft)}
 }
 
+/* ---------- craft 4-up ---------- */
+.craft-grid{list-style:none;display:grid;gap:1.25rem 1.25rem;grid-template-columns:repeat(2,1fr)}
+@media (min-width:940px){.craft-grid{grid-template-columns:repeat(4,1fr);gap:1.5rem}}
+.craft-grid figure{margin:0;display:grid;gap:.8rem}
+.craft-grid .ph{aspect-ratio:4/5;border:1px solid var(--hair-soft)}
+.craft-grid figcaption{
+  font-size:.74rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--peri);display:flex;align-items:baseline;gap:.7rem}
+.craft-grid figcaption .n{font-family:var(--serif);font-weight:400;letter-spacing:.02em;color:var(--ink);font-size:.9rem}
+
+/* ---------- chapter separator ---------- */
+.chapter{margin:0;width:100%;height:clamp(280px,44vw,560px)}
+
 /* ---------- services: rate card ---------- */
 .svc-grid{display:grid;gap:0 4rem}
 @media (min-width:880px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
@@ -195,7 +256,7 @@ p{max-width:64ch}
   display:flex;flex-wrap:wrap;align-items:center;gap:1.25rem;justify-content:space-between}
 .valet-note p{color:var(--peri);font-size:.97rem}
 
-/* ---------- care story ---------- */
+/* ---------- care story: editorial split ---------- */
 .care-grid{display:grid;gap:clamp(2.5rem,6vw,5rem);align-items:center}
 @media (min-width:940px){.care-grid{grid-template-columns:1.05fr .95fr}}
 .care-copy{display:grid;gap:1.25rem}
@@ -207,15 +268,24 @@ p{max-width:64ch}
   color:var(--ink);font-weight:500;font-size:.98rem}
 .care-list li:last-child{border-bottom:1px solid var(--hair-soft)}
 .care-art{display:flex;justify-content:center}
-.photo-slot{
-  width:min(100%,400px);aspect-ratio:4/5;
-  border:1px solid var(--hair);background:var(--navy);
-  display:grid;align-content:center;justify-items:center;gap:.7rem;
-  padding:2.5rem;text-align:center}
-.photo-slot strong{font-family:var(--serif);font-weight:500;font-size:1.15rem;color:var(--ink)}
-.photo-slot p{color:var(--peri);font-size:.92rem;max-width:30ch}
+.care-photo{width:min(100%,430px);margin:0;display:grid;gap:.9rem}
+.care-frame{border:1px solid var(--hair);padding:.85rem;background:var(--navy-deep)}
+.care-photo .ph{aspect-ratio:3/4}
+.care-photo figcaption{font-size:.85rem;color:var(--peri);line-height:1.55;max-width:40ch}
+
+/* ---------- fabric word-grid ---------- */
+.fabric-grid{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);margin-top:clamp(2rem,4vw,3rem)}
+@media (min-width:880px){.fabric-grid{grid-template-columns:repeat(4,1fr)}}
+.fabric-grid li{
+  font-family:var(--serif);font-size:clamp(1.7rem,3.2vw,2.6rem);line-height:1.15;
+  color:var(--peri);border-top:1px solid var(--hair-soft);padding:1.1rem .25rem 1.3rem}
+.fabric-grid li:nth-child(odd){color:var(--ink)}
+.fabric-grid li:nth-child(3n){font-style:italic}
+.fabric-note{margin-top:clamp(1.75rem,3vw,2.5rem);color:var(--peri);font-size:.95rem}
 
 /* ---------- shop ---------- */
+.shop-band{aspect-ratio:5/2;border-radius:10px;border:1px solid var(--hair);margin-bottom:1.25rem}
+@media (max-width:559px){.shop-band{aspect-ratio:16/9}}
 .shop-grid{display:grid;gap:1.25rem}
 @media (min-width:1080px){.shop-grid{grid-template-columns:repeat(4,1fr)}}
 @media (min-width:560px) and (max-width:1079px){.shop-grid{grid-template-columns:repeat(2,1fr)}}
@@ -258,12 +328,10 @@ p{max-width:64ch}
 .tel{
   display:inline-flex;align-items:center;min-height:44px;
   color:var(--ink);text-decoration:none;font-family:var(--serif);
-  font-size:1.35rem;font-weight:500;letter-spacing:.01em}
-.tel:hover{color:var(--lime)}
-.link-underline{
-  display:inline-flex;align-items:center;min-height:44px;
-  color:var(--peri);text-decoration:underline;text-underline-offset:4px;font-size:.95rem}
-.link-underline:hover{color:var(--ink)}
+  font-size:1.35rem;font-weight:500;letter-spacing:.01em;
+  transition:color 180ms var(--e-ui)}
+@media (hover:hover){.tel:hover{color:var(--lime)}}
+.tel:focus-visible{color:var(--lime)}
 .foot-h{
   font-family:var(--sans);font-size:.92rem;font-weight:600;letter-spacing:.02em;
   color:var(--ink);margin-bottom:1.25rem}
@@ -281,10 +349,55 @@ p{max-width:64ch}
 .foot-bottom p{color:var(--peri);font-size:.85rem}
 .foot-bottom .tagline{font-size:.95rem;margin:0}
 
-/* ---------- motion ---------- */
+/* ---------- motion: all hidden initial states live behind .js-motion, set by JS
+   only when the visitor has not asked for reduced motion ---------- */
+
+/* reveal system */
+.js-motion [data-reveal]{opacity:0;transform:translateY(12px);will-change:opacity,transform}
+.js-motion [data-reveal].is-in{
+  opacity:1;transform:none;
+  transition:opacity 620ms var(--e-ui),transform 720ms var(--e-settle);
+  transition-delay:calc(min(var(--i,0),4)*70ms)}
+
+/* image wipe (care editorial photo only) */
+.js-motion [data-wipe]{clip-path:inset(0 0 100% 0)}
+.js-motion [data-wipe].is-in{clip-path:inset(0 0 0 0);transition:clip-path 1000ms var(--e-expo)}
+.js-motion [data-wipe] img{transform:scale(1.06)}
+.js-motion [data-wipe].is-in img{transform:scale(1);transition:transform 1400ms var(--e-expo)}
+
+/* masked h1: the only masked heading on the page */
+.js-motion .mline{transform:translateY(105%)}
+.js-motion .hero.is-in .mline{transform:none;transition:transform 800ms var(--e-expo)}
+.js-motion .hero.is-in .mask + .mask .mline{transition-delay:80ms}
+
+/* signature: the valet route draws itself */
+.js-motion .route-line line{stroke-dasharray:304;stroke-dashoffset:304}
+.js-motion .route-line.is-in line{stroke-dashoffset:0;transition:stroke-dashoffset 900ms var(--e-expo) 400ms}
+.js-motion .route-line circle{transform:scale(0);transform-box:fill-box;transform-origin:center}
+.js-motion .route-line.is-in circle{transform:scale(1);transition:transform 380ms var(--e-settle);transition-delay:1120ms}
+.js-motion .route-line.is-in circle:nth-of-type(2){transition-delay:1240ms}
+.js-motion .route-line text{opacity:0}
+.js-motion .route-line.is-in text{opacity:1;transition:opacity 500ms var(--e-ui) 1360ms}
+
+/* trust icons stroke-draw (4 icons, 90ms stagger) */
+.js-motion .trust svg :is(circle,path){stroke-dasharray:1;stroke-dashoffset:1}
+.js-motion .trust.is-in svg :is(circle,path){stroke-dashoffset:0;transition:stroke-dashoffset 600ms var(--e-expo)}
+.js-motion .trust.is-in li:nth-child(2) svg :is(circle,path){transition-delay:90ms}
+.js-motion .trust.is-in li:nth-child(3) svg :is(circle,path){transition-delay:180ms}
+.js-motion .trust.is-in li:nth-child(4) svg :is(circle,path){transition-delay:270ms}
+
+/* section bands: quiet background cross-fade on entry, no movement */
+.js-motion .sec-b{background-color:var(--navy-deep);transition:background-color 800ms var(--e-ui)}
+.js-motion .sec-b.is-in{background-color:var(--navy)}
+
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none !important;transition:none !important}
   html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important
+  }
 }
 </style>
 </head>
@@ -315,36 +428,53 @@ p{max-width:64ch}
 
 <main id="main">
 
-  <!-- HERO -->
+  <!-- HERO: full-bleed low-key rail photo under a flat navy scrim -->
   <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">Dry and wet cleaning, Yonge and Lawrence</p>
-        <h1>Wet cleaning, held to a higher standard.</h1>
-        <p class="lede">Toronto's first wet cleaning specialist, family run for over 60 years. Miele certified, 100 percent toxic-free, and exacting about every seam, stain, and press.</p>
-        <div class="cta-row">
-          <a class="btn btn-lime" href="tel:+14164886717">Book a Pickup</a>
-          <a class="link-underline" href="#services">See services and prices</a>
+    <figure class="hero-bg">
+      <img src="img/rail-black-garments.jpg" width="1600" height="1067" alt="Dark garments hanging on a rail in low light" loading="eager" fetchpriority="high">
+    </figure>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Dry and wet cleaning, Yonge and Lawrence</p>
+          <h1>
+            <span class="mask"><span class="mline">Wet cleaning, held</span></span>
+            <span class="mask"><span class="mline">to a higher standard.</span></span>
+          </h1>
+          <p class="lede" data-reveal style="--i:1">Toronto's first wet cleaning specialist, family run for over 60 years. Miele certified, 100 percent toxic-free, and exacting about every seam, stain, and press.</p>
+          <div class="cta-row" data-reveal style="--i:2">
+            <a class="btn btn-lime" href="tel:+14164886717">Book a Pickup</a>
+            <a class="link-underline" href="#services">See services and prices</a>
+          </div>
         </div>
+
+        <aside class="route-card" aria-label="Valet pickup and delivery">
+          <h2 class="route-h">Valet pickup and delivery</h2>
+          <svg class="route-line" viewBox="0 0 320 44" aria-hidden="true">
+            <line x1="8" y1="18" x2="312" y2="18" stroke="rgba(154,163,199,.35)" stroke-width="1"/>
+            <circle cx="96" cy="18" r="5" fill="none" stroke="#9aa3c7" stroke-width="1.5"/>
+            <circle cx="224" cy="18" r="5" fill="none" stroke="#9aa3c7" stroke-width="1.5"/>
+            <text x="96" y="40" text-anchor="middle" fill="#9aa3c7" font-family="Public Sans, Arial, sans-serif" font-size="9.5" letter-spacing="2.5">TUE</text>
+            <text x="224" y="40" text-anchor="middle" fill="#9aa3c7" font-family="Public Sans, Arial, sans-serif" font-size="9.5" letter-spacing="2.5">FRI</text>
+          </svg>
+          <p class="route-copy">Two weekly routes, Tuesday and Friday. Leave your personalized garment bag at the door; it returns pressed on your next route day.</p>
+          <form class="route-form" id="route-form">
+            <label class="sr-only" for="pc">Postal code</label>
+            <input id="pc" name="pc" type="text" autocomplete="postal-code" placeholder="Postal code, e.g. M4N 1J7" required>
+            <button class="btn btn-lime" type="submit">Find my pickup day</button>
+          </form>
+          <p class="route-out" id="route-out" role="status"></p>
+        </aside>
       </div>
 
-      <aside class="route-card" aria-label="Valet pickup and delivery">
-        <h2 class="route-h">Valet pickup and delivery</h2>
-        <svg class="route-line" viewBox="0 0 320 44" aria-hidden="true">
-          <line x1="8" y1="18" x2="312" y2="18" stroke="rgba(154,163,199,.35)" stroke-width="1"/>
-          <circle cx="96" cy="18" r="5" fill="none" stroke="#9aa3c7" stroke-width="1.5"/>
-          <circle cx="224" cy="18" r="5" fill="none" stroke="#9aa3c7" stroke-width="1.5"/>
-          <text x="96" y="40" text-anchor="middle" fill="#9aa3c7" font-family="Public Sans, Arial, sans-serif" font-size="9.5" letter-spacing="2.5">TUE</text>
-          <text x="224" y="40" text-anchor="middle" fill="#9aa3c7" font-family="Public Sans, Arial, sans-serif" font-size="9.5" letter-spacing="2.5">FRI</text>
-        </svg>
-        <p class="route-copy">Two weekly routes, Tuesday and Friday. Leave your personalized garment bag at the door; it returns pressed on your next route day.</p>
-        <form class="route-form" id="route-form">
-          <label class="sr-only" for="pc">Postal code</label>
-          <input id="pc" name="pc" type="text" autocomplete="postal-code" placeholder="Postal code, e.g. M4N 1J7" required>
-          <button class="btn btn-lime" type="submit">Find my pickup day</button>
-        </form>
-        <p class="route-out" id="route-out" role="status"></p>
-      </aside>
+      <ul class="fact-rail" data-reveal style="--i:3" aria-label="Glenforest at a glance">
+        <li>Family run for over 60 years</li>
+        <li>Toronto's first wet cleaning specialist</li>
+        <li>Miele certified</li>
+        <li>Tuesday and Friday valet</li>
+        <li>100 percent toxic-free</li>
+      </ul>
     </div>
   </section>
 
@@ -354,25 +484,25 @@ p{max-width:64ch}
       <ul class="trust">
         <li>
           <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/>
+            <circle cx="12" cy="12" r="9" pathLength="1"/><circle cx="12" cy="12" r="4.5" pathLength="1"/>
           </svg>
           <span><b>Family run</b> for over 60 years</span>
         </li>
         <li>
           <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 3.5C12 3.5 5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0C18.5 10.5 12 3.5 12 3.5Z"/>
+            <path d="M12 3.5C12 3.5 5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0C18.5 10.5 12 3.5 12 3.5Z" pathLength="1"/>
           </svg>
           <span>Toronto's <b>first wet cleaning</b> specialist</span>
         </li>
         <li>
           <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/>
+            <circle cx="12" cy="12" r="9" pathLength="1"/><path d="M8.5 12.2l2.4 2.4 4.6-5" pathLength="1"/>
           </svg>
           <span><b>Miele certified</b> process</span>
         </li>
         <li>
           <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 20C4.5 12.5 8 4.5 20 4c.5 12-4 15.5-8 16Z"/><path d="M12 20c0-5 2.5-8.5 6-11"/>
+            <path d="M12 20C4.5 12.5 8 4.5 20 4c.5 12-4 15.5-8 16Z" pathLength="1"/><path d="M12 20c0-5 2.5-8.5 6-11" pathLength="1"/>
           </svg>
           <span><b>100 percent toxic-free</b> cleaning</span>
         </li>
@@ -380,8 +510,45 @@ p{max-width:64ch}
     </div>
   </section>
 
+  <!-- CRAFT 4-UP -->
+  <section class="sec sec-a" aria-label="The work">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Behind the counter</p>
+        <h2>The work itself.</h2>
+        <p class="lede">Every garment moves through four stations at Yonge and Lawrence.</p>
+      </div>
+      <ul class="craft-grid">
+        <li data-reveal style="--i:0">
+          <figure>
+            <div class="ph"><img src="img/jackets-steel-rack.jpg" width="800" height="1200" alt="Jackets checked in on a black steel rack" loading="lazy" decoding="async"></div>
+            <figcaption><span class="n">01</span>Inspect</figcaption>
+          </figure>
+        </li>
+        <li data-reveal style="--i:1">
+          <figure>
+            <div class="ph"><img src="img/shears-cutting-fabric.jpg" width="800" height="1200" alt="A hand guiding shears through fabric at the tailoring bench" loading="lazy" decoding="async"></div>
+            <figcaption><span class="n">02</span>Mend</figcaption>
+          </figure>
+        </li>
+        <li data-reveal style="--i:2">
+          <figure>
+            <div class="ph"><img src="img/steam-iron-in-hand.jpg" width="800" height="1200" alt="Hands working a steam iron, steam rising off the plate" loading="lazy" decoding="async"></div>
+            <figcaption><span class="n">03</span>Press</figcaption>
+          </figure>
+        </li>
+        <li data-reveal style="--i:3">
+          <figure>
+            <div class="ph"><img src="img/black-suit-by-window.jpg" width="800" height="1200" alt="A finished black suit jacket hanging by the window" loading="lazy" decoding="async"></div>
+            <figcaption><span class="n">04</span>Finish</figcaption>
+          </figure>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <!-- SERVICES -->
-  <section id="services" class="sec sec-a">
+  <section id="services" class="sec sec-b">
     <div class="wrap">
       <div class="sec-head">
         <h2>Everything in your closet, cared for properly.</h2>
@@ -416,8 +583,13 @@ p{max-width:64ch}
     </div>
   </section>
 
+  <!-- CHAPTER SEPARATOR: full bleed, no text -->
+  <figure class="chapter ph">
+    <img src="img/folding-dim-shop.jpg" width="1600" height="900" alt="Folding garments by lamplight in the dim shop" loading="lazy" decoding="async">
+  </figure>
+
   <!-- VALET -->
-  <section id="valet" class="sec sec-b">
+  <section id="valet" class="sec sec-a">
     <div class="wrap">
       <div class="sec-head">
         <h2>Leave the bag out Tuesday or Friday. We handle the rest.</h2>
@@ -446,8 +618,8 @@ p{max-width:64ch}
     </div>
   </section>
 
-  <!-- CARE STORY -->
-  <section id="care" class="sec sec-a">
+  <!-- CARE STORY: editorial split -->
+  <section id="care" class="sec sec-b">
     <div class="wrap care-grid">
       <div class="care-copy">
         <h2>Water, chosen over solvent.</h2>
@@ -461,11 +633,33 @@ p{max-width:64ch}
         </ul>
       </div>
       <div class="care-art">
-        <div class="photo-slot">
-          <strong>Commissioned photo</strong>
-          <p>Steam rising off the press at Yonge and Lawrence, or water beading on wool. Duotone into the navy palette; square corners.</p>
-        </div>
+        <figure class="care-photo">
+          <div class="care-frame">
+            <div class="ph" data-wipe>
+              <img src="img/satin-cream-folds.jpg" width="1200" height="1600" alt="Cream satin folded into deep shadow after finishing" loading="lazy" decoding="async">
+            </div>
+          </div>
+          <figcaption>Satin, finished and cooling. Cleaned in water matched to the fibre, so the shine stays the fibre's own.</figcaption>
+        </figure>
       </div>
+    </div>
+  </section>
+
+  <!-- FABRIC WORD-GRID -->
+  <section class="sec sec-a" aria-label="Fabrics we clean">
+    <div class="wrap">
+      <p class="eyebrow">Through the shop this week</p>
+      <ul class="fabric-grid">
+        <li>Silk</li>
+        <li>Cashmere</li>
+        <li>Wool</li>
+        <li>Lace</li>
+        <li>Linen</li>
+        <li>Denim</li>
+        <li>Down</li>
+        <li>Leather</li>
+      </ul>
+      <p class="fabric-note">If it hangs in your closet, we have cleaned one like it.</p>
     </div>
   </section>
 
@@ -476,8 +670,11 @@ p{max-width:64ch}
         <p class="eyebrow">Glenforest Reserve</p>
         <h2>Take the standard home.</h2>
       </div>
+      <figure class="ph shop-band">
+        <img src="img/folded-tees-on-black.jpg" width="1600" height="1067" alt="Folded garments squared away on a black counter" loading="lazy" decoding="async">
+      </figure>
       <div class="shop-grid">
-        <article class="prod">
+        <article class="prod" data-reveal style="--i:0">
           <svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true">
             <rect x="24" y="26" width="16" height="28" rx="3"/><rect x="28" y="15" width="8" height="11" rx="1.5"/><line x1="27" y1="12" x2="37" y2="12"/>
           </svg>
@@ -485,7 +682,7 @@ p{max-width:64ch}
           <p>Our in-house formula for treating stains the moment they happen.</p>
           <span class="price">$35</span>
         </article>
-        <article class="prod">
+        <article class="prod" data-reveal style="--i:1">
           <svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true">
             <rect x="28" y="10" width="8" height="24" rx="3"/><rect x="23" y="34" width="18" height="10" rx="2"/><line x1="26" y1="47" x2="26" y2="52"/><line x1="32" y1="47" x2="32" y2="52"/><line x1="38" y1="47" x2="38" y2="52"/>
           </svg>
@@ -493,7 +690,7 @@ p{max-width:64ch}
           <p>Natural bristles, gentle enough for silk and fine knits.</p>
           <span class="price">$35</span>
         </article>
-        <article class="prod">
+        <article class="prod" data-reveal style="--i:2">
           <svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true">
             <rect x="14" y="24" width="36" height="28" rx="2"/><line x1="14" y1="32" x2="50" y2="32"/><line x1="32" y1="24" x2="32" y2="52"/>
           </svg>
@@ -501,7 +698,7 @@ p{max-width:64ch}
           <p>The full ritual, boxed: solution, brush, and spotting bone.</p>
           <span class="price">$110</span>
         </article>
-        <article class="prod">
+        <article class="prod" data-reveal style="--i:3">
           <svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true">
             <circle cx="20" cy="32" r="7"/><circle cx="44" cy="32" r="7"/><rect x="24" y="29" width="16" height="6" rx="2"/>
           </svg>
@@ -598,6 +795,27 @@ p{max-width:64ch}
   for(var i=0;i<links.length;i++){
     links[i].addEventListener("click",function(){toggle.checked=false;});
   }
+})();
+
+/* Motion: one observer, one pass, nothing replays. */
+(function(){
+  if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if(!("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("js-motion");
+  var io=new IntersectionObserver(function(entries){
+    for(var i=0;i<entries.length;i++){
+      if(!entries[i].isIntersecting) continue;
+      entries[i].target.classList.add("is-in");
+      io.unobserve(entries[i].target);
+    }
+  },{threshold:.18,rootMargin:"0px 0px -10% 0px"});
+  var targets=document.querySelectorAll("[data-reveal],[data-wipe],.hero,.route-line,.trust,.sec-b");
+  for(var t=0;t<targets.length;t++){io.observe(targets[t]);}
+  document.addEventListener("transitionend",function(e){
+    if(e.target && e.target.hasAttribute && e.target.hasAttribute("data-reveal")){
+      e.target.style.willChange="auto";
+    }
+  });
 })();
 </script>
 </body>

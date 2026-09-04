@@ -28,6 +28,9 @@
   --radius:2px;      /* content surfaces: square, pressed-ticket */
   --radius-sm:12px;  /* interactive elements only */
   --wrap:1160px;
+  --e-settle:cubic-bezier(.22,1,.36,1);
+  --e-expo:cubic-bezier(.16,1,.3,1);
+  --e-ui:cubic-bezier(.4,0,.2,1);
   /* z scale: content 1, sticky 50, skip 100 */
 }
 
@@ -67,6 +70,25 @@ section{scroll-margin-top:88px}
 }
 .skip:focus{left:0}
 
+/* ---------- photography: one shoot, one treatment ---------- */
+/* warm brightness lift + 6 percent forest multiply unifies the mixed stock */
+.ph{
+  position:relative;overflow:hidden;
+  border-radius:var(--radius);
+  background:var(--cream);
+}
+.ph img{
+  width:100%;height:100%;object-fit:cover;
+  filter:brightness(1.02);
+}
+.ph::after{
+  content:"";position:absolute;inset:0;
+  background:var(--forest);mix-blend-mode:multiply;opacity:.06;
+  pointer-events:none;
+}
+.cap{margin-top:.65rem;font:italic 500 .93rem/1.55 var(--serif);color:var(--quiet)}
+.dark .cap{color:var(--sage)}
+
 /* ---------- buttons ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
@@ -78,12 +100,22 @@ section{scroll-margin-top:88px}
 .btn-bone{background:var(--bone);color:var(--forest)}
 .btn-bone:hover{background:#fffdf6}
 .link-quiet{
+  position:relative;
   display:inline-flex;align-items:center;min-height:48px;padding:.4rem .25rem;
   font:700 1rem var(--sans);color:var(--bone-dim);
-  text-decoration:underline;text-decoration-color:var(--sage);
+  text-decoration:underline;text-decoration-color:rgba(157,184,154,.45);
   text-underline-offset:5px;text-decoration-thickness:1.5px;
 }
-.link-quiet:hover{color:#ffffff}
+.link-quiet::after{
+  content:"";position:absolute;left:.25rem;right:.25rem;bottom:9px;height:1.5px;
+  background:var(--sage);transform:scaleX(0);transform-origin:100% 50%;
+}
+@media (hover:hover){
+  .link-quiet:hover{color:#ffffff}
+  .link-quiet:hover::after{transform:scaleX(1);transform-origin:0 50%}
+}
+.link-quiet:focus-visible{color:#ffffff}
+.link-quiet:focus-visible::after{transform:scaleX(1);transform-origin:0 50%}
 
 /* ---------- header ---------- */
 .site-head{
@@ -122,8 +154,8 @@ section{scroll-margin-top:88px}
 
 @media (max-width:940px){
   #nav-open{
-    display:block;position:absolute;opacity:0;
-    width:48px;height:48px;right:clamp(1.1rem,4.5vw,2.5rem);
+    display:block;position:absolute;width:1px;height:1px;
+    overflow:hidden;clip-path:inset(50%);
   }
   .burger{
     display:flex;flex-direction:column;justify-content:center;gap:5px;
@@ -150,16 +182,24 @@ section{scroll-margin-top:88px}
   .nav-cta .btn{width:100%;min-height:50px}
 }
 
-/* ---------- hero ---------- */
+/* ---------- hero: 55/45 split ---------- */
 .hero{
   position:relative;overflow:hidden;
   background:var(--forest);
   background-image:radial-gradient(120% 90% at 18% 8%,#26483750 0%,transparent 60%);
   color:var(--bone);
 }
-.hero-inner{position:relative;z-index:1;padding-block:clamp(4.25rem,9vw,7.25rem)}
+.hero-inner{
+  position:relative;z-index:1;
+  padding-block:clamp(3.5rem,7vw,5.75rem);
+  display:grid;gap:clamp(2.5rem,5vw,4rem);
+  grid-template-columns:1fr;align-items:center;
+}
+@media (min-width:980px){
+  .hero-inner{grid-template-columns:1.1fr .9fr}
+}
 .hero h1{
-  font-size:clamp(2.55rem,6vw,4.35rem);
+  font-size:clamp(2.45rem,4.8vw,3.9rem);
   line-height:1.04;color:var(--bone);max-width:14ch;
 }
 .hero .lede{
@@ -167,14 +207,21 @@ section{scroll-margin-top:88px}
   font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--bone-dim);
 }
 .hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:1.4rem;margin-top:2.1rem}
+.hero-photo{
+  margin:0;justify-self:center;width:100%;max-width:480px;
+  background:var(--cream);padding:10px;border-radius:26px;
+  box-shadow:0 30px 60px rgba(0,0,0,.28);
+}
+@media (min-width:980px){.hero-photo{justify-self:end}}
+.hero-photo .ph{border-radius:18px;aspect-ratio:4/5}
 .hero-art{
-  position:absolute;z-index:0;right:-6%;top:50%;
-  width:min(48vw,600px);color:var(--sage);opacity:.24;
-  transform:translateY(-56%) rotate(16deg);
+  position:absolute;z-index:0;left:-1%;bottom:-5%;
+  width:min(24vw,320px);color:var(--sage);opacity:.16;
   pointer-events:none;
 }
+.hero-art svg{width:100%;height:auto;aspect-ratio:1}
 @media (max-width:760px){
-  .hero-art{width:78vw;right:-32%;opacity:.13}
+  .hero-art{width:52vw;left:-18%;bottom:-3%;opacity:.1}
 }
 
 /* postal route widget */
@@ -197,17 +244,20 @@ section{scroll-margin-top:88px}
 .route-result{margin-top:1rem;font-weight:700;color:var(--forest)}
 .route-note{margin-top:.65rem;font-size:.875rem;color:var(--quiet)}
 
-/* trust strip, foot of hero */
+/* badge rail, foot of hero: quiet cream chips */
 .trust{position:relative;z-index:1;background:var(--ink)}
 .trust-inner{
   max-width:var(--wrap);margin-inline:auto;
-  padding:1.05rem clamp(1.1rem,4.5vw,2.5rem);
-  display:grid;gap:.8rem 2.5rem;
-  grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  padding:1.1rem clamp(1.1rem,4.5vw,2.5rem);
+  display:flex;flex-wrap:wrap;gap:.6rem .7rem;
 }
-.trust-item{display:flex;align-items:center;gap:.6rem}
-.trust-item svg{width:17px;height:17px;color:var(--sage);flex:none}
-.trust-item span{font:600 .92rem var(--sans);color:var(--bone)}
+.trust-item{
+  display:inline-flex;align-items:center;gap:.55rem;
+  background:var(--cream);color:var(--forest);
+  border-radius:10px;padding:.5rem .95rem;
+}
+.trust-item svg{width:16px;height:16px;color:var(--sage-deep);flex:none}
+.trust-item span{font:700 .86rem var(--sans);color:var(--forest)}
 
 /* ---------- shared section furniture ---------- */
 .section{padding-block:clamp(4.25rem,9vw,7.5rem)}
@@ -229,6 +279,9 @@ section{scroll-margin-top:88px}
 .care-copy p{max-width:62ch;color:var(--ink-soft)}
 .care-copy p + p{margin-top:1.15rem}
 .care-copy strong{color:var(--forest);font-weight:700}
+.care-side{display:grid;gap:1.5rem}
+.care-fig{margin:0}
+.care-fig .ph{aspect-ratio:3/2}
 
 .panel{
   background:var(--cream);
@@ -254,9 +307,35 @@ section{scroll-margin-top:88px}
   font:italic 500 1.08rem var(--serif);color:var(--quiet);
 }
 
+/* ---------- botanical gallery strip ---------- */
+.garden{
+  border-top:1px solid var(--hairline);
+  padding-block:clamp(3.5rem,7vw,5.5rem);
+}
+.garden-head{
+  display:flex;flex-wrap:wrap;align-items:baseline;
+  gap:.4rem 1.6rem;margin-bottom:1.9rem;
+}
+.garden h2{font-size:clamp(1.6rem,2.6vw,2.1rem);color:var(--forest)}
+.garden-line{font-size:1rem;color:var(--quiet)}
+.garden-grid{
+  display:grid;gap:1.1rem;grid-template-columns:1fr;align-items:center;
+}
+@media (min-width:700px){
+  .garden-grid{grid-template-columns:1.1fr .85fr 1.1fr}
+}
+.garden-fig{margin:0}
+.garden-fig .ph{aspect-ratio:3/2}
+.garden-fig.tall .ph{aspect-ratio:4/5}
+
 /* ---------- impact ledger ---------- */
-.impact{background:var(--forest);color:var(--bone)}
-.impact-inner{padding-block:clamp(3.75rem,7vw,5.75rem)}
+.impact{position:relative;overflow:hidden;background:var(--forest);color:var(--bone)}
+.impact-inner{position:relative;z-index:1;padding-block:clamp(3.75rem,7vw,5.75rem)}
+.impact-branch{
+  position:absolute;z-index:0;right:-30px;top:16%;
+  width:min(38vw,480px);height:auto;aspect-ratio:140/24;
+  color:var(--sage);opacity:.2;pointer-events:none;
+}
 .impact-lede{
   font:italic 500 clamp(1.3rem,2.4vw,1.65rem)/1.4 var(--serif);
   color:var(--bone);max-width:44ch;
@@ -286,6 +365,10 @@ section{scroll-margin-top:88px}
 .svc-tag{font:italic 500 .95rem var(--serif);color:var(--sage-deep);margin-top:.1rem}
 .svc-row > p{font-size:.98rem;color:var(--ink-soft)}
 
+/* ---------- full-bleed chapter separator ---------- */
+.chapter{margin:0;border-radius:0}
+.chapter img{width:100%;height:clamp(240px,42vw,520px);object-fit:cover}
+
 /* ---------- valet ---------- */
 .valet{background:var(--cream)}
 .valet-grid{
@@ -305,27 +388,32 @@ section{scroll-margin-top:88px}
 }
 .steps h3{font-size:1.3rem;color:var(--forest)}
 .steps p{margin-top:.45rem;font-size:.98rem;color:var(--ink-soft)}
-.photo-slot{margin:0}
-.photo-frame{
-  aspect-ratio:4 / 3;
-  background:var(--bone);
-  border:1px solid var(--hairline);border-radius:var(--radius);
-  display:grid;place-items:center;text-align:center;
-  padding:1.6rem;
-}
-.photo-frame span{max-width:24ch;font:italic 500 1.05rem/1.55 var(--serif);color:var(--quiet)}
-.photo-slot figcaption{margin-top:.8rem;font-size:.875rem;color:var(--quiet)}
+.photo-slot{margin:0;max-width:460px}
+.photo-slot .ph{aspect-ratio:4/5;background:var(--bone);border:1px solid var(--hairline)}
 .cadence{
   margin-top:2.4rem;
   font:italic 500 clamp(1.15rem,2vw,1.35rem) var(--serif);color:var(--forest);
 }
 
-/* ---------- shop ---------- */
+/* ---------- shop: the Reserve shelf ---------- */
 .shop{background:var(--forest)}
-.products{
-  display:grid;gap:1.3rem;margin-top:2.6rem;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+.shop-grid{
+  display:grid;gap:1.5rem;margin-top:2.6rem;
+  grid-template-columns:1fr;
 }
+@media (min-width:960px){
+  .shop-grid{grid-template-columns:.95fr 1.05fr;gap:1.7rem}
+}
+.shop-stills{
+  display:grid;gap:1.5rem 1.2rem;grid-template-columns:repeat(2,1fr);
+  align-content:start;
+}
+.still{margin:0}
+.still .ph{aspect-ratio:4/5}
+.products{
+  display:grid;gap:1.3rem;grid-template-columns:1fr;align-content:start;
+}
+@media (min-width:560px){.products{grid-template-columns:repeat(2,1fr)}}
 .product{
   background:var(--cream);color:var(--ink);
   border-radius:var(--radius);padding:1.55rem 1.45rem;
@@ -394,15 +482,57 @@ section{scroll-margin-top:88px}
 /* ---------- motion ---------- */
 @media (prefers-reduced-motion:no-preference){
   html{scroll-behavior:smooth}
-  .hero h1,.hero .lede,.hero-cta{animation:rise .85s cubic-bezier(.16,1,.3,1) both}
-  .hero .lede{animation-delay:.08s}
-  .hero-cta{animation-delay:.16s}
-  .route-card{animation:rise .85s cubic-bezier(.16,1,.3,1) .24s both}
-  @keyframes rise{from{opacity:0;transform:translateY(16px)}}
+  /* hero entrance: one sequence, five items, done inside 1.4s */
+  .hero h1,.hero .lede,.hero-cta,.route-card,.hero-photo{
+    animation:rise .85s cubic-bezier(.16,1,.3,1) both;
+  }
+  .hero h1{animation-delay:.06s}
+  .hero .lede,.hero-photo{animation-delay:.18s}
+  .hero-cta{animation-delay:.30s}
+  .route-card{animation-delay:.46s}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}}
+  /* signature: the sprig grows from its root */
+  .hero-art svg{
+    transform-origin:bottom center;
+    animation:sprig-grow 1400ms var(--e-expo) .3s both;
+  }
+  @keyframes sprig-grow{from{transform:scaleY(.86) rotate(-3deg)}}
   .btn{transition:background .2s ease-out,transform .25s cubic-bezier(.16,1,.3,1)}
   .btn:hover{transform:translateY(-1px)}
   .burger span{transition:transform .25s ease-out,opacity .2s ease-out}
   .site-nav a:not(.btn){transition:background .15s ease-out}
+  .link-quiet::after{transition:transform 260ms var(--e-settle)}
+  .product{transition:transform .3s var(--e-settle)}
+  @media (hover:hover){.product:hover{transform:translateY(-2px)}}
+}
+
+/* IO reveal system: states exist only once JS adds .js-motion */
+.js-motion [data-reveal]{opacity:0;transform:translateY(12px);will-change:opacity,transform}
+.js-motion [data-reveal].is-in{
+  opacity:1;transform:none;
+  transition:opacity 620ms var(--e-ui),transform 720ms var(--e-settle);
+  transition-delay:calc(min(var(--i,0),4)*70ms);
+}
+.js-motion [data-wipe]{clip-path:inset(0 0 100% 0)}
+.js-motion [data-wipe] img{transform:scale(1.06)}
+.js-motion [data-wipe].is-in{clip-path:inset(0 0 0 0);transition:clip-path 1000ms var(--e-expo)}
+.js-motion [data-wipe].is-in img{transform:none;transition:transform 1400ms var(--e-expo)}
+/* trust chips: leaves unfurl, text holds still */
+.js-motion [data-unfurl] .trust-item svg{transform:rotate(-8deg) scale(.9);transform-origin:50% 85%}
+.js-motion [data-unfurl].is-in .trust-item svg{
+  transform:none;
+  transition:transform 520ms var(--e-settle);
+  transition-delay:calc(var(--i,0)*80ms);
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
 }
 </style>
 </head>
@@ -494,40 +624,53 @@ section{scroll-margin-top:88px}
 <main>
 
 <section class="hero dark" id="top" aria-label="Welcome">
-  <svg class="hero-art" viewBox="0 0 48 48" aria-hidden="true"><use href="#sprig"/></svg>
+  <div class="hero-art" aria-hidden="true">
+    <svg viewBox="0 0 48 48"><use href="#sprig"/></svg>
+  </div>
   <div class="wrap hero-inner">
-    <h1>Clean that leaves nothing behind.</h1>
-    <p class="lede">Toronto&rsquo;s first wet cleaning specialist, family run at Yonge and Lawrence for over sixty years. Water, air and patience in place of harsh chemistry: one hundred percent toxic-free, and never a drop of PERC.</p>
-    <div class="hero-cta">
-      <a class="btn btn-bone" href="tel:+14164886717">Book a Pickup</a>
-      <a class="link-quiet" href="#care">How wet cleaning works</a>
-    </div>
-    <form class="route-card" id="route-form" novalidate>
-      <p class="route-title">On the valet route?</p>
-      <label class="visually-hidden" for="pc">Postal code</label>
-      <div class="route-row">
-        <input id="pc" name="pc" type="text" inputmode="text" autocomplete="postal-code" placeholder="Postal code, e.g. M4N 1A1">
-        <button class="btn btn-forest" type="submit">Find my pickup day</button>
+    <div>
+      <h1>Clean that leaves nothing behind.</h1>
+      <p class="lede">Toronto&rsquo;s first wet cleaning specialist, family run at Yonge and Lawrence for over sixty years. Water, air and patience in place of harsh chemistry: one hundred percent toxic-free, and never a drop of PERC.</p>
+      <div class="hero-cta">
+        <a class="btn btn-bone" href="tel:+14164886717">Book a Pickup</a>
+        <a class="link-quiet" href="#care">How wet cleaning works</a>
       </div>
-      <p class="route-result" id="route-result" role="status" aria-live="polite" hidden></p>
-      <p class="route-note">Valet runs Tuesday and Friday. Your garments travel in a personalized Glenforest bag.</p>
-    </form>
+      <form class="route-card" id="route-form" novalidate>
+        <p class="route-title">On the valet route?</p>
+        <label class="visually-hidden" for="pc">Postal code</label>
+        <div class="route-row">
+          <input id="pc" name="pc" type="text" inputmode="text" autocomplete="postal-code" placeholder="Postal code, e.g. M4N 1A1">
+          <button class="btn btn-forest" type="submit">Find my pickup day</button>
+        </div>
+        <p class="route-result" id="route-result" role="status" aria-live="polite" hidden></p>
+        <p class="route-note">Valet runs Tuesday and Friday. Your garments travel in a personalized Glenforest bag.</p>
+      </form>
+    </div>
+    <figure class="hero-photo">
+      <div class="ph">
+        <img src="img/cloth-with-leaves.jpg" width="1200" height="1500" alt="Fresh green leaves laid across folded white cloth" loading="eager" fetchpriority="high">
+      </div>
+    </figure>
   </div>
   <div class="trust">
-    <div class="trust-inner" role="list">
-      <div class="trust-item" role="listitem">
+    <div class="trust-inner" role="list" data-unfurl>
+      <div class="trust-item" role="listitem" style="--i:0">
         <svg aria-hidden="true"><use href="#leaf"/></svg>
         <span>Family run for over 60 years</span>
       </div>
-      <div class="trust-item" role="listitem">
+      <div class="trust-item" role="listitem" style="--i:1">
         <svg aria-hidden="true"><use href="#leaf"/></svg>
         <span>Toronto&rsquo;s first wet cleaning specialist</span>
       </div>
-      <div class="trust-item" role="listitem">
+      <div class="trust-item" role="listitem" style="--i:2">
         <svg aria-hidden="true"><use href="#leaf"/></svg>
         <span>Miele certified</span>
       </div>
-      <div class="trust-item" role="listitem">
+      <div class="trust-item" role="listitem" style="--i:3">
+        <svg aria-hidden="true"><use href="#leaf"/></svg>
+        <span>Tuesday and Friday valet</span>
+      </div>
+      <div class="trust-item" role="listitem" style="--i:4">
         <svg aria-hidden="true"><use href="#leaf"/></svg>
         <span>100 percent toxic-free</span>
       </div>
@@ -546,22 +689,30 @@ section{scroll-margin-top:88px}
         <p>Wet cleaning does the same work with <strong>filtered water, biodegradable detergents and precise Miele machines</strong>, each cycle tuned to the garment on the ticket. It is gentler on wool, silk and skin, and honest to the nose. Your clothes come back soft and bright, and they smell of nothing at all.</p>
         <p>We were the first shop in Toronto to commit to it fully. Sixty years in, we have never had a reason to look back.</p>
       </div>
-      <aside class="panel" aria-label="What touches your clothes">
-        <h3>Never in the building</h3>
-        <ul>
-          <li>PERC, in any amount</li>
-          <li>Harsh chemical solvents</li>
-          <li>Toxic spotting agents</li>
-        </ul>
-        <hr class="panel-divide">
-        <h3>Always in the wash</h3>
-        <ul>
-          <li>Filtered water, warmed to the fabric</li>
-          <li>Biodegradable detergents</li>
-          <li>Miele certified wet cleaning machines</li>
-          <li>A hand-pressed finish</li>
-        </ul>
-      </aside>
+      <div class="care-side">
+        <figure class="care-fig" data-reveal>
+          <div class="ph">
+            <img src="img/hands-folded-cloth.jpg" width="1600" height="1067" alt="Hands holding a neatly folded stack of soft cloth" loading="lazy">
+          </div>
+          <figcaption class="cap">Plant-based, biodegradable detergents, measured to each load by hand.</figcaption>
+        </figure>
+        <aside class="panel" aria-label="What touches your clothes">
+          <h3>Never in the building</h3>
+          <ul>
+            <li>PERC, in any amount</li>
+            <li>Harsh chemical solvents</li>
+            <li>Toxic spotting agents</li>
+          </ul>
+          <hr class="panel-divide">
+          <h3>Always in the wash</h3>
+          <ul>
+            <li>Filtered water, warmed to the fabric</li>
+            <li>Biodegradable detergents</li>
+            <li>Miele certified wet cleaning machines</li>
+            <li>A hand-pressed finish</li>
+          </ul>
+        </aside>
+      </div>
     </div>
     <div class="heritage" id="about">
       <svg aria-hidden="true"><use href="#sprig"/></svg>
@@ -572,7 +723,37 @@ section{scroll-margin-top:88px}
   </div>
 </section>
 
+<section class="garden" aria-labelledby="garden-h">
+  <div class="wrap">
+    <div class="garden-head">
+      <h2 id="garden-h">Straight from plants.</h2>
+      <p class="garden-line">Detergents, wash sheets and spot treatments built on leaves, never solvents.</p>
+    </div>
+    <div class="garden-grid">
+      <figure class="garden-fig" data-reveal style="--i:0">
+        <div class="ph">
+          <img src="img/eucalyptus-in-vase.jpg" width="1600" height="1067" alt="Eucalyptus stems standing in a glass vase" loading="lazy">
+        </div>
+        <figcaption class="cap">Eucalyptus</figcaption>
+      </figure>
+      <figure class="garden-fig tall" data-reveal style="--i:1">
+        <div class="ph">
+          <img src="img/leaves-on-white.jpg" width="1200" height="1500" alt="Green leaves arranged on a white surface" loading="lazy">
+        </div>
+        <figcaption class="cap">Leaf and stem</figcaption>
+      </figure>
+      <figure class="garden-fig" data-reveal style="--i:2">
+        <div class="ph">
+          <img src="img/laundry-sheets-wood.jpg" width="1600" height="1067" alt="Laundry detergent sheets laid out on a wooden table" loading="lazy">
+        </div>
+        <figcaption class="cap">Wash sheets</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section class="impact dark" aria-labelledby="impact-h">
+  <svg class="impact-branch" viewBox="0 0 140 24" aria-hidden="true"><use href="#branch"/></svg>
   <div class="wrap impact-inner">
     <svg class="marker" aria-hidden="true"><use href="#branch"/></svg>
     <h2 id="impact-h" class="visually-hidden">Our impact</h2>
@@ -630,6 +811,10 @@ section{scroll-margin-top:88px}
   </div>
 </section>
 
+<figure class="chapter ph" data-wipe>
+  <img src="img/folded-shirts-shelf.jpg" width="1600" height="1067" alt="Folded shirts stacked on wooden shelves in warm light" loading="lazy">
+</figure>
+
 <section class="section valet" id="valet" aria-labelledby="valet-h">
   <div class="wrap">
     <h2 id="valet-h">The valet, on your street twice a week.</h2>
@@ -656,10 +841,10 @@ section{scroll-margin-top:88px}
         </li>
       </ol>
       <figure class="photo-slot">
-        <div class="photo-frame">
-          <span>Photograph: a Glenforest garment bag out for the morning run.</span>
+        <div class="ph">
+          <img src="img/van-loading.jpg" width="1200" height="1500" alt="Loading garment bags into the delivery van on a route morning" loading="lazy">
         </div>
-        <figcaption>Slot for real photography from the shop: the storefront at Yonge and Lawrence, the press, or the valet bags.</figcaption>
+        <figcaption class="cap">Route morning: bags loaded for the run back to Yonge and Lawrence.</figcaption>
       </figure>
     </div>
     <p class="cadence">Two routes, Tuesday and Friday: the same streets, for sixty years.</p>
@@ -670,31 +855,47 @@ section{scroll-margin-top:88px}
   <div class="wrap">
     <h2 id="shop-h">Glenforest Reserve.</h2>
     <p class="sub">Small tools from our counter, for the stains that happen between visits.</p>
-    <div class="products">
-      <article class="product">
-        <svg aria-hidden="true"><use href="#i-bottle"/></svg>
-        <h3>Reserve Stain Treatment Solution</h3>
-        <p>The gentle formula our spotters reach for first, bottled for home.</p>
-        <p class="price">$35</p>
-      </article>
-      <article class="product">
-        <svg aria-hidden="true"><use href="#i-brush"/></svg>
-        <h3>Soft Spotting Brush</h3>
-        <p>Natural bristle, soft enough to trust on silk.</p>
-        <p class="price">$35</p>
-      </article>
-      <article class="product">
-        <svg aria-hidden="true"><use href="#i-kit"/></svg>
-        <h3>Reserve Starter Kit</h3>
-        <p>Solution, brush and bone together, with a card of our care notes.</p>
-        <p class="price">$110</p>
-      </article>
-      <article class="product">
-        <svg aria-hidden="true"><use href="#i-bone"/></svg>
-        <h3>Spotting Bone</h3>
-        <p>The old tool that still works best: lifts a spill before it sets.</p>
-        <p class="price">$25</p>
-      </article>
+    <div class="shop-grid">
+      <div class="shop-stills">
+        <figure class="still">
+          <div class="ph">
+            <img src="img/bottle-on-wood.jpg" width="1200" height="1500" alt="White bottle standing on a wooden counter" loading="lazy">
+          </div>
+          <figcaption class="cap">The Reserve solution, on the counter shelf.</figcaption>
+        </figure>
+        <figure class="still">
+          <div class="ph">
+            <img src="img/spray-bottle-hand.jpg" width="1200" height="1500" alt="Hand holding a spray bottle ready to treat a stain" loading="lazy">
+          </div>
+          <figcaption class="cap">Every batch is spot-tested before it is sold.</figcaption>
+        </figure>
+      </div>
+      <div class="products">
+        <article class="product" data-reveal style="--i:0">
+          <svg aria-hidden="true"><use href="#i-bottle"/></svg>
+          <h3>Reserve Stain Treatment Solution</h3>
+          <p>The gentle formula our spotters reach for first, bottled for home.</p>
+          <p class="price">$35</p>
+        </article>
+        <article class="product" data-reveal style="--i:1">
+          <svg aria-hidden="true"><use href="#i-brush"/></svg>
+          <h3>Soft Spotting Brush</h3>
+          <p>Natural bristle, soft enough to trust on silk.</p>
+          <p class="price">$35</p>
+        </article>
+        <article class="product" data-reveal style="--i:2">
+          <svg aria-hidden="true"><use href="#i-kit"/></svg>
+          <h3>Reserve Starter Kit</h3>
+          <p>Solution, brush and bone together, with a card of our care notes.</p>
+          <p class="price">$110</p>
+        </article>
+        <article class="product" data-reveal style="--i:3">
+          <svg aria-hidden="true"><use href="#i-bone"/></svg>
+          <h3>Spotting Bone</h3>
+          <p>The old tool that still works best: lifts a spill before it sets.</p>
+          <p class="price">$25</p>
+        </article>
+      </div>
     </div>
     <p class="shop-note">Sold at the counter, 3309 Yonge St.</p>
   </div>
@@ -803,6 +1004,53 @@ section{scroll-margin-top:88px}
     for (var i = 0; i < links.length; i++) {
       links[i].addEventListener('click', function () { toggle.checked = false; });
     }
+  }
+})();
+</script>
+
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('js-motion');
+
+  var targets = document.querySelectorAll('[data-reveal],[data-wipe],[data-unfurl]');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          var el = entries[i].target;
+          el.classList.add('is-in');
+          io.unobserve(el);
+          el.addEventListener('transitionend', function (e) {
+            e.currentTarget.style.willChange = 'auto';
+          }, { once: true });
+        }
+      }
+    }, { threshold: .18, rootMargin: '0px 0px -10% 0px' });
+    for (var j = 0; j < targets.length; j++) io.observe(targets[j]);
+  } else {
+    for (var k = 0; k < targets.length; k++) targets[k].classList.add('is-in');
+  }
+
+  // Impact branch: quiet 0.04-factor parallax, capped at 30px, desktop only.
+  var impact = document.querySelector('.impact');
+  var branch = document.querySelector('.impact-branch');
+  if (impact && branch) {
+    var queued = false;
+    var setBranch = function () {
+      queued = false;
+      if (window.innerWidth < 900) { branch.style.transform = ''; return; }
+      var r = impact.getBoundingClientRect();
+      var mid = r.top + r.height / 2 - window.innerHeight / 2;
+      var y = Math.max(-30, Math.min(30, mid * -0.04));
+      branch.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0)';
+    };
+    var queue = function () {
+      if (!queued) { queued = true; window.requestAnimationFrame(setBranch); }
+    };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue, { passive: true });
+    setBranch();
   }
 })();
 </script>

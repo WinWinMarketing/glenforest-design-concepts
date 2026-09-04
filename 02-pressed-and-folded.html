@@ -11,7 +11,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..700&display=swap" rel="stylesheet">
 <style>
 /* Pressed & Folded: Swiss grid, flat blocks, exposed hairlines, numerals doing the talking.
-   Type: Archivo, a grotesk with real widths for the big numerals; single family, weights only. */
+   Type: Archivo, a grotesk with real widths for the big numerals; single family, weights only.
+   Photography: high-key, lightly desaturated, no overlays. The photo is a fact, not a mood. */
 :root{
   --navy:#2b3990;
   --lime:#c3d500;
@@ -22,6 +23,10 @@
   --hair-dark:#4a55a6;
   --muted:#4c5265;
   --muted-dark:#c6cbe6;
+  --e-swiss:cubic-bezier(.65,0,.35,1);
+  --e-settle:cubic-bezier(.22,1,.36,1);
+  --e-expo:cubic-bezier(.16,1,.3,1);
+  --e-ui:cubic-bezier(.4,0,.2,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -56,6 +61,12 @@ a{color:var(--navy)}
 .cells>*{background:var(--white)}
 .dark .cells>*{background:var(--navy)}
 
+/* explicit rule lines (the animated hairlines; static without JS) */
+.rule-x{position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--hair)}
+.rule-x.t{bottom:auto;top:0}
+.dark .rule-x{background:var(--hair-dark)}
+.rule-y{position:absolute;top:0;bottom:0;left:calc(58.3333% - 1px);width:1px;background:var(--hair)}
+
 .lbl{
   font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
   color:var(--navy);display:flex;align-items:center;gap:10px;
@@ -79,6 +90,7 @@ p{max-width:64ch}
   min-height:48px;padding:0 26px;font-weight:600;font-size:1rem;
   text-decoration:none;border:0;cursor:pointer;
   font-family:inherit;
+  transition:background-color 180ms var(--e-ui),color 180ms var(--e-ui);
 }
 .btn-lime{background:var(--lime);color:var(--ink)}
 .btn-lime:hover{background:var(--ink);color:var(--lime)}
@@ -87,6 +99,13 @@ p{max-width:64ch}
   color:var(--navy);text-decoration:underline;text-underline-offset:4px;
 }
 .hero-link:hover{color:var(--ink)}
+.dark .hero-link{color:var(--white)}
+.dark .hero-link:hover{color:var(--lime)}
+
+/* ---- photography: one treatment page-wide so mixed stock reads as one shoot ---- */
+.ph{position:relative;overflow:hidden;background:var(--panel)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph img,.hero-bg{filter:saturate(.78) contrast(1.03) brightness(1.03)}
 
 /* ---------------- header ---------------- */
 .site-head{
@@ -106,10 +125,20 @@ p{max-width:64ch}
 .nav a{
   display:inline-flex;align-items:center;min-height:44px;padding:0 14px;
   color:var(--ink);text-decoration:none;font-weight:500;font-size:.95rem;
+  position:relative;
 }
-.nav a:hover{color:var(--navy);text-decoration:underline;text-underline-offset:4px}
+.nav a::after{
+  content:"";position:absolute;left:14px;right:14px;bottom:9px;height:2px;
+  background:var(--navy);transform:scaleX(0);transform-origin:right center;
+  transition:transform 260ms var(--e-settle);
+}
+@media (hover:hover){
+  .nav a:hover{color:var(--navy)}
+  .nav a:hover::after{transform:scaleX(1);transform-origin:left center}
+}
+.nav a:focus-visible::after{transform:scaleX(1);transform-origin:left center}
 .head-cta{margin-left:8px;min-height:44px;padding:0 20px}
-.menu-t{position:absolute;opacity:0;width:1px;height:1px}
+.menu-t{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .menu-b{
   display:none;margin-left:auto;width:48px;height:48px;cursor:pointer;
   flex-direction:column;align-items:center;justify-content:center;gap:6px;
@@ -136,13 +165,22 @@ p{max-width:64ch}
 }
 @media (max-width:420px){.head-cta{display:none}}
 
-/* ---------------- hero ---------------- */
-.hero .cells{grid-template-columns:7fr 5fr}
-.hero-copy{padding:clamp(40px,7vw,88px) clamp(24px,4vw,56px)}
+/* ---------------- hero: full-bleed high-key photo, flat navy panels on the grid ---------------- */
+.hero{position:relative;background:var(--navy)}
+.hero-bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 30%;
+}
+.hero .wrap{position:relative;padding-top:clamp(150px,26vw,300px)}
+.hero-cells{display:grid;grid-template-columns:7fr 5fr;gap:1px}
+.hero-copy{
+  background:var(--navy);color:var(--white);
+  padding:clamp(36px,5.5vw,72px) clamp(24px,4vw,56px);
+}
 .hero-copy .lbl{margin-bottom:28px}
 .hero-copy h1{
   font-size:clamp(2.4rem,5.4vw,4.2rem);font-weight:700;line-height:1.02;
-  letter-spacing:-.025em;margin-bottom:20px;max-width:18ch;
+  letter-spacing:-.025em;margin-bottom:20px;max-width:18ch;color:var(--white);
 }
 .hero-copy .sub{font-size:clamp(1.02rem,1.4vw,1.15rem);max-width:46ch;margin-bottom:36px}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
@@ -176,22 +214,29 @@ p{max-width:64ch}
 }
 .route-out a{color:var(--lime);font-weight:700;text-underline-offset:4px}
 .route-out a:hover{color:var(--white)}
-@media (max-width:900px){.hero .cells{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .hero-cells{grid-template-columns:1fr}
+  .hero .wrap{padding-top:clamp(140px,38vw,220px)}
+}
 
-/* ---------------- trust strip ---------------- */
-.trust .cells{grid-template-columns:repeat(4,1fr)}
-.trust-cell{padding:clamp(24px,3vw,40px) clamp(20px,2.5vw,32px)}
-.trust-cell .fig{font-size:clamp(2.2rem,3.6vw,3.2rem);margin-bottom:8px}
-.trust-cell p{font-size:.95rem;color:var(--muted);max-width:22ch}
-@media (max-width:860px){.trust .cells{grid-template-columns:repeat(2,1fr)}}
+/* ---------------- trust rail: five hairline-separated micro-facts at the hero's foot ---------------- */
+.trust .wrap{position:relative}
+.trust-grid{grid-template-columns:repeat(5,1fr)}
+.trust-cell{padding:clamp(16px,2.2vw,26px) clamp(16px,2vw,24px);display:flex;flex-direction:column;gap:4px}
+.trust-cell .fig{font-size:clamp(1.15rem,1.6vw,1.4rem);letter-spacing:-.01em}
+.trust-cell .fig .plus{color:var(--lime);font-weight:400}
+.trust-cell p{font-size:.84rem;color:var(--muted);line-height:1.45;max-width:24ch}
+@media (max-width:900px){
+  .trust-grid{grid-template-columns:repeat(2,1fr)}
+  .trust-cell:last-child{grid-column:1/-1}
+}
 
 /* ---------------- section head row ---------------- */
 .sec-head{
+  position:relative;
   display:flex;align-items:flex-end;justify-content:space-between;gap:24px;
   padding:clamp(36px,5vw,64px) clamp(24px,4vw,56px) clamp(24px,3vw,36px);
-  border-bottom:1px solid var(--hair);
 }
-.dark .sec-head{border-color:var(--hair-dark)}
 .sec-head-l{display:flex;flex-direction:column;gap:16px}
 .sec-head .fig{font-size:clamp(3.6rem,8vw,6.5rem)}
 .dark .sec-head .fig{color:var(--lime)}
@@ -201,6 +246,8 @@ p{max-width:64ch}
 .services .wrap{background:var(--panel)}
 .svc-grid{grid-template-columns:repeat(3,1fr)}
 .svc{padding:clamp(24px,3vw,36px) clamp(20px,2.6vw,32px);display:flex;flex-direction:column;gap:12px;min-height:190px}
+.svc-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.svc-i{font-weight:700;font-size:.9rem;letter-spacing:.08em;color:var(--navy)}
 .svc-code{
   width:44px;height:44px;background:var(--lime);color:var(--ink);
   display:flex;align-items:center;justify-content:center;
@@ -208,8 +255,25 @@ p{max-width:64ch}
 }
 .svc h3{margin-top:auto}
 .svc p{font-size:.95rem;color:var(--muted)}
+@media (hover:hover){
+  .svc .svc-i,.svc h3{transition:transform 180ms var(--e-swiss)}
+  .svc:hover .svc-i{transform:translateX(4px)}
+  .svc:hover h3{transform:translateX(-4px)}
+}
 @media (max-width:960px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:620px){.svc-grid{grid-template-columns:1fr}.svc{min-height:0}}
+
+/* ---------------- craft 4-up: the four passes, square tiles, one-word captions ---------------- */
+.craft-grid{grid-template-columns:repeat(4,1fr)}
+.craft-tile{display:flex;flex-direction:column}
+.craft-tile .ph{aspect-ratio:1/1}
+.craft-tile figcaption{
+  display:flex;align-items:baseline;gap:10px;
+  padding:14px 16px;border-top:1px solid var(--hair);
+  font-weight:600;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;
+}
+.craft-tile .ci{color:var(--navy);font-weight:700;font-feature-settings:"tnum" 1}
+@media (max-width:760px){.craft-grid{grid-template-columns:repeat(2,1fr)}}
 
 /* ---------------- valet ---------------- */
 .valet{background:var(--navy);color:var(--white)}
@@ -228,7 +292,7 @@ p{max-width:64ch}
 @media (max-width:820px){.steps{grid-template-columns:1fr}}
 
 /* ---------------- care story ---------------- */
-.care .cells{grid-template-columns:7fr 5fr}
+.care .cells{grid-template-columns:7fr 5fr;position:relative;background:transparent}
 .care-copy{padding:clamp(36px,5vw,64px) clamp(24px,4vw,56px)}
 .care-copy .lbl{margin-bottom:24px}
 .care-copy h2{margin-bottom:20px;max-width:18ch}
@@ -243,7 +307,17 @@ p{max-width:64ch}
 }
 .care-facts li:first-child{border-top:1px solid var(--hair)}
 .care-facts li::before{content:"";width:10px;height:10px;background:var(--lime);flex:none}
-@media (max-width:880px){.care .cells{grid-template-columns:1fr}}
+@media (max-width:880px){
+  .care .cells{grid-template-columns:1fr}
+  .care .rule-y{display:none}
+}
+
+/* ---------------- fabric register: type as texture ---------------- */
+.fab-grid{grid-template-columns:repeat(4,1fr)}
+.fab{padding:clamp(20px,3vw,34px) clamp(18px,2.4vw,28px);display:flex;align-items:baseline;gap:12px}
+.fab-i{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:var(--muted);font-feature-settings:"tnum" 1}
+.fab-w{font-weight:700;font-size:clamp(1.3rem,2.4vw,1.9rem);letter-spacing:-.02em;color:var(--navy)}
+@media (max-width:760px){.fab-grid{grid-template-columns:repeat(2,1fr)}}
 
 /* ---------------- about band ---------------- */
 .about{background:var(--panel)}
@@ -261,24 +335,24 @@ p{max-width:64ch}
 }
 @media (max-width:700px){.about-in{grid-template-columns:1fr;gap:16px}}
 
-/* ---------------- shop ---------------- */
-.shop-rows{grid-template-columns:1fr}
-.shop-row{
-  display:grid;grid-template-columns:minmax(180px,1.2fr) 2fr auto;gap:16px;align-items:baseline;
-  padding:clamp(18px,2.4vw,26px) clamp(24px,4vw,56px);
+/* ---------------- shop: product shelf, still lifes on flat grey cells ---------------- */
+.shop-shelf{grid-template-columns:repeat(4,1fr)}
+.prod{display:flex;flex-direction:column}
+.prod .ph{aspect-ratio:4/5}
+.prod-body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
+.prod-body h3{font-size:1rem}
+.prod-body p{color:var(--muted);font-size:.92rem}
+.price{
+  font-weight:700;font-size:1.15rem;color:var(--navy);font-feature-settings:"tnum" 1;
+  margin-top:auto;border-top:1px solid var(--hair);padding-top:12px;
 }
-.shop-row h3{font-size:1.02rem}
-.shop-row p{color:var(--muted);font-size:.95rem}
-.price{font-weight:700;font-size:1.15rem;color:var(--navy);font-feature-settings:"tnum" 1}
 .shop-note{
   padding:clamp(18px,2.4vw,26px) clamp(24px,4vw,56px);
   border-top:1px solid var(--hair);
   color:var(--muted);font-size:.95rem;
 }
-@media (max-width:680px){
-  .shop-row{grid-template-columns:1fr auto;gap:4px 16px}
-  .shop-row p{grid-column:1 / -1}
-}
+@media (max-width:980px){.shop-shelf{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:460px){.shop-shelf{grid-template-columns:1fr}}
 
 /* ---------------- reviews ---------------- */
 .reviews{background:var(--panel)}
@@ -338,9 +412,48 @@ p{max-width:64ch}
 }
 @media (max-width:820px){.foot-grid{grid-template-columns:1fr}}
 
+/* ---------------- motion: rules draw first, content takes its cell ----------------
+   Signature: section hairlines scale in over 520ms, then content appears inside the
+   grid they just drew. Opacity only, no rise, no settles. All states live behind
+   .js-motion, which is only added when JS runs and reduced motion is off. */
+.js-motion .rule-x{transform:scaleX(0);transform-origin:left center}
+.js-motion .rule-y{transform:scaleY(0);transform-origin:center top}
+.js-motion [data-io].is-in .rule-x{
+  transform:scaleX(1);
+  transition:transform 520ms var(--e-swiss);
+  transition-delay:calc(min(var(--i,0),3)*90ms);
+}
+.js-motion [data-io].is-in .rule-y{
+  transform:scaleY(1);
+  transition:transform 520ms var(--e-swiss);
+}
+.js-motion [data-io] [data-cell]{opacity:0}
+.js-motion [data-io].is-in [data-cell]{
+  opacity:1;
+  transition:opacity 360ms var(--e-swiss);
+  transition-delay:calc(420ms + min(var(--i,0),3)*90ms);
+}
+/* hero: three hard-cut opacity steps at 0 / 120 / 240ms, nothing moves */
+.js-motion .hero [data-h]{opacity:0}
+.js-motion .hero.is-in [data-h]{opacity:1;transition:opacity 320ms var(--e-swiss)}
+.js-motion .hero.is-in [data-h="1"]{transition-delay:120ms}
+.js-motion .hero.is-in [data-h="2"]{transition-delay:240ms}
+/* the TUE + FRI plus turns a quarter, once */
+.hero .route-days .plus{display:inline-block}
+.js-motion .hero.is-in .route-days .plus{
+  transform:rotate(90deg);
+  transition:transform 400ms var(--e-swiss);
+  transition-delay:340ms;
+}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{transition:none !important;animation:none !important}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
 }
 </style>
 </head>
@@ -368,27 +481,27 @@ p{max-width:64ch}
     <a href="#care">Our Care</a>
     <a href="#shop">Shop</a>
     <a href="#about">About</a>
-    <a href="#contact">Contact</a>
     <a href="tel:+14164886717">Book a Pickup: 416 488-6717</a>
   </nav>
 </header>
 
 <main id="main">
 
-<!-- HERO -->
-<section class="hero">
+<!-- HERO: full-bleed high-key photo, navy panels carry the type on the grid -->
+<section class="hero" data-io>
+  <img class="hero-bg" src="img/shirt-white-hanger-focus.jpg" alt="Freshly pressed white dress shirt on a wooden hanger" width="1600" height="1067" fetchpriority="high">
   <div class="wrap">
-    <div class="cells">
-      <div class="hero-copy">
-        <p class="lbl">Dry and wet cleaning, Yonge and Lawrence, Toronto</p>
-        <h1>Toronto's first wet cleaner. Sixty years at Yonge and Lawrence.</h1>
-        <p class="sub">Care your wardrobe can count on. No PERC and no harsh chemicals. Everything back pressed, on schedule.</p>
-        <div class="hero-ctas">
+    <div class="hero-cells">
+      <div class="hero-copy dark">
+        <p class="lbl" data-h="0">Dry and wet cleaning, Yonge and Lawrence, Toronto</p>
+        <h1 data-h="0">Toronto's first wet cleaner. Sixty years on Yonge.</h1>
+        <p class="sub" data-h="1">Care your wardrobe can count on. No PERC and no harsh chemicals. Everything back pressed, on schedule.</p>
+        <div class="hero-ctas" data-h="1">
           <a class="btn btn-lime" href="tel:+14164886717">Book a Pickup</a>
           <a class="hero-link" href="#services">See all six services</a>
         </div>
       </div>
-      <div class="hero-route dark">
+      <div class="hero-route dark" data-h="2">
         <p class="lbl">Valet routes</p>
         <p class="route-days">TUE<span class="plus">+</span>FRI</p>
         <p>Two pickup and delivery routes, every week. Enter your postal code to find your day.</p>
@@ -403,23 +516,28 @@ p{max-width:64ch}
   </div>
 </section>
 
-<!-- TRUST STRIP -->
-<section class="trust" id="trust">
+<!-- TRUST RAIL: five micro-facts on one hairline row at the hero's foot -->
+<section class="trust" id="trust" data-io>
   <div class="wrap">
-    <div class="cells">
-      <div class="trust-cell">
+    <span class="rule-x t" aria-hidden="true"></span>
+    <div class="cells trust-grid">
+      <div class="trust-cell" data-cell style="--i:0">
         <p class="fig">60+</p>
         <p>Years family run on Yonge Street</p>
       </div>
-      <div class="trust-cell">
+      <div class="trust-cell" data-cell style="--i:1">
         <p class="fig">1st</p>
         <p>Toronto's first wet cleaning specialist</p>
       </div>
-      <div class="trust-cell">
+      <div class="trust-cell" data-cell style="--i:2">
         <p class="fig">Miele</p>
         <p>Certified machines, methods, and training</p>
       </div>
-      <div class="trust-cell">
+      <div class="trust-cell" data-cell style="--i:3">
+        <p class="fig">TUE<span class="plus">+</span>FRI</p>
+        <p>Valet pickup and delivery, every week</p>
+      </div>
+      <div class="trust-cell" data-cell style="--i:3">
         <p class="fig">100%</p>
         <p>Toxic-free cleaning, no PERC, no harsh chemicals</p>
       </div>
@@ -430,40 +548,41 @@ p{max-width:64ch}
 <!-- SERVICES -->
 <section class="services" id="services">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-head-l">
+    <div class="sec-head" data-io>
+      <div class="sec-head-l" data-cell style="--i:0">
         <h2>Six ways we look after what you wear.</h2>
       </div>
-      <p class="fig" aria-hidden="true">6</p>
+      <p class="fig" aria-hidden="true" data-cell style="--i:1">6</p>
+      <span class="rule-x" aria-hidden="true"></span>
     </div>
-    <div class="cells svc-grid">
-      <div class="svc">
-        <span class="svc-code" aria-hidden="true">WC</span>
+    <div class="cells svc-grid" data-io>
+      <div class="svc" data-cell style="--i:0">
+        <div class="svc-top"><span class="svc-i" aria-hidden="true">01</span><span class="svc-code" aria-hidden="true">WC</span></div>
         <h3>Wet Cleaning</h3>
         <p>Water and precision dosing for the garments other cleaners send to solvents.</p>
       </div>
-      <div class="svc">
-        <span class="svc-code" aria-hidden="true">WF</span>
+      <div class="svc" data-cell style="--i:1">
+        <div class="svc-top"><span class="svc-i" aria-hidden="true">02</span><span class="svc-code" aria-hidden="true">WF</span></div>
         <h3>Wash and Fold</h3>
         <p>Everyday laundry washed gently and returned in one squared-off stack.</p>
       </div>
-      <div class="svc">
-        <span class="svc-code" aria-hidden="true">ES</span>
+      <div class="svc" data-cell style="--i:2">
+        <div class="svc-top"><span class="svc-i" aria-hidden="true">03</span><span class="svc-code" aria-hidden="true">ES</span></div>
         <h3>Executive Shirt Service</h3>
         <p>Collars, cuffs, and plackets pressed crisp, finished on hangers or boxed.</p>
       </div>
-      <div class="svc">
-        <span class="svc-code" aria-hidden="true">AR</span>
+      <div class="svc" data-cell style="--i:3">
+        <div class="svc-top"><span class="svc-i" aria-hidden="true">04</span><span class="svc-code" aria-hidden="true">AR</span></div>
         <h3>Alterations and Repairs</h3>
         <p>Hems, seams, zippers, and refits, measured twice and finished in house.</p>
       </div>
-      <div class="svc">
-        <span class="svc-code" aria-hidden="true">HL</span>
+      <div class="svc" data-cell style="--i:3">
+        <div class="svc-top"><span class="svc-i" aria-hidden="true">05</span><span class="svc-code" aria-hidden="true">HL</span></div>
         <h3>Household and Linens</h3>
         <p>Duvets, drapes, and table linens cleaned fresh and pressed flat.</p>
       </div>
-      <div class="svc">
-        <span class="svc-code" aria-hidden="true">WG</span>
+      <div class="svc" data-cell style="--i:3">
+        <div class="svc-top"><span class="svc-i" aria-hidden="true">06</span><span class="svc-code" aria-hidden="true">WG</span></div>
         <h3>Wedding Gowns and Delicates</h3>
         <p>Silks, lace, and heirlooms cleaned by hand and boxed for keeping.</p>
       </div>
@@ -471,28 +590,61 @@ p{max-width:64ch}
   </div>
 </section>
 
+<!-- CRAFT 4-UP: the four passes, square tiles, one-word captions -->
+<section class="craft" id="method">
+  <div class="wrap">
+    <div class="sec-head" data-io>
+      <div class="sec-head-l" data-cell style="--i:0">
+        <p class="lbl">The method</p>
+        <h2>Inspect to deliver.</h2>
+        <p class="sub">The same four passes, in the same order, for every garment.</p>
+      </div>
+      <span class="rule-x" aria-hidden="true"></span>
+    </div>
+    <div class="cells craft-grid" data-io>
+      <figure class="craft-tile" data-cell style="--i:0">
+        <div class="ph"><img src="img/tailor-chalk-mark.jpg" alt="Hands marking a garment with tailor's chalk during inspection" width="1600" height="1067" loading="lazy"></div>
+        <figcaption><span class="ci" aria-hidden="true">01</span>Inspect</figcaption>
+      </figure>
+      <figure class="craft-tile" data-cell style="--i:1">
+        <div class="ph"><img src="img/detergent-bottle-clean.jpg" alt="Biodegradable detergent bottle on a plain ground" width="1000" height="1500" loading="lazy"></div>
+        <figcaption><span class="ci" aria-hidden="true">02</span>Clean</figcaption>
+      </figure>
+      <figure class="craft-tile" data-cell style="--i:2">
+        <div class="ph"><img src="img/steam-pressed-board.jpg" alt="Steam iron finishing a freshly pressed shirt on the board" width="1600" height="1067" loading="lazy"></div>
+        <figcaption><span class="ci" aria-hidden="true">03</span>Press</figcaption>
+      </figure>
+      <figure class="craft-tile" data-cell style="--i:3">
+        <div class="ph"><img src="img/white-van-open.jpg" alt="White delivery van with its doors open, loaded for the route" width="1600" height="1067" loading="lazy"></div>
+        <figcaption><span class="ci" aria-hidden="true">04</span>Deliver</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- VALET -->
 <section class="valet dark" id="valet">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-head-l">
+    <div class="sec-head" data-io>
+      <div class="sec-head-l" data-cell style="--i:0">
         <h2>Two route days, every week.</h2>
         <p class="sub">Tuesday and Friday, your driver comes to you. No appointment needed, the route runs whether you call or not.</p>
       </div>
-      <p class="fig" aria-hidden="true">2</p>
+      <p class="fig" aria-hidden="true" data-cell style="--i:1">2</p>
+      <span class="rule-x" aria-hidden="true"></span>
     </div>
-    <div class="cells steps">
-      <div class="step">
+    <div class="cells steps" data-io>
+      <div class="step" data-cell style="--i:0">
         <p class="fig" aria-hidden="true">1</p>
         <h3>Bag it</h3>
         <p>Leave your garments in your personalized Glenforest garment bag at the door.</p>
       </div>
-      <div class="step">
+      <div class="step" data-cell style="--i:1">
         <p class="fig" aria-hidden="true">2</p>
         <h3>We collect</h3>
         <p>Your driver picks up on your route day, Tuesday or Friday, no call needed.</p>
       </div>
-      <div class="step">
+      <div class="step" data-cell style="--i:2">
         <p class="fig" aria-hidden="true">3</p>
         <h3>Back pressed</h3>
         <p>Everything returns on your next route day, pressed and ready to wear.</p>
@@ -508,13 +660,14 @@ p{max-width:64ch}
 <!-- CARE STORY -->
 <section class="care" id="care">
   <div class="wrap">
-    <div class="cells">
-      <div class="care-copy">
+    <div class="cells" data-io>
+      <div class="care-copy" data-cell style="--i:0">
+        <p class="lbl">Our care</p>
         <h2>Water, not solvents.</h2>
         <p>Most dry cleaning still leans on harsh solvents like PERC. Glenforest was the first cleaner in Toronto to replace them with professional wet cleaning: pure water, biodegradable detergents, and Miele machines that meter every degree and every gram.</p>
         <p>The result is cleaning that is 100 percent toxic-free and noticeably kinder to fine fibres and to sensitive skin. Garments come back soft, bright, and free of that chemical finish, pressed to the standard we have kept for over 60 years.</p>
       </div>
-      <div class="care-facts">
+      <div class="care-facts" data-cell style="--i:1">
         <ul>
           <li>No PERC, ever</li>
           <li>Biodegradable detergents</li>
@@ -522,6 +675,32 @@ p{max-width:64ch}
           <li>Safe for skin, silk, and wool</li>
         </ul>
       </div>
+      <span class="rule-y" aria-hidden="true"></span>
+    </div>
+  </div>
+</section>
+
+<!-- FABRIC REGISTER: type as texture -->
+<section class="fabrics" aria-label="Fabrics we clean">
+  <div class="wrap">
+    <div class="sec-head" data-io>
+      <div class="sec-head-l" data-cell style="--i:0">
+        <p class="lbl">Fabric register</p>
+        <h2>What we trust to water.</h2>
+        <p class="sub">Everything below is cleaned in pure water with metered, biodegradable detergents.</p>
+      </div>
+      <p class="fig" aria-hidden="true" data-cell style="--i:1">8</p>
+      <span class="rule-x" aria-hidden="true"></span>
+    </div>
+    <div class="cells fab-grid" data-io>
+      <div class="fab" data-cell style="--i:0"><span class="fab-i" aria-hidden="true">01</span><span class="fab-w">Silk</span></div>
+      <div class="fab" data-cell style="--i:1"><span class="fab-i" aria-hidden="true">02</span><span class="fab-w">Cashmere</span></div>
+      <div class="fab" data-cell style="--i:2"><span class="fab-i" aria-hidden="true">03</span><span class="fab-w">Wool</span></div>
+      <div class="fab" data-cell style="--i:3"><span class="fab-i" aria-hidden="true">04</span><span class="fab-w">Lace</span></div>
+      <div class="fab" data-cell style="--i:0"><span class="fab-i" aria-hidden="true">05</span><span class="fab-w">Linen</span></div>
+      <div class="fab" data-cell style="--i:1"><span class="fab-i" aria-hidden="true">06</span><span class="fab-w">Denim</span></div>
+      <div class="fab" data-cell style="--i:2"><span class="fab-i" aria-hidden="true">07</span><span class="fab-w">Down</span></div>
+      <div class="fab" data-cell style="--i:3"><span class="fab-i" aria-hidden="true">08</span><span class="fab-w">Leather</span></div>
     </div>
   </div>
 </section>
@@ -529,9 +708,9 @@ p{max-width:64ch}
 <!-- ABOUT BAND -->
 <section class="about" id="about">
   <div class="wrap">
-    <div class="about-in">
-      <p class="fig" aria-hidden="true">60</p>
-      <div class="about-txt">
+    <div class="about-in" data-io>
+      <p class="fig" aria-hidden="true" data-cell style="--i:0">60</p>
+      <div class="about-txt" data-cell style="--i:1">
         <h2>Years on Yonge Street. One family.</h2>
         <p>The Zachos family opened Glenforest Cleaners more than 60 years ago and still runs it today, from the same neighbourhood at Yonge and Lawrence. Long enough to know every fabric, and most of our customers, by name.</p>
         <p class="tagline">May your worst problem be a stain on your clothes.</p>
@@ -540,36 +719,49 @@ p{max-width:64ch}
   </div>
 </section>
 
-<!-- SHOP -->
+<!-- SHOP: product shelf -->
 <section class="shop" id="shop">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-head-l">
+    <div class="sec-head" data-io>
+      <div class="sec-head-l" data-cell style="--i:0">
         <p class="lbl">Glenforest Reserve</p>
         <h2>The tools we trust, sized for home.</h2>
       </div>
-      <p class="fig" aria-hidden="true">4</p>
+      <p class="fig" aria-hidden="true" data-cell style="--i:1">4</p>
+      <span class="rule-x" aria-hidden="true"></span>
     </div>
-    <div class="cells shop-rows">
-      <div class="shop-row">
-        <h3>Reserve Stain Treatment Solution</h3>
-        <p>The spotting formula our pressers reach for first.</p>
-        <p class="price">$35</p>
+    <div class="cells shop-shelf" data-io>
+      <div class="prod" data-cell style="--i:0">
+        <div class="ph"><img src="img/spray-bottle-hand.jpg" alt="Hand holding a spray bottle of stain treatment solution" width="1000" height="1500" loading="lazy"></div>
+        <div class="prod-body">
+          <h3>Reserve Stain Treatment Solution</h3>
+          <p>The spotting formula our pressers reach for first.</p>
+          <p class="price">$35</p>
+        </div>
       </div>
-      <div class="shop-row">
-        <h3>Soft Spotting Brush</h3>
-        <p>Lifts stains without bruising the weave.</p>
-        <p class="price">$35</p>
+      <div class="prod" data-cell style="--i:1">
+        <div class="ph"><img src="img/linen-beige-macro.jpg" alt="Close weave of natural linen, the kind the soft brush protects" width="1600" height="1231" loading="lazy"></div>
+        <div class="prod-body">
+          <h3>Soft Spotting Brush</h3>
+          <p>Lifts stains without bruising the weave.</p>
+          <p class="price">$35</p>
+        </div>
       </div>
-      <div class="shop-row">
-        <h3>Spotting Bone</h3>
-        <p>The classic tool for lifting spills before they set.</p>
-        <p class="price">$25</p>
+      <div class="prod" data-cell style="--i:2">
+        <div class="ph"><img src="img/silk-white-folds.jpg" alt="Soft folds of white silk, the fabric a spotting bone spares" width="1600" height="1200" loading="lazy"></div>
+        <div class="prod-body">
+          <h3>Spotting Bone</h3>
+          <p>The classic tool for lifting spills before they set.</p>
+          <p class="price">$25</p>
+        </div>
       </div>
-      <div class="shop-row">
-        <h3>Reserve Starter Kit</h3>
-        <p>Solution, brush, and bone, cased as a set.</p>
-        <p class="price">$110</p>
+      <div class="prod" data-cell style="--i:3">
+        <div class="ph"><img src="img/bottle-on-wood.jpg" alt="White bottle standing on a wooden table, still life" width="1200" height="1600" loading="lazy"></div>
+        <div class="prod-body">
+          <h3>Reserve Starter Kit</h3>
+          <p>Solution, brush, and bone, cased as a set.</p>
+          <p class="price">$110</p>
+        </div>
       </div>
     </div>
     <p class="shop-note">Glenforest Reserve is available in store at 3309 Yonge St.</p>
@@ -579,20 +771,21 @@ p{max-width:64ch}
 <!-- REVIEWS -->
 <section class="reviews" id="reviews">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-head-l">
+    <div class="sec-head" data-io>
+      <div class="sec-head-l" data-cell style="--i:0">
         <h2>Held to a local standard.</h2>
       </div>
+      <span class="rule-x" aria-hidden="true"></span>
     </div>
     <!-- Hand-off: quotes below are verbatim from public review listings (typos intact).
          Before publishing, confirm each reviewer's signed name from the live Google listing
          and update the cite lines to match exactly. -->
-    <div class="cells rev-grid">
-      <div class="rev">
+    <div class="cells rev-grid" data-io>
+      <div class="rev" data-cell style="--i:0">
         <blockquote>Glenforest does a fantastic job on my dry clean only clothing. The executive finish makes my shirt feel amazing and my clothes don't stink like chemicals when they get back.</blockquote>
         <cite>Yelp review</cite>
       </div>
-      <div class="rev">
+      <div class="rev" data-cell style="--i:1">
         <blockquote>They are awesome. I had my Christmas Party to go to and needed my suit dry cleaned the same day. Owner not only got my suit clean for the party, they offered to have it delivered to me because I was working. This was on a Saturday. Customer service was beyond exceptional, the suit looked amazing and I was very fortunate they could do this for me at the last minute. 12/10 stars. I would definitely recommend Glenforest Cleaners to anyone in the area or that's looking for a same day service.</blockquote>
         <cite>Customer review, December 2024</cite>
       </div>
@@ -664,6 +857,21 @@ p{max-width:64ch}
   for(var i=0;i<mLinks.length;i++){
     mLinks[i].addEventListener('click',function(){toggle.checked=false;});
   }
+
+  /* motion: one observer, fire once, everything else is CSS */
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches){return;}
+  if(!('IntersectionObserver' in window)){return;}
+  document.documentElement.classList.add('js-motion');
+  var io=new IntersectionObserver(function(entries){
+    for(var j=0;j<entries.length;j++){
+      if(entries[j].isIntersecting){
+        entries[j].target.classList.add('is-in');
+        io.unobserve(entries[j].target);
+      }
+    }
+  },{threshold:.18,rootMargin:'0px 0px -10% 0px'});
+  var targets=document.querySelectorAll('[data-io]');
+  for(var k=0;k<targets.length;k++){io.observe(targets[k]);}
 })();
 </script>
 </body>
